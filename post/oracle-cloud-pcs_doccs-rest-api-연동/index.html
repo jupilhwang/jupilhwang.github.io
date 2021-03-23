@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en-US.UTF8">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Just Do It ! - Yolo">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://jupilhwang.github.io//img/home-bg.jpg">
+    <meta property="twitter:image" content="https://jupilhwang.github.io//img/home-bg.jpg" />
+    
+
+    
+    <meta name="title" content="" />
+    <meta property="og:title" content="" />
+    <meta property="twitter:title" content="" />
+    
+
+    
+    <meta name="description" content="">
+    <meta property="og:description" content="" />
+    <meta property="twitter:description" content="" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="https://jupilhwang.github.io/img/favicon.ico">
+
+    <title></title>
+
+    <link rel="canonical" href="https://jupilhwang.github.io/post/oracle-cloud-pcs_doccs-rest-api-%EC%97%B0%EB%8F%99/">
+
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/iDisqus.min.css"/>
+
+    
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/zanshang.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" type="text/css">
+
+    
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/lightbox.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"><link rel="stylesheet" href="https://jupilhwang.github.io/css/main.css">
+
+    
+    
+    <script src="https://jupilhwang.github.io/js/jquery.min.js"></script>
+
+    
+    <script src="https://jupilhwang.github.io/js/bootstrap.min.js"></script>
+
+    
+    <script src="https://jupilhwang.github.io/js/hux-blog.min.js"></script>
+
+    
+    
+    <script src="https://jupilhwang.github.io/js/lightbox.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <script src="https://jupilhwang.github.io/js/main.js"></script>
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://jupilhwang.github.io/">Just Do It ! - Yolo</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://jupilhwang.github.io/">Home</a>
+                    </li>
+                    
+                    
+		    
+                        <li><a href="https://jupilhwang.github.io/top/books/">BOOKS</a></li>
+                    
+                        <li><a href="https://jupilhwang.github.io/page/about">ABOUT</a></li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1></h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                Just Do It ! - Yolo
+                         
+                        on 
+                        Monday, January 1, 0001
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>DocCS</p>
+<h4 id="oauth_token">OAUTH_TOKEN</h4>
+<h5 id="curl">Curl</h5>
+<ul>
+<li>Accept : application/xml or application/json</li>
+<li>Authorization:
+<ul>
+<li>Authorization: Basic abclajdlfa=</li>
+<li>Authorization: Bearer eyJlad..adljfalsd</li>
+</ul>
+</li>
+<li>Content-Length</li>
+<li>Content-Type
+<ul>
+<li>application/json</li>
+</ul>
+</li>
+<li>Accept-Language: fr</li>
+</ul>
+<h5 id="using-oauth">Using OAuth</h5>
+<ul>
+<li>base url : <a href="https://documents-krdemo.documents.us2.oraclecloud.com/documents/web?IdcService=GET_OAUTH_TOKEN">https://documents-krdemo.documents.us2.oraclecloud.com/documents/web?IdcService=GET_OAUTH_TOKEN</a></li>
+<li>Reponse</li>
+</ul>
+<pre><code>{
+
+&quot;LocalData&quot;: {
+&quot;IdcService&quot;: &quot;GET_OAUTH_TOKEN&quot;,
+&quot;StatusCode&quot;: &quot;0&quot;,
+&quot;StatusMessage&quot;: &quot;You are logged in as 'U9133ACF5AE2AF282FD7F23A723FD68419FE'.&quot;,
+&quot;StatusMessageKey&quot;: &quot;!csUserLoggedIn,U9133ACF5AE2AF282FD7F23A723FD68419FE&quot;,
+&quot;dUser&quot;: &quot;U9133ACF5AE2AF282FD7F23A723FD68419FE&quot;,
+&quot;dUserFullName&quot;: &quot;Jupil Hwang&quot;,
+&quot;expiration&quot;: &quot;604799&quot;,
+&quot;idcToken&quot;: &quot;1481347104797:C7968F3B2E31D84A029F65AF0FD970A9&quot;,
+&quot;localizedForResponse&quot;: &quot;1&quot;,
+&quot;tokenValue&quot;: &quot;eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsIng1dCI6IkxLRERYN2VyRUxYcm5fc0Zwc0RFZkt6ejg3YyIsImtpZCI6ImtyZGVtby5jZXJ0In0.eyJzdWIiOiJqdXBpbC5od2FuZ0BvcmFjbGUuY29tIiwib3JhY2xlLm9hdXRoLnVzZXJfb3JpZ2luX2lkX3R5cGUiOiJMREFQX1VJRCIsIm9yYWNsZS5vYXV0aC51c2VyX29yaWdpbl9pZCI6Imp1cGlsLmh3YW5nQG9yYWNsZS5jb20iLCJpc3MiOiJrcmRlbW8iLCJvcmFjbGUub2F1dGguc3ZjX3BfbiI6ImtyZGVtb1NlcnZpY2VQcm9maWxlIiwiaWF0IjoxNDgxMTc0MzA1LCJvcmFjbGUub2F1dGgucHJuLmlkX3R5cGUiOiJMREFQX1VJRCIsIm9yYWNsZS5vYXV0aC50a19jb250ZXh0IjoicmVzb3VyY2VfYWNjZXNzX3RrIiwiZXhwIjoxNDgxNzc5MTA0LCJhdWQiOlsiaHR0cHM6Ly9kb2N1bWVudHMta3JkZW1vLmRvY3VtZW50cy51czIub3JhY2xlY2xvdWQuY29tOjQ0My9kb2N1bWVudHMiXSwib3JhY2xlLm9hdXRoLnN1Yi5pZF90eXBlIjoiTERBUF9VSUQiLCJwcm4iOiJqdXBpbC5od2FuZ0BvcmFjbGUuY29tIiwianRpIjoiZDA0ZjQ2ODYtNjVhMy00YWIyLTk2NjItMmEzODA2M2I0ZTYzIiwib3JhY2xlLm9hdXRoLmNsaWVudF9vcmlnaW5faWQiOiJkZDdmMmYyNy0zN2QyLTRhMTktYjY3NS02ZWU0NWZhODk0NDUiLCJvcmFjbGUub2F1dGguc2NvcGUiOiJodHRwczovL2RvY3VtZW50cy1rcmRlbW8uZG9jdW1lbnRzLnVzMi5vcmFjbGVjbG91ZC5jb206NDQzL2RvY3VtZW50cyIsInVzZXIudGVuYW50Lm5hbWUiOiJrcmRlbW8iLCJvcmFjbGUub2F1dGguaWRfZF9pZCI6IjQ2NjkzMTY5NDk2MjI0MjA3In0.QUsPt6rXmGnVUyDxeMSKYhKxMFTSnuEqM5zybYlR9TZ1atkCDKdMNuC8euZp2SX45L43gVQbjUmyb-PdJ-jFYnv_c73QBZVcU7h8Kae2UrL39BGRF6dOmhp9b1fi6Ldi7L6GaK393MHgspel0v3vOlpDykISeis-arJEvYJsc10Bj5JO_ZFCP9AWVz4FwtpXFMtuiCiA2DtjAdQDo97qh0NYq2HFQCF4muTjV5KPrqi9_wRTNy4pdywezHLmk5PEqlsTGo2w7opo02t1WnlM6d1weGSr2hDKWv3WMn1WNN6moWNHmBKQk2tYNOe9690qWHo3WNYcDa1nBHDnO3OP3A&quot;
+},
+
+
+&quot;ResultSets&quot;: {
+
+}
+}
+</code></pre><pre><code>curl -iv -H 'Authorization:Bearer token' -X GET {Docs External URL}/api/1.1/folder/items
+</code></pre><h5 id="using-baic-authorization">Using Baic Authorization</h5>
+<ul>
+<li>Base64 encode</li>
+</ul>
+<pre><code>  jupil.hwang@oracle.com:W3lc0m31#
+
+  -- encode --&gt;
+  Authorization:Basic anVwaWwuaHdhbmdAb3JhY2xlLmNvbTpXM2xjMG0zMSM=
+
+</code></pre><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -iv -H <span class="s1">&#39;Authorization:Basic anVwaWwuaHdhbmdAb3JhY2xlLmNvbTpXM2xjMG0zMSM=&#39;</span> -X GET https://documents-krdemo.documents.us2.oraclecloud.com/documents/api/1.1/folders/items
+</code></pre></div><p>Response</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+<span class="nt">&#34;count&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span>
+<span class="nt">&#34;errorCode&#34;</span><span class="p">:</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span>
+<span class="nt">&#34;hasMore&#34;</span><span class="p">:</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span>
+<span class="nt">&#34;limit&#34;</span><span class="p">:</span> <span class="s2">&#34;100&#34;</span><span class="p">,</span>
+<span class="nt">&#34;offset&#34;</span><span class="p">:</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span>
+<span class="nt">&#34;ownerFolderID&#34;</span><span class="p">:</span> <span class="s2">&#34;self&#34;</span><span class="p">,</span>
+<span class="nt">&#34;totalResults&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span>
+<span class="nt">&#34;items&#34;</span><span class="p">:</span> <span class="p">[</span>
+<span class="p">{</span>
+<span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;folder&#34;</span><span class="p">,</span>
+<span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;FC0370A6544CA32F53428D9D723FD68419FE3B212942&#34;</span><span class="p">,</span>
+<span class="nt">&#34;parentID&#34;</span><span class="p">:</span> <span class="s2">&#34;self&#34;</span><span class="p">,</span>
+<span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;AutomaticWorkflow&#34;</span><span class="p">,</span>
+<span class="nt">&#34;ownedBy&#34;</span><span class="p">:</span> <span class="p">{</span>
+<span class="nt">&#34;displayName&#34;</span><span class="p">:</span> <span class="s2">&#34;Jupil Hwang&#34;</span><span class="p">,</span>
+<span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;U9133ACF5AE2AF282FD7F23A723FD68419FE&#34;</span><span class="p">,</span>
+<span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;user&#34;</span>
+<span class="p">}</span>
+<span class="p">,</span>
+<span class="nt">&#34;createdBy&#34;</span><span class="p">:</span> <span class="p">{</span>
+<span class="nt">&#34;displayName&#34;</span><span class="p">:</span> <span class="s2">&#34;Jupil Hwang&#34;</span><span class="p">,</span>
+<span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;U9133ACF5AE2AF282FD7F23A723FD68419FE&#34;</span><span class="p">,</span>
+<span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;user&#34;</span>
+<span class="p">}</span>
+<span class="p">,</span>
+<span class="nt">&#34;modifiedBy&#34;</span><span class="p">:</span> <span class="p">{</span>
+<span class="nt">&#34;displayName&#34;</span><span class="p">:</span> <span class="s2">&#34;Jupil Hwang&#34;</span><span class="p">,</span>
+<span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;U9133ACF5AE2AF282FD7F23A723FD68419FE&#34;</span><span class="p">,</span>
+<span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;user&#34;</span>
+<span class="p">}</span>
+<span class="p">,</span>
+<span class="nt">&#34;createdTime&#34;</span><span class="p">:</span> <span class="s2">&#34;2016-12-08T05:10:38Z&#34;</span><span class="p">,</span>
+<span class="nt">&#34;modifiedTime&#34;</span><span class="p">:</span> <span class="s2">&#34;2016-12-08T05:10:38Z&#34;</span><span class="p">,</span>
+<span class="nt">&#34;size&#34;</span><span class="p">:</span> <span class="s2">&#34;0&#34;</span><span class="p">,</span>
+<span class="nt">&#34;childItemsCount&#34;</span><span class="p">:</span> <span class="s2">&#34;0&#34;</span>
+<span class="p">}</span>
+<span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="https://jupilhwang.github.io/post/oracle-cloud/" data-toggle="tooltip" data-placement="top" title="">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="https://jupilhwang.github.io/post/networkoverlay/" data-toggle="tooltip" data-placement="top" title="Network Overlay">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "just-do-it-2" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="https://jupilhwang.github.io/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/cd" title="cd">
+                            cd
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/cloud" title="cloud">
+                            cloud
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/groovy" title="groovy">
+                            groovy
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/k8s" title="k8s">
+                            k8s
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/network" title="network">
+                            network
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/oracle" title="oracle">
+                            oracle
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/tanzu" title="tanzu">
+                            tanzu
+                        </a>
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/tkg" title="tkg">
+                            tkg
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/vsphere" title="vsphere">
+                            vsphere
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Just Do It ! - Yolo" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:jupil.hwang@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+
+                    
+                    <li>
+                        <a href="https://twitter.com/jupil_hwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/jupilhwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/jupilhwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/namoo4u">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Just Do It ! - Yolo 2021
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-117423189-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>

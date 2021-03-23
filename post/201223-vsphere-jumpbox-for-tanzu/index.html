@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en-US.UTF8">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Just Do It ! - Yolo">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://jupilhwang.github.io//img/home-bg.jpg">
+    <meta property="twitter:image" content="https://jupilhwang.github.io//img/home-bg.jpg" />
+    
+
+    
+    <meta name="title" content="jumpbox on vSphere for Tanzu" />
+    <meta property="og:title" content="jumpbox on vSphere for Tanzu" />
+    <meta property="twitter:title" content="jumpbox on vSphere for Tanzu" />
+    
+
+    
+    <meta name="description" content="">
+    <meta property="og:description" content="" />
+    <meta property="twitter:description" content="" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="https://jupilhwang.github.io/img/favicon.ico">
+
+    <title>jumpbox on vSphere for Tanzu-</title>
+
+    <link rel="canonical" href="https://jupilhwang.github.io/post/201223-vsphere-jumpbox-for-tanzu/">
+
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/iDisqus.min.css"/>
+
+    
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/zanshang.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" type="text/css">
+
+    
+    <link rel="stylesheet" href="https://jupilhwang.github.io/css/lightbox.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"><link rel="stylesheet" href="https://jupilhwang.github.io/css/main.css">
+
+    
+    
+    <script src="https://jupilhwang.github.io/js/jquery.min.js"></script>
+
+    
+    <script src="https://jupilhwang.github.io/js/bootstrap.min.js"></script>
+
+    
+    <script src="https://jupilhwang.github.io/js/hux-blog.min.js"></script>
+
+    
+    
+    <script src="https://jupilhwang.github.io/js/lightbox.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <script src="https://jupilhwang.github.io/js/main.js"></script>
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://jupilhwang.github.io/">Just Do It ! - Yolo</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://jupilhwang.github.io/">Home</a>
+                    </li>
+                    
+                    
+		    
+                        <li><a href="https://jupilhwang.github.io/top/books/">BOOKS</a></li>
+                    
+                        <li><a href="https://jupilhwang.github.io/page/about">ABOUT</a></li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="https://jupilhwang.github.io/tags/vsphere" title="vsphere">
+                            vsphere
+                        </a>
+                        
+                        <a class="tag" href="https://jupilhwang.github.io/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        <a class="tag" href="https://jupilhwang.github.io/tags/k8s" title="k8s">
+                            k8s
+                        </a>
+                        
+                        <a class="tag" href="https://jupilhwang.github.io/tags/tanzu" title="tanzu">
+                            tanzu
+                        </a>
+                        
+                        <a class="tag" href="https://jupilhwang.github.io/tags/cli" title="cli">
+                            cli
+                        </a>
+                        
+                    </div>
+                    <h1>jumpbox on vSphere for Tanzu</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                Just Do It ! - Yolo
+                         
+                        on 
+                        Wednesday, December 23, 2020
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>이 문서는 vsphere 환경에서 tanzu를 설치/설정하기 위해 사용하는 jumpbox 를 손쉽게 사용하기 위한 문서이다.</p>
+<h1 id="deploy-ova">deploy OVA</h1>
+<p>대체로 Private Cloud이든 Public Cloud이든 동일한 작업환경을 위해서 Jumpbox를 설치해서작업을 하며 Jumpbox로는 ubuntu server 를 많이 사용한다. 여기서도 ubuntu-server-20.04.1 (LTS) 을 기준으로 설명한다.</p>
+<p><a href="https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.ova">https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.ova</a></p>
+<p>
+  <img src="https://jupilhwang.github.io/img/jumpbox/deploy-ubuntu-cloudimage-ova.png" alt="">
+
+</p>
+<p>iso로 실제 ubuntu-server를 설치해도 되고, 이미 export 해놓은 ova를 업로드하여 사용할 수 있지만, Public internet이 되는 환경이라면 이미 만들어진 ubuntu-cloudimage 를 사용하는 것도 좋다.</p>
+<p>ubuntu cloud image는 <a href="https://cloud-images.ubuntu.com">https://cloud-images.ubuntu.com</a> 에서 받을 수 있다. kaist 나 daum 같은 ftp mirror 를 제공하는 곳에서는 대체로 ubuntu release(cdimages)나 cd/iso 만 mirror 해서 제공하는데 cloud-image 도 제공해 주면 좋겠다.</p>
+<p><a href="https://cloud-images.ubuntu.com">https://cloud-images.ubuntu.com</a> 사이트에는 ubuntu 의 각 릴리즈별 이미지를 제공한다.</p>
+<ul>
+<li>windows Azure/Hyper-V images</li>
+<li>Vagrant images</li>
+<li>VMware/Virtualbox OVA</li>
+<li>img</li>
+</ul>
+<p>
+  <img src="https://jupilhwang.github.io/img/jumpbox/deploy-ubuntu-cloudimage-ova-02.png" alt="">
+
+</p>
+<h1 id="user-data-와-meta-data">user-data 와 meta-data</h1>
+<p>cloud image 는 cloud-init과 cloud-config을 사용하도록 만들어진 image라고 보면 되는데, cloud-config은 크게 user-data와 meta-data 라는 두가지 데이터를 통해서 초기 이미지 기동 시 인스턴스에 필요한 설정을 한다.</p>
+<ul>
+<li>user-data : 사용자 데이터</li>
+<li>meta-data : cloud-provider들에 대한 설정 데이터</li>
+</ul>
+<p>
+  <img src="https://jupilhwang.github.io/img/jumpbox/deploy-ubuntu-cloudimage-data.png" alt="">
+
+</p>
+<ul>
+<li>기본으로 ubuntu 라는 사용자가 생성되어 있으며, IP address 는 DHCP로 할당 받도록 되어 있다</li>
+</ul>
+<p>meta-data</p>
+<pre><code>network:
+  version: 2
+  ethernets:
+    id0:
+      match: { name: ens* }
+      dhcp4: false
+      dhcp6: false
+      addresses: [10.213.89.254/24]
+      gateway4: 10.213.89.1
+      nameservers:
+        addresses: [10.192.2.10,10.192.2.11,8.8.8.8]
+</code></pre><p><a href="https://raw.githubusercontent.com/jupilhwang/cli-install/master/network">https://raw.githubusercontent.com/jupilhwang/cli-install/master/network</a></p>
+<p>user-data</p>
+<pre><code>users:
+  - default
+ssh_pwauth: True
+chpasswd: { expire: False}
+runcmd:
+  - curl -sSL https://raw.githubusercontent.com/jupilhwang/cli-install/master/init.sh | bash - 
+final_message: &quot;The system is finally up, after $UPTIME seconds&quot;
+</code></pre><p>user-data는 base64 encoded data 로 제공이 되어야 하는데, 위의 yaml을 encode 하면 아래와 같다.</p>
+<p>dXNlcnM6CiAgLSBkZWZhdWx0CnNzaF9wd2F1dGg6IFRydWUKY2hwYXNzd2Q6IHsgZXhwaXJlOiBGYWxzZX0KcnVuY21kOgogIC0gY3VybCAtc1NMIGh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9qdXBpbGh3YW5nL2NsaS1pbnN0YWxsL21hc3Rlci9pbml0LnNoIHwgYmFzaCAtIApmaW5hbF9tZXNzYWdlOiAiVGhlIHN5c3RlbSBpcyBmaW5hbGx5IHVwLCBhZnRlciAkVVBUSU1FIHNlY29uZHMiCg==</p>
+
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="https://jupilhwang.github.io/post/201101-tkg-quick-start/" data-toggle="tooltip" data-placement="top" title="TKG 1.2 설치/설정 : quick start">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="https://jupilhwang.github.io/post/210111.jenkinsfile%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8onkubernetes/" data-toggle="tooltip" data-placement="top" title="Jenkins 파이프라인 to Build Image / Push Image on Kubernetes">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "just-do-it-2" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="https://jupilhwang.github.io/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/cd" title="cd">
+                            cd
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/cloud" title="cloud">
+                            cloud
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/groovy" title="groovy">
+                            groovy
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/k8s" title="k8s">
+                            k8s
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/kubernetes" title="kubernetes">
+                            kubernetes
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/network" title="network">
+                            network
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/oracle" title="oracle">
+                            oracle
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/tanzu" title="tanzu">
+                            tanzu
+                        </a>
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/tkg" title="tkg">
+                            tkg
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="https://jupilhwang.github.io/tags/vsphere" title="vsphere">
+                            vsphere
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Just Do It ! - Yolo" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:jupil.hwang@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+
+                    
+                    <li>
+                        <a href="https://twitter.com/jupil_hwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/jupilhwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/jupilhwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/namoo4u">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Just Do It ! - Yolo 2021
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-117423189-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>
