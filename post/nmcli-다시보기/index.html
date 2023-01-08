@@ -1,0 +1,135 @@
+<!doctype html><html lang=en-us.utf8><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:site_name" content="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><meta property="og:type" content="article"><meta property="og:image" content="https://jupilhwang.github.io//img/home-bg.jpg"><meta property="twitter:image" content="https://jupilhwang.github.io//img/home-bg.jpg"><meta name=title content="nmcli 다시보기"><meta property="og:title" content="nmcli 다시보기"><meta property="twitter:title" content="nmcli 다시보기"><meta name=description content><meta property="og:description" content><meta property="twitter:description" content><meta property="twitter:card" content="summary"><meta name=keyword content><link rel="shortcut icon" href=https://jupilhwang.github.io/img/favicon.ico><title>nmcli 다시보기 |</title><link rel=canonical href=https://jupilhwang.github.io/post/nmcli-%EB%8B%A4%EC%8B%9C%EB%B3%B4%EA%B8%B0/><link rel=stylesheet href=https://jupilhwang.github.io/css/bootstrap.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/hugo-theme-cleanwhite.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/zanshang.css><link href=https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css rel=stylesheet type=text/css><link rel=stylesheet href=https://jupilhwang.github.io/css/lightbox.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/main.css><script src=https://jupilhwang.github.io/js/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/bootstrap.min.js></script>
+<script src=https://jupilhwang.github.io/js/hux-blog.min.js></script>
+<script src=https://jupilhwang.github.io/js/lazysizes.min.js></script>
+<script src=https://jupilhwang.github.io/js/lightbox.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/main.js></script></head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-117423189-1","auto"),ga("send","pageview"))</script><nav class="navbar navbar-default navbar-custom navbar-fixed-top"><div class=container-fluid><div class="navbar-header page-scroll"><button type=button class=navbar-toggle>
+<span class=sr-only>Toggle navigation</span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+<span class=icon-bar></span></button>
+<a class=navbar-brand href=https://jupilhwang.github.io/>Just Do It ! 행동하지 않으면 성공도 실패도 없다</a></div><div id=huxblog_navbar><div class=navbar-collapse><ul class="nav navbar-nav navbar-right"><li><a href=https://jupilhwang.github.io/>All Posts</a></li><li><a href=https://jupilhwang.github.io/top/books/>BOOKS</a></li><li><a href=https://jupilhwang.github.io/page/about>ABOUT</a></li><li><a href=https://jupilhwang.github.io/search><i class="fa fa-search"></i></a></li></ul></div></div></div></nav><script>var $body=document.body,$toggle=document.querySelector(".navbar-toggle"),$navbar=document.querySelector("#huxblog_navbar"),$collapse=document.querySelector(".navbar-collapse");$toggle.addEventListener("click",handleMagic);function handleMagic(){$navbar.className.indexOf("in")>0?($navbar.className=" ",setTimeout(function(){$navbar.className.indexOf("in")<0&&($collapse.style.height="0px")},400)):($collapse.style.height="auto",$navbar.className+=" in")}</script><style type=text/css>header.intro-header{background-image:url(/img/home-bg.jpg)}</style><header class=intro-header><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><div class=tags><a class=tag href=https://jupilhwang.github.io/tags/linux title=linux>linux</a>
+<a class=tag href=https://jupilhwang.github.io/tags/nmcli title=nmcli>nmcli</a>
+<a class=tag href=https://jupilhwang.github.io/tags/network title=network>network</a></div><h1>nmcli 다시보기</h1><h2 class=subheading></h2><span class=meta>Posted by
+Just Do It ! 행동하지 않으면 성공도 실패도 없다
+on
+Monday, November 21, 2016</span></div></div></div></div></header><article><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+post-container"><h3 id=네트워크-설정>네트워크 설정</h3><p>네트워크 관리를 위한 CLI (command line tool)인 nmcli 에 대해서 다시 한번 보자. (맨날 까먹으니까&mldr;.. ㅠㅠ)</p><p>command line tool 인 nmcli 는 사용자가 직접 또는 NetworkManager를 위한 스크립트를 사용할 수 있다.
+기본적인 명령어 모양은 아래와 같다</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ netcli <span class=o>[</span>OPTIONS<span class=o>]</span> OBJECT <span class=o>{</span> COMMAND <span class=p>|</span> <span class=nb>help</span> <span class=o>}</span>
+</span></span></code></pre></div><p><strong>OBJECT</strong> 는 <strong>general, networking, radio, connection, device, agent, monitor</strong> 이다. 그리고 가장 많이 사용하는 <strong>OPTIONS</strong>은 <strong>-t (&ndash;terse), -p (&ndash;pretty), -h (&ndash;help)</strong> 이다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ nmcli <span class=nb>help</span>
+</span></span><span class=line><span class=cl>Usage: nmcli <span class=o>[</span>OPTIONS<span class=o>]</span> OBJECT <span class=o>{</span> COMMAND <span class=p>|</span> <span class=nb>help</span> <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>OPTIONS
+</span></span><span class=line><span class=cl>  -t<span class=o>[</span>erse<span class=o>]</span>                                   terse output
+</span></span><span class=line><span class=cl>  -p<span class=o>[</span>retty<span class=o>]</span>                                  pretty output
+</span></span><span class=line><span class=cl>  -m<span class=o>[</span>ode<span class=o>]</span> tabular<span class=p>|</span>multiline                  output mode
+</span></span><span class=line><span class=cl>  -c<span class=o>[</span>olors<span class=o>]</span> auto<span class=p>|</span>yes<span class=p>|</span>no                      whether to use colors in output
+</span></span><span class=line><span class=cl>  -f<span class=o>[</span>ields<span class=o>]</span> &lt;field1,field2,...&gt;<span class=p>|</span>all<span class=p>|</span>common   specify fields to output
+</span></span><span class=line><span class=cl>  -e<span class=o>[</span>scape<span class=o>]</span> yes<span class=p>|</span>no                           escape columns separators in values
+</span></span><span class=line><span class=cl>  -a<span class=o>[</span>sk<span class=o>]</span>                                     ask <span class=k>for</span> missing parameters
+</span></span><span class=line><span class=cl>  -s<span class=o>[</span>how-secrets<span class=o>]</span>                            allow displaying passwords
+</span></span><span class=line><span class=cl>  -w<span class=o>[</span>ait<span class=o>]</span> &lt;seconds&gt;                          <span class=nb>set</span> timeout waiting <span class=k>for</span> finishing operations
+</span></span><span class=line><span class=cl>  -v<span class=o>[</span>ersion<span class=o>]</span>                                 show program version
+</span></span><span class=line><span class=cl>  -h<span class=o>[</span>elp<span class=o>]</span>                                    print this <span class=nb>help</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>OBJECT
+</span></span><span class=line><span class=cl>  g<span class=o>[</span>eneral<span class=o>]</span>       NetworkManager<span class=s1>&#39;s general status and operations
+</span></span></span><span class=line><span class=cl><span class=s1>  n[etworking]    overall networking control
+</span></span></span><span class=line><span class=cl><span class=s1>  r[adio]         NetworkManager radio switches
+</span></span></span><span class=line><span class=cl><span class=s1>  c[onnection]    NetworkManager&#39;</span>s connections
+</span></span><span class=line><span class=cl>  d<span class=o>[</span>evice<span class=o>]</span>        devices managed by NetworkManager
+</span></span><span class=line><span class=cl>  a<span class=o>[</span>gent<span class=o>]</span>         NetworkManager secret agent or polkit agent
+</span></span><span class=line><span class=cl>  m<span class=o>[</span>onitor<span class=o>]</span>       monitor NetworkManager changes
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ nmcli general <span class=nb>help</span>
+</span></span><span class=line><span class=cl>COMMAND :<span class=o>=</span> <span class=o>{</span> status <span class=p>|</span> hostname <span class=p>|</span> permissions <span class=p>|</span> logging <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  status
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  hostname <span class=o>[</span>&lt;hostname&gt;<span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  permissions
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  logging <span class=o>[</span>level &lt;log level&gt;<span class=o>]</span> <span class=o>[</span>domains &lt;log domains&gt;<span class=o>]</span>
+</span></span></code></pre></div><p>NetworkManager의 상태</p><pre tabindex=0><code>$ nmcli general status
+STATE      CONNECTIVITY  WIFI-HW  WIFI     WWAN-HW  WWAN    
+connected  full          enabled  enabled  enabled  enabled
+</code></pre><p>모든 connections</p><pre tabindex=0><code>$ nmcli connection show
+NAME                         UUID                                  TYPE             DEVICE
+clear-guest                  3f1408fd-b085-4949-95dd-6a96f0eb2d46  802-11-wireless  wlan0  
+#SFO FREE WIFI               efcce222-c7ec-491d-84dd-9b872038d555  802-11-wireless  --     
+AirportWiFi                  a4c579ba-dfe8-42c8-8d5c-5883ed9468be  802-11-wireless  --     
+AirportWiFi(5G)              ce323b55-87b1-49cb-a488-8b790fe34148  802-11-wireless  --     
+Alt Guests                   a61ec0fc-2550-4811-89fe-a95862454999  802-11-wireless  --     
+AppleNamoo_5G                9c51380f-a129-492b-8ad0-7847bf2057d2  802-11-wireless  --     
+Auto Ethernet (DNS)          15ded4e9-6046-4a51-9002-a30320dda81a  802-3-ethernet   --     
+Auto Ethernet (without DNS)  0550fea5-1829-4525-8eb4-ed40e80fc112  802-3-ethernet   --     
+BELLALIANT1083               6005f4f4-0c46-46d9-ad70-fae14878799f  802-11-wireless  --     
+BWWainwrightInnAndSuites     2c04eea6-9c16-4cc2-b9bc-df2030b51c71  802-11-wireless  --     
+Coex free wifi zone          b62f6437-1ef0-4e60-9357-3e847c74b5d4  802-11-wireless  --     
+DD                           9851813f-1c7c-4c9c-b79b-9c6559fc4b82  802-11-wireless  --     
+DIRECT-4c-HP M277 LaserJet   a44ab5bb-1a52-4d42-8cce-6daff0d5d830  802-11-wireless  --     
+Dell M900HD 9914             b3c3d2d6-b309-4090-8a1a-80a547d8e6c1  802-11-wireless  --     
+Dell M900HD 991a             61db4250-7775-4dee-9f61-1a90bdfdd48e  802-11-wireless  --     
+Delta-Internet               810e2710-848c-4f62-9620-3964991f64ae  802-11-wireless  --     
+Desperado 5G                 1a3d4301-f35b-4a31-8587-67b9436fe7fc  802-11-wireless  --     
+EDIYA_5G                     01a1efa4-0cb1-4232-bbeb-0dfe37e10819  802-11-wireless  --     
+FARMTOCUP02                  59282bbf-45e6-402e-a97e-65ced51734f7  802-11-wireless  -
+</code></pre><p>현재 접속중인 connection</p><pre tabindex=0><code>$ nmcli connection show --active
+NAME         UUID                                  TYPE             DEVICE
+clear-guest  3f1408fd-b085-4949-95dd-6a96f0eb2d46  802-11-wireless  wlan0
+</code></pre><p>디바이스 상태</p><pre tabindex=0><code>$ nmcli device status
+DEVICE   TYPE      STATE         CONNECTION  
+wlan0    wifi      connected     clear-guest
+eth0     ethernet  disconnected  --          
+docker0  bridge    unmanaged     --          
+lo       loopback  unmanaged     --  
+</code></pre><p>Command는 몇가지 option과 object들에 대해서 줄여서 표현할 수 있다.</p><pre tabindex=0><code>$ nmcli connection modify id &#39;MyCafe&#39; 802-11-wireless.mtu 1350
+--&gt;
+$ nmcli con mod MyCafe 802-11-wireless.mtu 1350
+
+$ nmcli connection add type ethernet
+--&gt;
+$ nmcli c a type eth
+</code></pre><h3 id=nmcli-를-사용해서-인터페이스-시작중지>nmcli 를 사용해서 인터페이스 시작/중지</h3><p>nmcli 툴은 어떤 네트워크 인터페이스(nic)도 시작/중지 할 수 있다.</p><pre tabindex=0><code>nmcli con up id bond0
+nmcli con up id port0
+nmcli dev disconnect bond0
+nmcli dev disconnect ens3
+</code></pre><p>nmcli con up my-office</p><h3 id=wifi-connection>WiFi Connection</h3><p>사용가능한 Wi-Fi access point 확인</p><pre tabindex=0><code>$ nmcli dev wifi list
+*  SSID                   MODE    CHAN  RATE       SIGNAL  BARS  SECURITY         
+   ollehWiFi              Infra   1     54 Mbit/s  94      ▂▄▆█  WPA1 WPA2 802.1X
+   ollehWiFi              Infra   1     54 Mbit/s  94      ▂▄▆█                   
+   clear                  Infra   1     54 Mbit/s  84      ▂▄▆█                   
+   ollehWiFi              Infra   1     54 Mbit/s  82      ▂▄▆█                   
+   ollehWiFi              Infra   1     54 Mbit/s  82      ▂▄▆█  WPA1 WPA2 802.1X
+   aaa_msjo_403           Infra   1     54 Mbit/s  80      ▂▄▆_  WPA1 WPA2        
+   ollehWiFi              Infra   100   54 Mbit/s  77      ▂▄▆_  WPA1 WPA2 802.1X
+   olleh GiGA WiFi        Infra   100   54 Mbit/s  75      ▂▄▆_                   
+   ollehEgg_423           Infra   9     54 Mbit/s  74      ▂▄▆_  WPA1 WPA2        
+   ollehWiFi              Infra   100   54 Mbit/s  74      ▂▄▆_                   
+   SKH_ollehEgg_498       Infra   5     54 Mbit/s  69      ▂▄▆_  WPA1 WPA2
+</code></pre><p>새로운 Wi-Fi Connection을 static-ip, dns는 자동 으로 만들기</p><pre tabindex=0><code>$ nmcli con add con-name MyCafe ifname wlan0 type wifi ssid MyCafe ip4 192.168.100.101/24 gw4 192.168.100.1
+</code></pre><p>WPA2 password = caffeine 를 지정</p><pre tabindex=0><code>$ nmcli con modify MyCafe wifi-sec.key-mgme wpa-psk
+$ nmcli con mofidy MyCafe wifi-sec.psk caffeine
+</code></pre><hr><ul class=pager><li class=previous><a href=https://jupilhwang.github.io/post/linux-jvm-%ED%8A%9C%EB%8B%9D%ED%95%98%EA%B8%B0/ data-toggle=tooltip data-placement=top title="리눅스 JVM 튜닝하기">&larr;
+Previous Post</a></li><li class=next><a href=https://jupilhwang.github.io/post/oh-my-zsh-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/ data-toggle=tooltip data-placement=top title="oh my zsh 설치하기">Next
+Post &rarr;</a></li></ul><script src=https://utteranc.es/client.js repo=jupilhwang/blog-comments issue-term=title theme=github-light crossorigin=anonymous async></script></div><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+sidebar-container"><section><hr class="hidden-sm hidden-xs"><h5><a href=https://jupilhwang.github.io/tags/>FEATURED TAGS</a></h5><div class=tags><a href=https://jupilhwang.github.io/tags/cloud title=cloud>cloud</a>
+<a href=https://jupilhwang.github.io/tags/groovy title=groovy>groovy</a>
+<a href=https://jupilhwang.github.io/tags/k8s title=k8s>k8s</a>
+<a href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes</a>
+<a href=https://jupilhwang.github.io/tags/linux title=linux>linux</a>
+<a href=https://jupilhwang.github.io/tags/network title=network>network</a>
+<a href=https://jupilhwang.github.io/tags/oracle title=oracle>oracle</a>
+<a href=https://jupilhwang.github.io/tags/tanzu title=tanzu>tanzu</a>
+<a href=https://jupilhwang.github.io/tags/tkg title=tkg>tkg</a>
+<a href=https://jupilhwang.github.io/tags/vsphere title=vsphere>vsphere</a></div></section></div></div></div></article><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center"><li><a href=mailto:jupil.hwang@gmail.com><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-envelope fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://twitter.com/jupil_hwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-twitter fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.facebook.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-facebook fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://github.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-github fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.linkedin.com/in/namoo4u><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-linkedin fa-stack-1x fa-inverse"></i></span></a></li><li><a href rel=alternate type=application/rss+xml title="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="copyright text-muted">Copyright &copy; Just Do It ! 행동하지 않으면 성공도 실패도 없다 2023<br><a href=https://themes.gohugo.io/hugo-theme-cleanwhite>CleanWhite Hugo Theme</a> by <a href=https://zhaohuabing.com>Huabing</a> |
+<iframe style=margin-left:2px;margin-bottom:-5px frameborder=0 scrolling=0 width=100px height=20px src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true"></iframe></p></div></div></div></footer><script>function loadAsync(e,t){var s=document,o="script",n=s.createElement(o),i=s.getElementsByTagName(o)[0];n.src=e,t&&n.addEventListener("load",function(e){t(null,e)},!1),i.parentNode.insertBefore(n,i)}</script><script>$("#tag_cloud").length!==0&&loadAsync("/js/jquery.tagcloud.js",function(){$.fn.tagcloud.defaults={color:{start:"#bbbbee",end:"#0085a1"}},$("#tag_cloud a").tagcloud()})</script><script>loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js",function(){var e=document.querySelector("nav");e&&FastClick.attach(e)})</script></body></html>

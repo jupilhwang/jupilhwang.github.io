@@ -1,0 +1,198 @@
+<!doctype html><html lang=en-us.utf8><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:site_name" content="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><meta property="og:type" content="article"><meta property="og:image" content="https://jupilhwang.github.io//img/home-bg.jpg"><meta property="twitter:image" content="https://jupilhwang.github.io//img/home-bg.jpg"><meta name=title content="Kubernetes 에서 Kubesphere를 이용한 DevOps"><meta property="og:title" content="Kubernetes 에서 Kubesphere를 이용한 DevOps"><meta property="twitter:title" content="Kubernetes 에서 Kubesphere를 이용한 DevOps"><meta name=description content><meta property="og:description" content><meta property="twitter:description" content><meta property="twitter:card" content="summary"><meta name=keyword content><link rel="shortcut icon" href=https://jupilhwang.github.io/img/favicon.ico><title>Kubernetes 에서 Kubesphere를 이용한 DevOps |</title><link rel=canonical href=https://jupilhwang.github.io/post/kubernetes%EC%97%90%EC%84%9C-kubesphere%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-devops/><link rel=stylesheet href=https://jupilhwang.github.io/css/bootstrap.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/hugo-theme-cleanwhite.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/zanshang.css><link href=https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css rel=stylesheet type=text/css><link rel=stylesheet href=https://jupilhwang.github.io/css/lightbox.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/main.css><script src=https://jupilhwang.github.io/js/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/bootstrap.min.js></script>
+<script src=https://jupilhwang.github.io/js/hux-blog.min.js></script>
+<script src=https://jupilhwang.github.io/js/lazysizes.min.js></script>
+<script src=https://jupilhwang.github.io/js/lightbox.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/main.js></script></head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-117423189-1","auto"),ga("send","pageview"))</script><nav class="navbar navbar-default navbar-custom navbar-fixed-top"><div class=container-fluid><div class="navbar-header page-scroll"><button type=button class=navbar-toggle>
+<span class=sr-only>Toggle navigation</span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+<span class=icon-bar></span></button>
+<a class=navbar-brand href=https://jupilhwang.github.io/>Just Do It ! 행동하지 않으면 성공도 실패도 없다</a></div><div id=huxblog_navbar><div class=navbar-collapse><ul class="nav navbar-nav navbar-right"><li><a href=https://jupilhwang.github.io/>All Posts</a></li><li><a href=https://jupilhwang.github.io/top/books/>BOOKS</a></li><li><a href=https://jupilhwang.github.io/page/about>ABOUT</a></li><li><a href=https://jupilhwang.github.io/search><i class="fa fa-search"></i></a></li></ul></div></div></div></nav><script>var $body=document.body,$toggle=document.querySelector(".navbar-toggle"),$navbar=document.querySelector("#huxblog_navbar"),$collapse=document.querySelector(".navbar-collapse");$toggle.addEventListener("click",handleMagic);function handleMagic(){$navbar.className.indexOf("in")>0?($navbar.className=" ",setTimeout(function(){$navbar.className.indexOf("in")<0&&($collapse.style.height="0px")},400)):($collapse.style.height="auto",$navbar.className+=" in")}</script><style type=text/css>header.intro-header{background-image:url(/img/home-bg.jpg)}</style><header class=intro-header><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><div class=tags><a class=tag href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes</a>
+<a class=tag href=https://jupilhwang.github.io/tags/kubesphere title=kubesphere>kubesphere</a>
+<a class=tag href=https://jupilhwang.github.io/tags/devops title=devops>devops</a></div><h1>Kubernetes 에서 Kubesphere를 이용한 DevOps</h1><h2 class=subheading></h2><span class=meta>Posted by
+Just Do It ! 행동하지 않으면 성공도 실패도 없다
+on
+Wednesday, March 25, 2020</span></div></div></div></div></header><article><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+post-container"><h1 id=developer-portal-with-kubesphere>Developer Portal with Kubesphere</h1><p>kubesphere (<a href=https://github.com/kubesphere/kubesphere>https://github.com/kubesphere/kubesphere</a>) 의 오픈소스 프로젝트로 쿠버네티스 클러스터에서 사용할 수 있는 웹 UI를 제공합니다. 워크스페이스/프로젝트 단위로 워크로드를 관리하고, Jenkins를 통한 파이프라인도 제공한다. 내부적으로 프로메테우스와 ElasticSearch 를 통한 모니터링/로깅을 제공한다.
+OpenPitrix 를 사용한 App Store도 제공한다.</p><p>공식 사이트: <a href=https://kubesphere.io>https://kubesphere.io</a></p><h2 id=environments>Environments</h2><ul><li>PKS(Pivotal Container Service) 1.6.1</li><li>NSX-T 2.4.3</li><li>vSphere 6.7U3</li></ul><h2 id=pks-installation-with-epmcenterprise-pks-management-console>PKS Installation with EPMC(Enterprise PKS Management Console)</h2><ul><li>Deploye PKS Management Console</li><li>Configuration</li><li>Deploy
+<img src=https://jupilhwang.github.io/img/kubesphere/epmc-configuration.png alt></li></ul><h4 id=create-k8s-cluster>Create K8s Cluster</h4><ul><li><p>클러스터 생성</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pks create-cluster k8s --external-hostname demo-cluster.k8s.kdis.local -p medium -n <span class=m>5</span>
+</span></span></code></pre></div><p><img src=https://jupilhwang.github.io/img/kubesphere/pks-cluster-create.png alt></p></li><li><p>클러스터 생성 확인</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pks cluster k8s
+</span></span></code></pre></div><p><img src=https://jupilhwang.github.io/img/kubesphere/pks-cluster-create-02.png alt></p><ul><li>bosh cli로 생성된 K8s 클러스터 VM 확인
+<img src=https://jupilhwang.github.io/img/kubesphere/pks-cluster-create-03.png alt></li></ul></li><li><p>DNS Setting for K8s Master API LB
+생성된 클러스터의 Master API Server의 IP 주소를 DNS에 클러스터 생성 시 입력한 external-hostname으로 등록한다.
+<img src=https://jupilhwang.github.io/img/kubesphere/k8s-api-dns.png alt></p></li><li><p>EPMC : Enterprise PKS</p><ul><li>summay
+<img src=https://jupilhwang.github.io/img/kubesphere/epmc-k8s-cluster-summary.png alt></li><li>ndoes
+<img src=https://jupilhwang.github.io/img/kubesphere/epmc-k8s-cluster-nodes.png alt></li><li>namespaces
+<img src=https://jupilhwang.github.io/img/kubesphere/epmc-k8s-cluster-namespaces.png alt></li></ul></li><li><p>Get Kubernetes Credentials for Kubectl cli</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pks get-credentials k8s
+</span></span></code></pre></div><ul><li>kubectl cli 확인</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl cluster-info
+</span></span><span class=line><span class=cl>kubectl api-resources
+</span></span></code></pre></div><p><img src=https://jupilhwang.github.io/img/kubesphere/kubectl-cluster-info.png alt>
+<img src=https://jupilhwang.github.io/img/kubesphere/kubectl-api-resources.png alt></p></li></ul><h1 id=software>Software</h1><ul><li>Helm</li><li>Kubesphere</li></ul><h2 id=default-storage-class-생성>Default Storage Class 생성</h2><ul><li>Storage Class 생성<div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=l>kubectl create -f -&lt;&lt;-EOF</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>StorageClass</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>storage.k8s.io/v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w>  </span><span class=l>thick</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>provisioner</span><span class=p>:</span><span class=w> </span><span class=l>kubernetes.io/vsphere-volume</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>parameters</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>diskformat</span><span class=p>:</span><span class=w> </span><span class=l>zeroedthick</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>EOF</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>kubectl patch storageclass thick -p &#39;{&#34;metadata&#34;: {&#34;annotations&#34;:{&#34;storageclass.kubernetes.io/is-default-class&#34;:&#34;true&#34;}}}&#39;</span><span class=w>
+</span></span></span></code></pre></div></li></ul><h2 id=helm>Helm</h2><ul><li><p>Download CLI</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>wget https://get.helm.sh/helm-v2.16.3-linux-amd64.tar.gz
+</span></span></code></pre></div></li><li><p>tiller 서비스 어카운트/클러스터롤 생성</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml></code></pre></div></li></ul><h2 id=namespace-kube-system>kubectl apply -f -&#171;-EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+name: tiller
+namespace: kube-system</h2><p>apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+name: tiller
+roleRef:
+apiGroup: rbac.authorization.k8s.io
+kind: ClusterRole
+name: cluster-admin
+subjects:</p><ul><li><p>kind: ServiceAccount
+name: tiller
+namespace: kube-system
+EOF</p><pre tabindex=0><code></code></pre></li><li><p>helm init</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>helm init --service-account<span class=o>=</span>tiller
+</span></span></code></pre></div></li><li><p>helm 에서 사용할 repo 추가 및 업데이트하기</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>helm repo add stable https://kubernetes-charts.storage.googleapis.com
+</span></span><span class=line><span class=cl>helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+</span></span><span class=line><span class=cl>helm repo add bitnami https://charts.bitnami.com/bitnami
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>helm repo update
+</span></span></code></pre></div></li></ul><h2 id=kubesphere>kubesphere</h2><ul><li><p>Installing</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl apply -f https://raw.githubusercontent.com/kubesphere/ks-installer/master/kubesphere-complete-setup.yaml
+</span></span></code></pre></div></li><li><p>Verify</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl logs -n kubesphere-system <span class=k>$(</span>kubectl get pod -n kubesphere-system -l <span class=nv>app</span><span class=o>=</span>ks-install -o <span class=nv>jsonpath</span><span class=o>=</span><span class=s1>&#39;{.items[0].metadata.name}&#39;</span><span class=k>)</span> -f
+</span></span></code></pre></div><p><img src=https://jupilhwang.github.io/img/kubesphere/kubesphere-install-log.png alt></p></li><li><p>Browsing kubesphere web ui
+<img src=https://jupilhwang.github.io/img/kubesphere/kubesphere-web-ui.png alt></p><ul><li><p>Logging 부분의 Elastic Search가 설치되어 있지 않고, Istio 와 Monitoring 에서 실행되지 않고 에러가 나는 부분이 있다.
+ks-installer 컨피그맵을 수정하여 추가적으로 설치한다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl edit cm ks-installer -n kubepshere-system
+</span></span></code></pre></div><p><img src=https://jupilhwang.github.io/img/kubesphere/ks-web-ui-02.png alt></p><p>** node exporter 에 오류가 있는것은 나중에 확인 필요하다 **</p><ul><li><p>Prometheus Node-Exporter 가 제대로 실행되지 않음</p><p>&ldquo;linux mounts: Path / is mounted on / but it is not a shared or slave mount.&rdquo; 오류 발생</p><p>daemonset 에서 / Volume 을 삭제하고 다시 기동하면 정상적으로 기동함
+<img src=https://jupilhwang.github.io/img/kubesphere/ks-web-ui-03.png alt></p><p>node-exporter 정상 기동 후에 CPU / Memroy / Load 가 정상적으로 표시됨</p></li></ul></li></ul></li></ul><h1 id=deploy-sample-application>Deploy Sample Application</h1><h2 id=create-workspace--project>Create Workspace / Project</h2><ul><li><p>workspace 생성
+<img src=https://jupilhwang.github.io/img/kubesphere/ks-workspace.png alt></p></li><li><p>project 생성</p><ul><li><p>project는 쿠버네티스의 네임스페이스로 생성된다.
+<img src=https://jupilhwang.github.io/img/kubesphere/ks-project.png alt></p></li><li><p>네임스페이스의 리소스 쿼터를 지정한다.
+<img src=https://jupilhwang.github.io/img/kubesphere/ks-project-resource-quota.png alt></p></li></ul></li></ul><h2 id=nginx-web-application>Nginx Web Application</h2><ul><li><p>kubesphere > App Store > Nginx > Deploy
+<img src=https://jupilhwang.github.io/img/kubesphere/nginx-deploy.png alt></p></li><li><p>디플로이먼트 확인
+<img src=https://jupilhwang.github.io/img/kubesphere/nginx-deployment.png alt></p></li><li><p>서비스 확인
+<img src=https://jupilhwang.github.io/img/kubesphere/nginx-services.png alt></p></li><li><p>웹 브라우저 확인
+<img src=https://jupilhwang.github.io/img/kubesphere/nginx-web-browser.png alt>
+** 파드 IP가 NSX-T에서 Routable 로 설정되어 있어서 Windows Jumpbox 에서 바로 엑세스가 가능하다. Routable 이 아닌경우 서비스를 NodePort / LoadBalancer / Ingress 가 필요하다 **</p></li></ul><h2 id=gitlab-ce>GitLab CE</h2><ul><li><p>VCS 로 git server를 설치한다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>helm install --name gitlab --namespace git stable/gitlab-ce --set <span class=nv>externalUrl</span><span class=o>=</span>http://git.k8s.kdis.local,gitlabRootPassword<span class=o>=</span>VMware1!
+</span></span></code></pre></div><p><img src=https://jupilhwang.github.io/img/kubesphere/gitlab-ce-install.png alt></p></li><li><p>gitlab running 확인
+<img src=https://jupilhwang.github.io/img/kubesphere/gitlab-ce-running.png alt></p></li><li><p>dns setting
+helm 설치시 설정으로 external URL을 git.k8s.kdis.local 로 했기 때문에, DNS에 LoadBalancer External IP를 지정해 준다.</p></li><li><p>Browser Access 후 Project Git Repo 생성
+<img src=https://jupilhwang.github.io/img/kubesphere/gitlab-ce-project-repo.png alt></p><p><strong><a href=http://git.k8s.kdis.local/root/hello-card.git>http://git.k8s.kdis.local/root/hello-card.git</a></strong></p></li></ul><h2 id=create-spring-boot-application-and-containerize>Create Spring Boot Application and Containerize</h2><ul><li><p>start.spring.io 로 sample download</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>spring init --build gradle --java-version<span class=o>=</span>1.8  --dependencies<span class=o>=</span>web,thymeleaf,actuator
+</span></span></code></pre></div></li><li><p>add WelcomeController to DemoApplication.java</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Controller</span>
+</span></span><span class=line><span class=cl><span class=kd>class</span> <span class=nc>WelcomeController</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nd>@GetMapping</span><span class=o>(</span><span class=s>&#34;/&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>  <span class=kd>public</span> <span class=n>String</span> <span class=nf>main</span><span class=o>(</span><span class=n>Model</span> <span class=n>model</span><span class=o>)</span>	<span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=s>&#34;welcome&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div></li><li><p>add welcome.html to resources/templates folder</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>body</span> <span class=na>bgcolor</span><span class=o>=</span><span class=s>&#34;lightgreen&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>h1</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    Hello World
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>h1</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
+</span></span></code></pre></div></li><li><p>Run Sample Application</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>./gradlew bootRun
+</span></span></code></pre></div></li><li><p>Push to Git Repo
+윈도우즈에 git 에 설치되어 있지 않은 경우, git 을 다운로드해서 설치한다.</p></li><li><p><del>Containerize with Docker and Dockerfile</del></p></li><li><p>Containerize with Jib</p><ul><li>build.gradle > plugins 에 아래 추가</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-groovy data-lang=groovy><span class=line><span class=cl><span class=n>plugins</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>id</span><span class=o>(</span><span class=s2>&#34;com.google.cloud.tools.jib&#34;</span><span class=o>)</span> <span class=n>version</span> <span class=s2>&#34;2.1.0&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><ul><li>Jib 설정 추가</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-groovy data-lang=groovy><span class=line><span class=cl><span class=n>jib</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>to</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//image=&#34;10.195.70.131:443/biz-a-team/simple-app&#34;
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>image</span><span class=o>=</span><span class=s2>&#34;jhwangdemo/simple-app&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>auth</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>username</span><span class=o>=</span><span class=s2>&#34;jhwangdemo&#34;</span>
+</span></span><span class=line><span class=cl>      <span class=n>password</span><span class=o>=</span><span class=s2>&#34;P@ssw0rd1234&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>tags</span><span class=o>=[</span><span class=s2>&#34;blue&#34;</span><span class=o>,</span> <span class=s2>&#34;0.0.1&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span><span class=line><span class=cl>  <span class=n>from</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>image</span><span class=o>=</span><span class=s2>&#34;openjdk:8-alpine&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span><span class=line><span class=cl>  <span class=n>allowInsecureRegistries</span><span class=o>(</span><span class=kc>true</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div></li><li><p>CI 파이프라인을 윈한 Jenkinsfile 예제</p><pre tabindex=0><code class=language-jenkinsfile data-lang=jenkinsfile>pipeline {
+  agent any
+  stages {
+    stage(&#39;Prepare&#39;) {
+      steps {
+        parallel (
+          &#39;gradle clean&#39;: {
+            gradlew &#39;clean&#39;
+          },
+          &#39;kubectl cli&#39;: {
+            sh &#39;curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl&#39;
+            sh &#39;chmod a+x kubectl&#39;
+          }
+        )
+      }
+    }
+    stage(&#39;Build &amp; Docker&#39;) {
+      steps {
+        gradlew &#39;jib&#39;
+      }
+    }
+    stage(&#34;Deploy&#34;) {
+        steps {
+          withKubeConfig([ credentialsId: &#39;pez-205-k8s&#39;, serverUrl: &#39;https://k8s.run.haas-205.pez.pivotal.io:8443&#39; ]) {
+            sh &#39;./kubectl apply -f manifest/simple-app.yaml&#39;
+          }
+        }
+    }
+  }
+
+  post {
+    always {
+      deleteDir()
+    }
+  }
+}
+
+def gradlew(command)  {
+  sh &#34;./gradlew ${command} --stacktrace&#34;
+}
+</code></pre></li></ul><ul><li>Revision Control<ul><li><p>특정 버전의 ReplicaSet으로 돌아가기 위해서 사용한다
+<img src=https://jupilhwang.github.io/img/kubesphere/revison-control.png alt></p><p>kubesphere 에서 버그인지 &ldquo;NotFound the server could not find the requested resource&rdquo; 에러가 발생한다.
+<strong>확인필요</strong></p></li><li><p>레플리카셋 확인</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl get rs -n demo-project -o wide
+</span></span></code></pre></div></li><li><p>롤아웃 히스토리</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl rollout <span class=nb>history</span> -n demo-project deploy/demo-app
+</span></span></code></pre></div><p><img src=https://jupilhwang.github.io/img/kubesphere/rollout-history.png alt></p><p>특정버전의 롤아웃 히스토리</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl rollout <span class=nb>history</span> -n demo-project deploy/demo-app --revision <span class=m>3</span>
+</span></span></code></pre></div></li><li><p>특정 버전으로 롤아웃</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl rollout undo -n demo-project deploy/demo-app --to-revision <span class=m>2</span>
+</span></span></code></pre></div></li></ul></li></ul><h2 id=jenkins>Jenkins</h2><ul><li><p>Jenkins 는 NodePort 30180으로 기동한다.
+관리자 Passowrd는 kubesphere 와 동일하다</p><p>jenkins 에서 외부 사이트를 접속할 수 없는 문제가 있어서, DNS 에 전달자(Forward)를 추가(8.8.8.8)한다.</p></li></ul><h2 id=service-mesh>Service Mesh</h2><ul><li><p>ks-installer 에서 ServiceMesh 가 enable 이 되어야 한다.</p></li><li><p>Gatway 세팅
+project > project settings > Advacned Settings 에서
+<img src=https://jupilhwang.github.io/img/kubesphere/istio-enable-autoinject.png alt>
+Application Governance 를 Enable 한다</p></li><li><p>Deploy Istio BookInfo Sample Application
+Project > Application Workloads > Applications 에서 Deploy Sample Application 선택</p><p><a href="http://productpage.mesh-project.10.50.50.21.nip.io/productpage?u=normal">http://productpage.mesh-project.10.50.50.21.nip.io/productpage?u=normal</a></p></li><li><p>Canary Release</p><ul><li>Create Job for Grayscale Release
+<img src=https://jupilhwang.github.io/img/kubesphere/istio-bookinfo-canary-01.png alt>
+<img src=https://jupilhwang.github.io/img/kubesphere/istio-bookinfo-canary-02.png alt>
+<img src=https://jupilhwang.github.io/img/kubesphere/istio-bookinfo-canary-03.png alt>
+<img src=https://jupilhwang.github.io/img/kubesphere/istio-bookinfo-canary-04.png alt></li><li>Grayscale Job 확인</li></ul></li><li><p>Traffic Management</p><ul><li>Project > Application Workloads > Applications > Composing App > Bookinfo<ul><li>Tab 에서 Traffic Management 선택
+<img src=https://jupilhwang.github.io/img/kubesphere/istio-bookinfo-traffic-management.png alt>
+<img src=https://jupilhwang.github.io/img/kubesphere/istio-bookinfo-tracing.png alt></li></ul></li></ul></li></ul><h2 id=app-store>App Store</h2><ul><li><p>Add App Repos
+Workspace > Workspace Settings > App Repos > Create Repo</p><p>새로운 Helm Repo 추가
+<img src=https://jupilhwang.github.io/img/kubesphere/app-repo-create.png alt></p></li><li><p>Browse App Templates
+Project > Application Workloads > Applications > Deploy New Application > App Tempates</p><p><img src=https://jupilhwang.github.io/img/kubesphere/app-helm-templates.png alt></p></li></ul><h2 id=기타>기타</h2><hr><ul class=pager><li class=previous><a href=https://jupilhwang.github.io/post/%EC%BD%94%ED%8B%80%EB%A6%B0_kotlin_%EB%8B%A4%EC%8B%9C%EB%B3%B4%EA%B8%B01/ data-toggle=tooltip data-placement=top title=코틀린_Kotlin_다시보기1>&larr;
+Previous Post</a></li><li class=next><a href=https://jupilhwang.github.io/post/%EC%82%AC%EC%9A%A9%EC%9E%90%EA%B7%B8%EB%A3%B9%EA%B4%80%EB%A6%AC%EB%A5%BC%EC%9C%84%ED%95%9Caerobase/ data-toggle=tooltip data-placement=top title="사용자/그룹 관리를 위한 Aerobase">Next
+Post &rarr;</a></li></ul><script src=https://utteranc.es/client.js repo=jupilhwang/blog-comments issue-term=title theme=github-light crossorigin=anonymous async></script></div><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+sidebar-container"><section><hr class="hidden-sm hidden-xs"><h5><a href=https://jupilhwang.github.io/tags/>FEATURED TAGS</a></h5><div class=tags><a href=https://jupilhwang.github.io/tags/cloud title=cloud>cloud</a>
+<a href=https://jupilhwang.github.io/tags/groovy title=groovy>groovy</a>
+<a href=https://jupilhwang.github.io/tags/k8s title=k8s>k8s</a>
+<a href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes</a>
+<a href=https://jupilhwang.github.io/tags/linux title=linux>linux</a>
+<a href=https://jupilhwang.github.io/tags/network title=network>network</a>
+<a href=https://jupilhwang.github.io/tags/oracle title=oracle>oracle</a>
+<a href=https://jupilhwang.github.io/tags/tanzu title=tanzu>tanzu</a>
+<a href=https://jupilhwang.github.io/tags/tkg title=tkg>tkg</a>
+<a href=https://jupilhwang.github.io/tags/vsphere title=vsphere>vsphere</a></div></section></div></div></div></article><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center"><li><a href=mailto:jupil.hwang@gmail.com><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-envelope fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://twitter.com/jupil_hwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-twitter fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.facebook.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-facebook fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://github.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-github fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.linkedin.com/in/namoo4u><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-linkedin fa-stack-1x fa-inverse"></i></span></a></li><li><a href rel=alternate type=application/rss+xml title="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="copyright text-muted">Copyright &copy; Just Do It ! 행동하지 않으면 성공도 실패도 없다 2023<br><a href=https://themes.gohugo.io/hugo-theme-cleanwhite>CleanWhite Hugo Theme</a> by <a href=https://zhaohuabing.com>Huabing</a> |
+<iframe style=margin-left:2px;margin-bottom:-5px frameborder=0 scrolling=0 width=100px height=20px src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true"></iframe></p></div></div></div></footer><script>function loadAsync(e,t){var s=document,o="script",n=s.createElement(o),i=s.getElementsByTagName(o)[0];n.src=e,t&&n.addEventListener("load",function(e){t(null,e)},!1),i.parentNode.insertBefore(n,i)}</script><script>$("#tag_cloud").length!==0&&loadAsync("/js/jquery.tagcloud.js",function(){$.fn.tagcloud.defaults={color:{start:"#bbbbee",end:"#0085a1"}},$("#tag_cloud a").tagcloud()})</script><script>loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js",function(){var e=document.querySelector("nav");e&&FastClick.attach(e)})</script></body></html>

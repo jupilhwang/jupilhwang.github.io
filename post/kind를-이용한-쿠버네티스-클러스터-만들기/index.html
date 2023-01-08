@@ -1,0 +1,121 @@
+<!doctype html><html lang=en-us.utf8><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:site_name" content="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><meta property="og:type" content="article"><meta property="og:image" content="https://jupilhwang.github.io//img/home-bg.jpg"><meta property="twitter:image" content="https://jupilhwang.github.io//img/home-bg.jpg"><meta name=title content="Kind를 이용한 쿠버네티스 클러스터 만들기"><meta property="og:title" content="Kind를 이용한 쿠버네티스 클러스터 만들기"><meta property="twitter:title" content="Kind를 이용한 쿠버네티스 클러스터 만들기"><meta name=description content><meta property="og:description" content><meta property="twitter:description" content><meta property="twitter:card" content="summary"><meta name=keyword content><link rel="shortcut icon" href=https://jupilhwang.github.io/img/favicon.ico><title>Kind를 이용한 쿠버네티스 클러스터 만들기 |</title><link rel=canonical href=https://jupilhwang.github.io/post/kind%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-%ED%81%B4%EB%9F%AC%EC%8A%A4%ED%84%B0-%EB%A7%8C%EB%93%A4%EA%B8%B0/><link rel=stylesheet href=https://jupilhwang.github.io/css/bootstrap.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/hugo-theme-cleanwhite.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/zanshang.css><link href=https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css rel=stylesheet type=text/css><link rel=stylesheet href=https://jupilhwang.github.io/css/lightbox.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/main.css><script src=https://jupilhwang.github.io/js/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/bootstrap.min.js></script>
+<script src=https://jupilhwang.github.io/js/hux-blog.min.js></script>
+<script src=https://jupilhwang.github.io/js/lazysizes.min.js></script>
+<script src=https://jupilhwang.github.io/js/lightbox.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/main.js></script></head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-117423189-1","auto"),ga("send","pageview"))</script><nav class="navbar navbar-default navbar-custom navbar-fixed-top"><div class=container-fluid><div class="navbar-header page-scroll"><button type=button class=navbar-toggle>
+<span class=sr-only>Toggle navigation</span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+<span class=icon-bar></span></button>
+<a class=navbar-brand href=https://jupilhwang.github.io/>Just Do It ! 행동하지 않으면 성공도 실패도 없다</a></div><div id=huxblog_navbar><div class=navbar-collapse><ul class="nav navbar-nav navbar-right"><li><a href=https://jupilhwang.github.io/>All Posts</a></li><li><a href=https://jupilhwang.github.io/top/books/>BOOKS</a></li><li><a href=https://jupilhwang.github.io/page/about>ABOUT</a></li><li><a href=https://jupilhwang.github.io/search><i class="fa fa-search"></i></a></li></ul></div></div></div></nav><script>var $body=document.body,$toggle=document.querySelector(".navbar-toggle"),$navbar=document.querySelector("#huxblog_navbar"),$collapse=document.querySelector(".navbar-collapse");$toggle.addEventListener("click",handleMagic);function handleMagic(){$navbar.className.indexOf("in")>0?($navbar.className=" ",setTimeout(function(){$navbar.className.indexOf("in")<0&&($collapse.style.height="0px")},400)):($collapse.style.height="auto",$navbar.className+=" in")}</script><style type=text/css>header.intro-header{background-image:url(/img/home-bg.jpg)}</style><header class=intro-header><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><div class=tags><a class=tag href=https://jupilhwang.github.io/tags/kubernetes title=Kubernetes>Kubernetes</a>
+<a class=tag href=https://jupilhwang.github.io/tags/kind title=Kind>Kind</a>
+<a class=tag href=https://jupilhwang.github.io/tags/k8s title=K8s>K8s</a>
+<a class=tag href=https://jupilhwang.github.io/tags/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4 title=쿠버네티스>쿠버네티스</a></div><h1>Kind를 이용한 쿠버네티스 클러스터 만들기</h1><h2 class=subheading></h2><span class=meta>Posted by
+Just Do It ! 행동하지 않으면 성공도 실패도 없다
+on
+Sunday, April 26, 2020</span></div></div></div></div></header><article><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+post-container"><h1 id=kubernetes-개발환경>Kubernetes 개발환경</h1><h2 id=vagrant-vs-minikube-vs-kind>Vagrant vs Minikube vs Kind</h2><p>Local 환경에서 K8s를 사용하기 위해서 다양한 방법을 사용 할 수 있다.</p><h3 id=vagrant>Vagrant</h3><p>Vagrant는 HashCorp에서 만든 프로비저닝 툴로, VagrantFile에 기본 이미지와 생성된 VM에 필요한 설정을 미리 Code화 해서 제공하는 툴이다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># vagrant cli 가 설치 되어야 한다.</span>
+</span></span><span class=line><span class=cl>vagrant version
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># git cli 가 설치 되면 좋다.</span>
+</span></span><span class=line><span class=cl>git version
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 기본 가상화 솔루션으로 VirtualBox를 사용하기 때문에, VirtualBox가 미리 설치가 되어 있어야 한다. Hyper-V나 다른 가상화 툴을 사용할 수 있다.</span>
+</span></span><span class=line><span class=cl>vagrant up
+</span></span></code></pre></div><h3 id=minikube>Minikube</h3><p>Local 환경에 쿠버네티스를 사용하고 테스트하는데 가장 많이 사용하는 툴이지 않을까 한다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># CLI를 다운로드 받아 설치하고, 간단하게 minikube start를 하면 기본 가상화 툴인 virutlabox 에 Single Node Kubernetes Cluster가 기동된다.</span>
+</span></span><span class=line><span class=cl>minikube start
+</span></span></code></pre></div><h3 id=kind>Kind</h3><p><a href=https://kind.sigs.k8s.io/>https://kind.sigs.k8s.io/</a></p><p>Local 쿠버네티스 클러스터를 기동하기 위해 Docker를 사용한다. 다른 가상화 솔루션 없이, Docker Daemon만 있다면 쿠버네티스 클러스터를 생성할 수 있다.</p><h4 id=single-node-cluster>Single Node Cluster</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ <span class=nb>time</span> kind create cluster --name dev --image kindest/node:v1.18.0
+</span></span><span class=line><span class=cl>Creating cluster <span class=s2>&#34;dev&#34;</span> ...
+</span></span><span class=line><span class=cl> ✓ Ensuring node image <span class=o>(</span>kindest/node:v1.18.0<span class=o>)</span> 🖼
+</span></span><span class=line><span class=cl> ✓ Preparing nodes 📦
+</span></span><span class=line><span class=cl> ✓ Writing configuration 📜
+</span></span><span class=line><span class=cl> ✓ Starting control-plane 🕹️
+</span></span><span class=line><span class=cl> ✓ Installing CNI 🔌
+</span></span><span class=line><span class=cl> ✓ Installing StorageClass 💾
+</span></span><span class=line><span class=cl>Set kubectl context to <span class=s2>&#34;kind-dev&#34;</span>
+</span></span><span class=line><span class=cl>You can now use your cluster with:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>kubectl cluster-info --context kind-dev
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/#community 🙂
+</span></span><span class=line><span class=cl>kind create cluster --name dev --image kindest/node:v1.18.0  1.49s user 0.97s system 3% cpu 1:15.15 total
+</span></span></code></pre></div><p>클러스터가 제대로 만들어 졌는지 확인 할 수 있다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ kind get clusters
+</span></span><span class=line><span class=cl>dev
+</span></span></code></pre></div><p>DockerHub에서 kindes/node:v1.1.8.0 을 다운로드 받아서 실행한다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ docker ps -a
+</span></span><span class=line><span class=cl>CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS                    PORTS                       NAMES
+</span></span><span class=line><span class=cl>db3bf5361131        kindest/node:v1.18.0   <span class=s2>&#34;/usr/local/bin/entr…&#34;</span>   About a minute ago   Up About a minute         127.0.0.1:32770-&gt;6443/tcp   dev-control-plane
+</span></span></code></pre></div><p>Local 쿠버네티스 컨텍스트를 확인해 보면 kind-dev라는 이름의 쿠버네티스 컨텍스트를 확인 할 수 있다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ k config get-contexts
+</span></span><span class=line><span class=cl>CURRENT   NAME              CLUSTER    AUTHINFO                               NAMESPACE
+</span></span><span class=line><span class=cl>          k8s               k8s        1f998a63-7764-4bc3-8b71-7f96268b4dda
+</span></span><span class=line><span class=cl>*         kind-dev          kind-dev   kind-dev
+</span></span><span class=line><span class=cl>          mgmt-admin@mgmt   mgmt       mgmt-admin
+</span></span><span class=line><span class=cl>          minikube          minikube   minikube
+</span></span></code></pre></div><h4 id=multi-node-cluster>Multi Node Cluster</h4><p>kind 로 쿠버네티스 클러스터를 생성할 때, 설정을 통해서 다양한 설정을 정할 수 있는데, 그중에 하나가 노드의 수를 지정할 수 있다.</p><ul><li>multi-node-cluster-config.yaml</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># a cluster with 3 control-plane nodes and 3 workers</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Cluster</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>kind.x-k8s.io/v1alpha4</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>nodes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>- <span class=nt>role</span><span class=p>:</span><span class=w> </span><span class=l>control-plane</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>- <span class=nt>role</span><span class=p>:</span><span class=w> </span><span class=l>control-plane</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>- <span class=nt>role</span><span class=p>:</span><span class=w> </span><span class=l>control-plane</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>- <span class=nt>role</span><span class=p>:</span><span class=w> </span><span class=l>worker</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>- <span class=nt>role</span><span class=p>:</span><span class=w> </span><span class=l>worker</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>- <span class=nt>role</span><span class=p>:</span><span class=w> </span><span class=l>worker</span><span class=w>
+</span></span></span></code></pre></div><p>생성된 config 파일로 쿠버네티스 클러스터를 생성한다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ kind create cluster --name k8s --config kind-example-config-3-3nodes.yaml --image kindest/node:v1.18.0
+</span></span><span class=line><span class=cl>Creating cluster <span class=s2>&#34;k8s&#34;</span> ...
+</span></span><span class=line><span class=cl> ✓ Ensuring node image <span class=o>(</span>kindest/node:v1.18.0<span class=o>)</span> 🖼
+</span></span><span class=line><span class=cl> ✓ Preparing nodes 📦 📦 📦 📦 📦 📦
+</span></span><span class=line><span class=cl> ✓ Configuring the external load balancer ⚖️
+</span></span><span class=line><span class=cl> ✓ Writing configuration 📜
+</span></span><span class=line><span class=cl> ✓ Starting control-plane 🕹️
+</span></span><span class=line><span class=cl> ✓ Installing CNI 🔌
+</span></span><span class=line><span class=cl> ✓ Installing StorageClass 💾
+</span></span><span class=line><span class=cl> ✓ Joining more control-plane nodes 🎮
+</span></span><span class=line><span class=cl> ✓ Joining worker nodes 🚜
+</span></span><span class=line><span class=cl>Set kubectl context to <span class=s2>&#34;kind-k8s&#34;</span>
+</span></span><span class=line><span class=cl>You can now use your cluster with:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>kubectl cluster-info --context kind-k8s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Not sure what to <span class=k>do</span> next? 😅 Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+</span></span></code></pre></div><p>생성된 클러스터 정보를 확인</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ kubectl cluster-info --context kind-k8s
+</span></span><span class=line><span class=cl>Kubernetes master is running at https://127.0.0.1:32771
+</span></span><span class=line><span class=cl>KubeDNS is running at https://127.0.0.1:32771/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+</span></span></code></pre></div><p>이전에 생성된 dev 쿠버네티스 클러스터를 확인해보면 로컬호스트의 다른 포트로 API Server가 기동중인것을 확인 할 수 있다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ kubectl --context kind-dev cluster-info
+</span></span><span class=line><span class=cl>Kubernetes master is running at https://127.0.0.1:32770
+</span></span><span class=line><span class=cl>KubeDNS is running at https://127.0.0.1:32770/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>To further debug and diagnose cluster problems, use <span class=s1>&#39;kubectl cluster-info dump&#39;</span>.
+</span></span></code></pre></div><p>기동중인 도커 데몬을 확인한다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker ps -a
+</span></span><span class=line><span class=cl>CONTAINER ID        IMAGE                          COMMAND                  CREATED             STATUS                    PORTS                       NAMES
+</span></span><span class=line><span class=cl>24ef23d204f1        kindest/haproxy:2.1.1-alpine   <span class=s2>&#34;/docker-entrypoint.…&#34;</span>   <span class=m>10</span> minutes ago      Up <span class=m>10</span> minutes             127.0.0.1:32771-&gt;6443/tcp   k8s-external-load-balancer
+</span></span><span class=line><span class=cl>5723989c3bc8        kindest/node:v1.18.0           <span class=s2>&#34;/usr/local/bin/entr…&#34;</span>   <span class=m>10</span> minutes ago      Up <span class=m>10</span> minutes                                         k8s-worker
+</span></span><span class=line><span class=cl>4780a3feefe3        kindest/node:v1.18.0           <span class=s2>&#34;/usr/local/bin/entr…&#34;</span>   <span class=m>10</span> minutes ago      Up <span class=m>10</span> minutes             127.0.0.1:32773-&gt;6443/tcp   k8s-control-plane3
+</span></span><span class=line><span class=cl>1c843d4e2ece        kindest/node:v1.18.0           <span class=s2>&#34;/usr/local/bin/entr…&#34;</span>   <span class=m>10</span> minutes ago      Up <span class=m>10</span> minutes                                         k8s-worker2
+</span></span><span class=line><span class=cl>e791a8b75097        kindest/node:v1.18.0           <span class=s2>&#34;/usr/local/bin/entr…&#34;</span>   <span class=m>10</span> minutes ago      Up <span class=m>10</span> minutes                                         k8s-worker3
+</span></span><span class=line><span class=cl>5cbde9e8ec86        kindest/node:v1.18.0           <span class=s2>&#34;/usr/local/bin/entr…&#34;</span>   <span class=m>10</span> minutes ago      Up <span class=m>10</span> minutes             127.0.0.1:32774-&gt;6443/tcp   k8s-control-plane
+</span></span><span class=line><span class=cl>e73995f61160        kindest/node:v1.18.0           <span class=s2>&#34;/usr/local/bin/entr…&#34;</span>   <span class=m>10</span> minutes ago      Up <span class=m>10</span> minutes             127.0.0.1:32772-&gt;6443/tcp   k8s-control-plane2
+</span></span><span class=line><span class=cl>db3bf5361131        kindest/node:v1.18.0           <span class=s2>&#34;/usr/local/bin/entr…&#34;</span>   <span class=m>23</span> minutes ago      Up <span class=m>23</span> minutes             127.0.0.1:32770-&gt;6443/tcp   dev-control-plane
+</span></span></code></pre></div><hr><ul class=pager><li class=previous><a href=https://jupilhwang.github.io/post/multiple-boot-usb-%EC%83%9D%EC%84%B1%ED%88%B4/ data-toggle=tooltip data-placement=top title="Ventoy: Multiple Boot USB 디스크 생성툴">&larr;
+Previous Post</a></li><li class=next><a href=https://jupilhwang.github.io/post/vsphere-with-kuberentes%EC%9D%98-master_worker-node-%EC%A0%91%EC%86%8D%ED%95%98%EA%B8%B0/ data-toggle=tooltip data-placement=top title="vSphere with Kubernetes의 Master/Worker Node SSH 접속하기">Next
+Post &rarr;</a></li></ul><script src=https://utteranc.es/client.js repo=jupilhwang/blog-comments issue-term=title theme=github-light crossorigin=anonymous async></script></div><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+sidebar-container"><section><hr class="hidden-sm hidden-xs"><h5><a href=https://jupilhwang.github.io/tags/>FEATURED TAGS</a></h5><div class=tags><a href=https://jupilhwang.github.io/tags/cloud title=cloud>cloud</a>
+<a href=https://jupilhwang.github.io/tags/groovy title=groovy>groovy</a>
+<a href=https://jupilhwang.github.io/tags/k8s title=k8s>k8s</a>
+<a href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes</a>
+<a href=https://jupilhwang.github.io/tags/linux title=linux>linux</a>
+<a href=https://jupilhwang.github.io/tags/network title=network>network</a>
+<a href=https://jupilhwang.github.io/tags/oracle title=oracle>oracle</a>
+<a href=https://jupilhwang.github.io/tags/tanzu title=tanzu>tanzu</a>
+<a href=https://jupilhwang.github.io/tags/tkg title=tkg>tkg</a>
+<a href=https://jupilhwang.github.io/tags/vsphere title=vsphere>vsphere</a></div></section></div></div></div></article><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center"><li><a href=mailto:jupil.hwang@gmail.com><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-envelope fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://twitter.com/jupil_hwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-twitter fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.facebook.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-facebook fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://github.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-github fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.linkedin.com/in/namoo4u><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-linkedin fa-stack-1x fa-inverse"></i></span></a></li><li><a href rel=alternate type=application/rss+xml title="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="copyright text-muted">Copyright &copy; Just Do It ! 행동하지 않으면 성공도 실패도 없다 2023<br><a href=https://themes.gohugo.io/hugo-theme-cleanwhite>CleanWhite Hugo Theme</a> by <a href=https://zhaohuabing.com>Huabing</a> |
+<iframe style=margin-left:2px;margin-bottom:-5px frameborder=0 scrolling=0 width=100px height=20px src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true"></iframe></p></div></div></div></footer><script>function loadAsync(e,t){var s=document,o="script",n=s.createElement(o),i=s.getElementsByTagName(o)[0];n.src=e,t&&n.addEventListener("load",function(e){t(null,e)},!1),i.parentNode.insertBefore(n,i)}</script><script>$("#tag_cloud").length!==0&&loadAsync("/js/jquery.tagcloud.js",function(){$.fn.tagcloud.defaults={color:{start:"#bbbbee",end:"#0085a1"}},$("#tag_cloud a").tagcloud()})</script><script>loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js",function(){var e=document.querySelector("nav");e&&FastClick.attach(e)})</script></body></html>
