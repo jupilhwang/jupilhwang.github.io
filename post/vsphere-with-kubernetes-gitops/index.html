@@ -26,7 +26,7 @@ post-container"><h1 id=gitops>GitOps</h1><h1 id=argocd>ArgoCD</h1><h2 id=install
 </span></span></code></pre></div><ul><li>Disable auth flag</li></ul><pre tabindex=0><code>kubectl patch deploy argocd-server -n argocd -p &#39;[{&#34;op&#34;: &#34;add&#34;, &#34;path&#34;: &#34;/spec/template/spec/containers/0/command/-&#34;, &#34;value&#34;: &#34;--disable-auth&#34;}]&#39; --type json
 </code></pre><h1 id=cd-for-tanzu-kubernetes-cluster>CD for Tanzu Kubernetes Cluster</h1><hr><ul class=pager><li class=previous><a href=https://jupilhwang.github.io/post/vsphere-with-kuberentes%EC%9D%98-master_worker-node-%EC%A0%91%EC%86%8D%ED%95%98%EA%B8%B0/ data-toggle=tooltip data-placement=top title="vSphere with Kubernetes의 Master/Worker Node SSH 접속하기">&larr;
 Previous Post</a></li><li class=next><a href=https://jupilhwang.github.io/post/powrecli-core-for-vmware/ data-toggle=tooltip data-placement=top title="PowerCLI CORE for VMware">Next
-Post &rarr;</a></li></ul><script src=https://utteranc.es/client.js repo=jupilhwang/jupilhwang.github.io issue-term=pathname label=Comment theme=github-light crossorigin=anonymous async></script></div><div class="col-lg-8 col-lg-offset-2
+Post &rarr;</a></li></ul><script src=https://utteranc.es/client.js repo=jupilhwang/blog-comments issue-term=pathname label=Comment theme=github-light crossorigin=anonymous async></script></div><div class="col-lg-8 col-lg-offset-2
 col-md-10 col-md-offset-1
 sidebar-container"><section><hr class="hidden-sm hidden-xs"><h5><a href=https://jupilhwang.github.io/tags/>FEATURED TAGS</a></h5><div class=tags><a href=https://jupilhwang.github.io/tags/cloud title=cloud>cloud</a>
 <a href=https://jupilhwang.github.io/tags/groovy title=groovy>groovy</a>
