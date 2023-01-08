@@ -1,31 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>IaaS on Just Do It ! - Yolo</title>
-    <link>https://jupilhwang.github.io/tags/iaas/</link>
-    <description>Recent content in IaaS on Just Do It ! - Yolo</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-US.UTF8</language>
-    <copyright>Jupil Hwang All rights reserved</copyright>
-    <lastBuildDate>Tue, 08 Nov 2016 12:52:55 +0900</lastBuildDate>
-    
-	<atom:link href="https://jupilhwang.github.io/tags/iaas/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Bare Meta Cloud Services are now available</title>
-      <link>https://jupilhwang.github.io/post/bare-meta-cloud-services-are-now-available/</link>
-      <pubDate>Tue, 08 Nov 2016 12:52:55 +0900</pubDate>
-      
-      <guid>https://jupilhwang.github.io/post/bare-meta-cloud-services-are-now-available/</guid>
-      <description>Bare Metal Cloud Services 지원 서비스   Integrated network block storage
-  object storage
-  identity and access management
-  VPN Connectivity
-  Software-defined Virtual Cloud Network (VCN)
- secure, elastic, extension of on-premises network    Market leading price-perfomance
- Best in class - predictable, consistent performance NVMe (Non-Volatile Memory Express) SSD for fastest IOPs and low latency    Massive Enterprise Scale</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>IaaS on Just Do It ! 행동하지 않으면 성공도 실패도 없다</title><link>https://jupilhwang.github.io/tags/iaas/</link><description>Recent content in IaaS on Just Do It ! 행동하지 않으면 성공도 실패도 없다</description><generator>Hugo -- gohugo.io</generator><language>en-US.UTF8</language><copyright>Jupil Hwang All rights reserved</copyright><lastBuildDate>Tue, 08 Nov 2016 12:52:55 +0900</lastBuildDate><atom:link href="https://jupilhwang.github.io/tags/iaas/index.xml" rel="self" type="application/rss+xml"/><item><title>Bare Meta Cloud Services are now available</title><link>https://jupilhwang.github.io/post/bare-meta-cloud-services-are-now-available/</link><pubDate>Tue, 08 Nov 2016 12:52:55 +0900</pubDate><guid>https://jupilhwang.github.io/post/bare-meta-cloud-services-are-now-available/</guid><description>Bare Metal Cloud Services 지원 서비스 Integrated network block storage
+object storage
+identity and access management
+VPN Connectivity
+Software-defined Virtual Cloud Network (VCN)
+secure, elastic, extension of on-premises network Market leading price-perfomance
+Best in class - predictable, consistent performance NVMe (Non-Volatile Memory Express) SSD for fastest IOPs and low latency Massive Enterprise Scale
+Access 100s of cores of decicated compute in a fast provisioned cloud model Elasticity, scale, flexibility &amp;amp; choice of development Secuity Hardening</description></item></channel></rss>

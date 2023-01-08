@@ -1,304 +1,96 @@
-<!DOCTYPE html>
-<html lang="en-US.UTF8">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    
-    <meta property="og:site_name" content="Just Do It ! - Yolo">
-    <meta property="og:type" content="article">
-
-    
-    <meta property="og:image" content="https://jupilhwang.github.io//img/home-bg.jpg">
-    <meta property="twitter:image" content="https://jupilhwang.github.io//img/home-bg.jpg" />
-    
-
-    
-    <meta name="title" content="TKG 1.2 설치/설정 : quick start" />
-    <meta property="og:title" content="TKG 1.2 설치/설정 : quick start" />
-    <meta property="twitter:title" content="TKG 1.2 설치/설정 : quick start" />
-    
-
-    
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
-    
-
-    
-    <meta property="twitter:card" content="summary" />
-    
-    
-
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="https://jupilhwang.github.io/img/favicon.ico">
-
-    <title>TKG 1.2 설치/설정 : quick start-</title>
-
-    <link rel="canonical" href="https://jupilhwang.github.io/post/201101-tkg-quick-start/">
-
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/zanshang.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" type="text/css">
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/lightbox.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"><link rel="stylesheet" href="https://jupilhwang.github.io/css/main.css">
-
-    
-    
-    <script src="https://jupilhwang.github.io/js/jquery.min.js"></script>
-
-    
-    <script src="https://jupilhwang.github.io/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://jupilhwang.github.io/js/hux-blog.min.js"></script>
-
-    
-    
-    <script src="https://jupilhwang.github.io/js/lightbox.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
-    <script src="https://jupilhwang.github.io/js/main.js"></script>
-    
-
-</head>
-
-
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://jupilhwang.github.io/">Just Do It ! - Yolo</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://jupilhwang.github.io/">Home</a>
-                    </li>
-                    
-                    
-		    
-                        <li><a href="https://jupilhwang.github.io/top/books/">BOOKS</a></li>
-                    
-                        <li><a href="https://jupilhwang.github.io/page/about">ABOUT</a></li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header {
-        background-image: url('/img/home-bg.jpg')
-    }
-</style>
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/kubernetes" title="kubernetes">
-                            kubernetes
-                        </a>
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/tkg" title="tkg">
-                            tkg
-                        </a>
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/tanzu" title="tanzu">
-                            tanzu
-                        </a>
-                        
-                    </div>
-                    <h1>TKG 1.2 설치/설정 : quick start</h1>
-                    <h2 class="subheading"></h2>
-                    <span class="meta">
-                        Posted by 
-                        
-                                Just Do It ! - Yolo
-                         
-                        on 
-                        Sunday, November 1, 2020
-                        
-                        
-                        
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                post-container">
-
-                
-                <h1 id="tkg-components">TKG Components</h1>
-<h2 id="storage-class">Storage Class</h2>
-<ul>
-<li>vSphere 에서 Storage를 사용하기 위해 Tag 기반의 policy 를 적용한 Datastore 를 사용한다.</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">govc tags.category.create tkg-storage-category
-govc tags.create -c tkg-storage-category tkg-storage
-govc tags.attach tkg-storage /Datacenter/datastore/LUN01
-</code></pre></div><ul>
-<li>tkg cluster 생성 시 자동으로 만들어 진 default sc 를 삭제하고 새로 생성한다.</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">k delete sc default
-
-k apply -f -<span class="s">&lt;&lt;-EOF
-</span><span class="s">kind: StorageClass
-</span><span class="s">apiVersion: storage.k8s.io/v1
-</span><span class="s">metadata:
-</span><span class="s">  name: default
-</span><span class="s">  annotations:
-</span><span class="s">    storageclass.kubernetes.io/is-default-class: &#34;true&#34;
-</span><span class="s">provisioner: csi.vsphere.vmware.com
-</span><span class="s">parameters:
-</span><span class="s">  storagepolicyname: &#34;TKG Storage Policy&#34;     # optional
-</span><span class="s">  fstype: ext4
-</span><span class="s">EOF</span>
-</code></pre></div><h2 id="metallb">MetalLB</h2>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">k apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
-k apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
-k create secret generic -n metallb-system memberlist --from-literal<span class="o">=</span><span class="nv">secretkey</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>openssl rand -base64 128<span class="k">)</span><span class="s2">&#34;</span>
-
-k apply -f -<span class="s">&lt;&lt;-EOF
-</span><span class="s">apiVersion: v1
-</span><span class="s">kind: ConfigMap
-</span><span class="s">metadata:
-</span><span class="s">  namespace: metallb-system
-</span><span class="s">  name: config
-</span><span class="s">data:
-</span><span class="s">  config: |
-</span><span class="s">    address-pools:
-</span><span class="s">    - name: default
-</span><span class="s">      protocol: layer2
-</span><span class="s">      addresses:
-</span><span class="s">      - 192.168.0.140-192.168.0.150
-</span><span class="s">EOF</span>
-</code></pre></div><h2 id="cert-manager">Cert Manager</h2>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> tkg-extensions-v1.2.0+vmware.1
-kubectl apply -f cert-manager/
-kubectl apply -f extensions/tmc-extension-manager.yaml
-kubectl apply -f extensions/kapp-controller.yaml
-</code></pre></div><h2 id="contour">Contour</h2>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> extensions/ingress/contour
-kubectl apply -f namespace-role.yaml
-
-cat &gt; vsphere/contour-data-values.yaml <span class="s">&lt;&lt;EOF
-</span><span class="s">#@data/values
-</span><span class="s">#@overlay/match-child-defaults missing_ok=True
-</span><span class="s">---
-</span><span class="s">infrastructure_provider: &#34;vsphere&#34;
-</span><span class="s">contour:
-</span><span class="s">  image:
-</span><span class="s">    repository: registry.tkg.vmware.run
-</span><span class="s">envoy:
-</span><span class="s">  image:
-</span><span class="s">    repository: registry.tkg.vmware.run
-</span><span class="s">  service:
-</span><span class="s">    type: LoadBalancer
-</span><span class="s">EOF</span>
-
-kubectl create secret generic contour-data-values --from-file<span class="o">=</span>values.yaml<span class="o">=</span>vsphere/contour-data-values.yaml -n tanzu-system-ingress
-kubectl apply -f contour-extension.yaml
-</code></pre></div><h2 id="metrics-server">Metrics Server</h2>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.0/components.yaml
-</code></pre></div><p>혹 사설 인증서로 인해서 x509 error 와 같은 에러가  발생하면</p>
-<pre><code>command:
+<!doctype html><html lang=en-us.utf8><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:site_name" content="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><meta property="og:type" content="article"><meta property="og:image" content="https://jupilhwang.github.io/img/home-bg.jpg"><meta property="twitter:image" content="https://jupilhwang.github.io/img/home-bg.jpg"><meta name=title content="TKG 1.2 설치/설정 : quick start"><meta property="og:title" content="TKG 1.2 설치/설정 : quick start"><meta property="twitter:title" content="TKG 1.2 설치/설정 : quick start"><meta name=description content><meta property="og:description" content><meta property="twitter:description" content><meta property="twitter:card" content="summary"><meta name=keyword content><link rel="shortcut icon" href=https://jupilhwang.github.io/img/favicon.ico><title>TKG 1.2 설치/설정 : quick start |</title><link rel=canonical href=https://jupilhwang.github.io/post/201101-tkg-quick-start/><link rel=stylesheet href=https://jupilhwang.github.io/css/bootstrap.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/hugo-theme-cleanwhite.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/zanshang.css><link href=https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css rel=stylesheet type=text/css><link rel=stylesheet href=https://jupilhwang.github.io/css/lightbox.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/main.css><script src=https://jupilhwang.github.io/js/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/bootstrap.min.js></script>
+<script src=https://jupilhwang.github.io/js/hux-blog.min.js></script>
+<script src=https://jupilhwang.github.io/js/lazysizes.min.js></script>
+<script src=https://jupilhwang.github.io/js/lightbox.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/main.js></script></head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-117423189-1","auto"),ga("send","pageview"))</script><nav class="navbar navbar-default navbar-custom navbar-fixed-top"><div class=container-fluid><div class="navbar-header page-scroll"><button type=button class=navbar-toggle>
+<span class=sr-only>Toggle navigation</span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+<span class=icon-bar></span></button>
+<a class=navbar-brand href=https://jupilhwang.github.io/>Just Do It ! 행동하지 않으면 성공도 실패도 없다</a></div><div id=huxblog_navbar><div class=navbar-collapse><ul class="nav navbar-nav navbar-right"><li><a href=https://jupilhwang.github.io/>All Posts</a></li><li><a href=https://jupilhwang.github.io/top/books/>BOOKS</a></li><li><a href=https://jupilhwang.github.io/page/about>ABOUT</a></li><li><a href=https://jupilhwang.github.io/search><i class="fa fa-search"></i></a></li></ul></div></div></div></nav><script>var $body=document.body,$toggle=document.querySelector(".navbar-toggle"),$navbar=document.querySelector("#huxblog_navbar"),$collapse=document.querySelector(".navbar-collapse");$toggle.addEventListener("click",handleMagic);function handleMagic(){$navbar.className.indexOf("in")>0?($navbar.className=" ",setTimeout(function(){$navbar.className.indexOf("in")<0&&($collapse.style.height="0px")},400)):($collapse.style.height="auto",$navbar.className+=" in")}</script><style type=text/css>header.intro-header{background-image:url(/img/home-bg.jpg)}</style><header class=intro-header><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><div class=tags><a class=tag href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes</a>
+<a class=tag href=https://jupilhwang.github.io/tags/tkg title=tkg>tkg</a>
+<a class=tag href=https://jupilhwang.github.io/tags/tanzu title=tanzu>tanzu</a></div><h1>TKG 1.2 설치/설정 : quick start</h1><h2 class=subheading></h2><span class=meta>Posted by
+Just Do It ! 행동하지 않으면 성공도 실패도 없다
+on
+Sunday, November 1, 2020</span></div></div></div></div></header><article><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+post-container"><h1 id=tkg-components>TKG Components</h1><h2 id=storage-class>Storage Class</h2><ul><li>vSphere 에서 Storage를 사용하기 위해 Tag 기반의 policy 를 적용한 Datastore 를 사용한다.</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>govc tags.category.create tkg-storage-category
+</span></span><span class=line><span class=cl>govc tags.create -c tkg-storage-category tkg-storage
+</span></span><span class=line><span class=cl>govc tags.attach tkg-storage /Datacenter/datastore/LUN01
+</span></span></code></pre></div><ul><li>tkg cluster 생성 시 자동으로 만들어 진 default sc 를 삭제하고 새로 생성한다.</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>k delete sc default
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>k apply -f -<span class=s>&lt;&lt;-EOF
+</span></span></span><span class=line><span class=cl><span class=s>kind: StorageClass
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: storage.k8s.io/v1
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: default
+</span></span></span><span class=line><span class=cl><span class=s>  annotations:
+</span></span></span><span class=line><span class=cl><span class=s>    storageclass.kubernetes.io/is-default-class: &#34;true&#34;
+</span></span></span><span class=line><span class=cl><span class=s>provisioner: csi.vsphere.vmware.com
+</span></span></span><span class=line><span class=cl><span class=s>parameters:
+</span></span></span><span class=line><span class=cl><span class=s>  storagepolicyname: &#34;TKG Storage Policy&#34;     # optional
+</span></span></span><span class=line><span class=cl><span class=s>  fstype: ext4
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div><h2 id=metallb>MetalLB</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>k apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
+</span></span><span class=line><span class=cl>k apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
+</span></span><span class=line><span class=cl>k create secret generic -n metallb-system memberlist --from-literal<span class=o>=</span><span class=nv>secretkey</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>openssl rand -base64 128<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>k apply -f -<span class=s>&lt;&lt;-EOF
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: ConfigMap
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  namespace: metallb-system
+</span></span></span><span class=line><span class=cl><span class=s>  name: config
+</span></span></span><span class=line><span class=cl><span class=s>data:
+</span></span></span><span class=line><span class=cl><span class=s>  config: |
+</span></span></span><span class=line><span class=cl><span class=s>    address-pools:
+</span></span></span><span class=line><span class=cl><span class=s>    - name: default
+</span></span></span><span class=line><span class=cl><span class=s>      protocol: layer2
+</span></span></span><span class=line><span class=cl><span class=s>      addresses:
+</span></span></span><span class=line><span class=cl><span class=s>      - 192.168.0.140-192.168.0.150
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div><h2 id=cert-manager>Cert Manager</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> tkg-extensions-v1.2.0+vmware.1
+</span></span><span class=line><span class=cl>kubectl apply -f cert-manager/
+</span></span><span class=line><span class=cl>kubectl apply -f extensions/tmc-extension-manager.yaml
+</span></span><span class=line><span class=cl>kubectl apply -f extensions/kapp-controller.yaml
+</span></span></code></pre></div><h2 id=contour>Contour</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> extensions/ingress/contour
+</span></span><span class=line><span class=cl>kubectl apply -f namespace-role.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat &gt; vsphere/contour-data-values.yaml <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>#@data/values
+</span></span></span><span class=line><span class=cl><span class=s>#@overlay/match-child-defaults missing_ok=True
+</span></span></span><span class=line><span class=cl><span class=s>---
+</span></span></span><span class=line><span class=cl><span class=s>infrastructure_provider: &#34;vsphere&#34;
+</span></span></span><span class=line><span class=cl><span class=s>contour:
+</span></span></span><span class=line><span class=cl><span class=s>  image:
+</span></span></span><span class=line><span class=cl><span class=s>    repository: registry.tkg.vmware.run
+</span></span></span><span class=line><span class=cl><span class=s>envoy:
+</span></span></span><span class=line><span class=cl><span class=s>  image:
+</span></span></span><span class=line><span class=cl><span class=s>    repository: registry.tkg.vmware.run
+</span></span></span><span class=line><span class=cl><span class=s>  service:
+</span></span></span><span class=line><span class=cl><span class=s>    type: LoadBalancer
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>kubectl create secret generic contour-data-values --from-file<span class=o>=</span>values.yaml<span class=o>=</span>vsphere/contour-data-values.yaml -n tanzu-system-ingress
+</span></span><span class=line><span class=cl>kubectl apply -f contour-extension.yaml
+</span></span></code></pre></div><h2 id=metrics-server>Metrics Server</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.0/components.yaml
+</span></span></code></pre></div><p>혹 사설 인증서로 인해서 x509 error 와 같은 에러가 발생하면</p><pre tabindex=0><code>command:
 - /metrics-server
 - --kubelet-insecure-tls
-</code></pre><p>commnad 에 kubelet-insecure-tls 를 추가해 준다.</p>
-<h2 id="harbor">Harbor</h2>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">helm install harbor harbor/harbor --set expose.ingress.hosts.core<span class="o">=</span>harbor.vsphere.skt --set expose.ingress.hosts.notary<span class="o">=</span>notary.vsphere.skt --set <span class="nv">externalURL</span><span class="o">=</span>https://harbor.vsphere.skt:32588 -n harbor --set persistence.persistentVolumeClaim.registry.size<span class="o">=</span>100Gi
-
-helm install harbor harbor/harbor --set expose.ingress.hosts.core<span class="o">=</span>harbor-02.vsphere.skt --set expose.ingress.hosts.notary<span class="o">=</span>notary-02.vsphere.skt --set <span class="nv">externalURL</span><span class="o">=</span>https://harbor-02.vsphere.skt -n tanzu-system-harbor --set persistence.persistentVolumeClaim.registry.size<span class="o">=</span>100Gi
-</code></pre></div><h2 id="istioctl">Istioctl</h2>
-<p>특정버전의 istioctl 다운로드 하기</p>
-<pre><code>curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.1.9 sh -
-</code></pre><h2 id="prometheus--grafana">Prometheus / Grafana</h2>
-<pre><code>k create ns tanzu-system-monitoring
+</code></pre><p>commnad 에 kubelet-insecure-tls 를 추가해 준다.</p><h2 id=harbor>Harbor</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>helm install harbor harbor/harbor --set expose.ingress.hosts.core<span class=o>=</span>harbor.vsphere.skt --set expose.ingress.hosts.notary<span class=o>=</span>notary.vsphere.skt --set <span class=nv>externalURL</span><span class=o>=</span>https://harbor.vsphere.skt:32588 -n harbor --set persistence.persistentVolumeClaim.registry.size<span class=o>=</span>100Gi
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>helm install harbor harbor/harbor --set expose.ingress.hosts.core<span class=o>=</span>harbor-02.vsphere.skt --set expose.ingress.hosts.notary<span class=o>=</span>notary-02.vsphere.skt --set <span class=nv>externalURL</span><span class=o>=</span>https://harbor-02.vsphere.skt -n tanzu-system-harbor --set persistence.persistentVolumeClaim.registry.size<span class=o>=</span>100Gi
+</span></span></code></pre></div><h2 id=istioctl>Istioctl</h2><p>특정버전의 istioctl 다운로드 하기</p><pre tabindex=0><code>curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.1.9 sh -
+</code></pre><h2 id=prometheus--grafana>Prometheus / Grafana</h2><pre tabindex=0><code>k create ns tanzu-system-monitoring
 
 helm repo add prometheus https://prometheus-community.github.io/helm-charts
 helm repo update
 
 helm uninstall prometheus -n tanzu-system-monitoring
 helm install prometheus prometheus/kube-prometheus-stack -n tanzu-system-monitoring --set grafana.service.type=LoadBalancer
-</code></pre><h2 id="efk">EFK</h2>
-<pre><code>k create ns tanzu-system-logging
+</code></pre><h2 id=efk>EFK</h2><pre tabindex=0><code>k create ns tanzu-system-logging
 
 helm repo add stable https://charts.helm.sh/stable
 helm repo add elastic https://helm.elastic.co
@@ -312,519 +104,60 @@ helm install fluent-bit stable/fluent-bit -n tanzu-system-logging --set backend.
 
 helm uninstall kibana -n tanzu-system-logging
 helm install kibana elastic/kibana -n tanzu-system-logging --set service.type=LoadBalancer --set service.port=80
-</code></pre><h2 id="gitlab-ce">Gitlab CE</h2>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl create ns tanzu-system-gitlab
-
-helm repo add gitlab https://charts.gitlab.io/
-helm repo update
-helm -n tanzu-system-gitlab install gitlab gitlab/gitlab <span class="se">\
-</span><span class="se"></span>  --set certmanager.install<span class="o">=</span><span class="nb">false</span> <span class="se">\
-</span><span class="se"></span>  --set certmanager-issuer.email<span class="o">=</span>jupil.hwang@gmail.com <span class="se">\
-</span><span class="se"></span>  --set gitlab.gitlab-shell.minReplicas<span class="o">=</span><span class="m">1</span> <span class="se">\
-</span><span class="se"></span>  --set gitlab.gitlab-shell.maxReplicas<span class="o">=</span><span class="m">1</span> <span class="se">\
-</span><span class="se"></span>  --set gitlab.sidekiq.minReplicas<span class="o">=</span><span class="m">1</span> <span class="se">\
-</span><span class="se"></span>  --set gitlab.sidekiq.maxReplicas<span class="o">=</span><span class="m">1</span> <span class="se">\
-</span><span class="se"></span>  --set gitlab.webservice.minReplicas<span class="o">=</span><span class="m">1</span> <span class="se">\
-</span><span class="se"></span>  --set gitlab.webserivce.maxReplicas<span class="o">=</span><span class="m">1</span> <span class="se">\
-</span><span class="se"></span>  --set gitlab.task-runner.enabled<span class="o">=</span><span class="nb">false</span> <span class="se">\
-</span><span class="se"></span>  --set gitlab-runner.install<span class="o">=</span><span class="nb">false</span> <span class="se">\ </span> 
-  --set global.hosts.domain<span class="o">=</span>haas-411.pez.vmware.com <span class="se">\
-</span><span class="se"></span>  --set global.hosts.externalIP<span class="o">=</span> <span class="se">\
-</span><span class="se"></span>  --set global.ingress.annotations.cert-manager<span class="se">\.</span>io<span class="se">\/</span>cluster-issuer<span class="o">=</span>letsencrypt-contour-cluter-issuer <span class="se">\
-</span><span class="se"></span>  --set global.ingress.annotations.kubernetes<span class="se">\.</span>io<span class="se">\/</span>tls-acme<span class="o">=</span><span class="nb">true</span> <span class="se">\
-</span><span class="se"></span>  --set global.projectcontour<span class="se">\.</span>io<span class="se">\/</span>ingress.class<span class="o">=</span>contour <span class="se">\
-</span><span class="se"></span>  --set <span class="nv">externalUrl</span><span class="o">=</span>gitlab.haas-411.pez.vmware.com <span class="se">\
-</span><span class="se"></span>  --set ngnix-ingress.enabled<span class="o">=</span><span class="nb">false</span> <span class="se">\
-</span><span class="se"></span>  --set prometheus.install<span class="o">=</span><span class="nb">false</span> <span class="se">\
-</span><span class="se"></span>  --set global.edition<span class="o">=</span>ce 
-
-kubectl -n tanzu-system-gitlab get secret gitlab-gitlab-initial-root-password -ojsonpath<span class="o">=</span><span class="s1">&#39;{.data.password}&#39;</span> <span class="p">|</span> base64 --decode <span class="p">;</span> <span class="nb">echo</span>
-</code></pre></div><h2 id="gitea">Gitea</h2>
-<p>gitlab 을 사용할 수도 있지만, 간편하게 git / issues / wiki 정도의 기능만 원한다면 gitea 를 추천한다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl create ns tanzu-system-git
-
-helm repo add gitea https://dl.gitea.io/charts/
-helm repo update
-helm -n tanzu-system-git install gitea gitea/gitea <span class="se">\
-</span><span class="se"></span>    --set ingress.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\
-</span><span class="se"></span>    --set ingress.hosts<span class="o">=</span>git.tanzu.system <span class="se">\
-</span><span class="se"></span>    --set gitea.admin.username<span class="o">=</span>root <span class="se">\
-</span><span class="se"></span>    --set gitea.admin.passowrd<span class="o">=</span>&lt;Password&gt;
-</code></pre></div><h2 id="vmlp">vMLP</h2>
-<p>vMLP 는 VMware 인프라위에 Machine Learning 워크로드를 효과적으로 실행하기 위한 Data Scientists 를 위한 ML Platform 이다.</p>
-<ul>
-<li>VMware 와 Kubernetes 위에 가상화된 환경 제공</li>
-<li>Kubeflow 와 Horovod 기반의 분샨 모델 트레이닝과 친숙한 Jupyter notebook 제공</li>
-<li>TKG(Tanzu Kubernetes Grid) 기반에서 GPU 지원 : <a href="https://blogs.vmware.com/apps/2018/09/using-gpus-with-virtual-machines-on-vsphere-part-3-installing-the-nvidia-grid-technology.html">vGPU</a> / <a href="https://github.com/NVIDIA/k8s-device-plugin">NVIDIA Kubernetes Device Plugin</a></li>
-<li>기본 제공 배포 프레임워크 기반의 모델 테스에 대한 빠른 처리</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get svc -n istio-system istio-ingressgateway
-</code></pre></div><ul>
-<li>kubeflow UI &ndash;&gt; http://endpoint</li>
-<li>vMLP (e.g. Data Manager) UI &mdash;&gt; http://endpoint/vmlp/</li>
-<li>MLflow UI &mdash;&gt; http://endpoint/mlflow/</li>
-</ul>
-<p><a href="mailto:admin@kubeflow.org">admin@kubeflow.org</a> / 12341234</p>
-
-
-                
-
-                <hr>
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="https://jupilhwang.github.io/post/200630_haproxy_dataplaneapi/" data-toggle="tooltip" data-placement="top" title="HAProxy - dataplaneapi / Kubernetes - service-api">&larr;
-                            Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="https://jupilhwang.github.io/post/201223-vsphere-jumpbox-for-tanzu/" data-toggle="tooltip" data-placement="top" title="jumpbox on vSphere for Tanzu">Next
-                            Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "just-do-it-2" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
-            </div>
-            
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="https://jupilhwang.github.io/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/cd" title="cd">
-                            cd
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/cloud" title="cloud">
-                            cloud
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/groovy" title="groovy">
-                            groovy
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/k8s" title="k8s">
-                            k8s
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/kubernetes" title="kubernetes">
-                            kubernetes
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/linux" title="linux">
-                            linux
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/network" title="network">
-                            network
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/oracle" title="oracle">
-                            oracle
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/tanzu" title="tanzu">
-                            tanzu
-                        </a>
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/tkg" title="tkg">
-                            tkg
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/vsphere" title="vsphere">
-                            vsphere
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </div>
-                </section>
-                
-
-                
-                
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href='' rel="alternate" type="application/rss+xml" title="Just Do It ! - Yolo" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fas fa-circle fa-stack-2x"></i>
-                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:jupil.hwang@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-
-                    
-                    <li>
-                        <a href="https://twitter.com/jupil_hwang">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    
-                    
-                    
-
-                    
-                    <li>
-                        <a target="_blank" href="https://www.facebook.com/jupilhwang">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/jupilhwang">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-                    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/namoo4u">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-                    
-                    
-                    
-                    
-                    
-            
-            
-            
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; Just Do It ! - Yolo 2021
-                    <br>
-                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="100px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
-                    </iframe>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-117423189-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
-</html>
+</code></pre><h2 id=gitlab-ce>Gitlab CE</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl create ns tanzu-system-gitlab
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>helm repo add gitlab https://charts.gitlab.io/
+</span></span><span class=line><span class=cl>helm repo update
+</span></span><span class=line><span class=cl>helm -n tanzu-system-gitlab install gitlab gitlab/gitlab <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set certmanager.install<span class=o>=</span><span class=nb>false</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set certmanager-issuer.email<span class=o>=</span>jupil.hwang@gmail.com <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set gitlab.gitlab-shell.minReplicas<span class=o>=</span><span class=m>1</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set gitlab.gitlab-shell.maxReplicas<span class=o>=</span><span class=m>1</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set gitlab.sidekiq.minReplicas<span class=o>=</span><span class=m>1</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set gitlab.sidekiq.maxReplicas<span class=o>=</span><span class=m>1</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set gitlab.webservice.minReplicas<span class=o>=</span><span class=m>1</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set gitlab.webserivce.maxReplicas<span class=o>=</span><span class=m>1</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set gitlab.task-runner.enabled<span class=o>=</span><span class=nb>false</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set gitlab-runner.install<span class=o>=</span><span class=nb>false</span> <span class=se>\ </span> 
+</span></span><span class=line><span class=cl>  --set global.hosts.domain<span class=o>=</span>haas-411.pez.vmware.com <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set global.hosts.externalIP<span class=o>=</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set global.ingress.annotations.cert-manager<span class=se>\.</span>io<span class=se>\/</span>cluster-issuer<span class=o>=</span>letsencrypt-contour-cluter-issuer <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set global.ingress.annotations.kubernetes<span class=se>\.</span>io<span class=se>\/</span>tls-acme<span class=o>=</span><span class=nb>true</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set global.projectcontour<span class=se>\.</span>io<span class=se>\/</span>ingress.class<span class=o>=</span>contour <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set <span class=nv>externalUrl</span><span class=o>=</span>gitlab.haas-411.pez.vmware.com <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set ngnix-ingress.enabled<span class=o>=</span><span class=nb>false</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set prometheus.install<span class=o>=</span><span class=nb>false</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  --set global.edition<span class=o>=</span>ce 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>kubectl -n tanzu-system-gitlab get secret gitlab-gitlab-initial-root-password -ojsonpath<span class=o>=</span><span class=s1>&#39;{.data.password}&#39;</span> <span class=p>|</span> base64 --decode <span class=p>;</span> <span class=nb>echo</span>
+</span></span></code></pre></div><h2 id=gitea>Gitea</h2><p>gitlab 을 사용할 수도 있지만, 간편하게 git / issues / wiki 정도의 기능만 원한다면 gitea 를 추천한다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl create ns tanzu-system-git
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>helm repo add gitea https://dl.gitea.io/charts/
+</span></span><span class=line><span class=cl>helm repo update
+</span></span><span class=line><span class=cl>helm -n tanzu-system-git install gitea gitea/gitea <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --set ingress.enabled<span class=o>=</span><span class=nb>true</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --set ingress.hosts<span class=o>=</span>git.tanzu.system <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --set gitea.admin.username<span class=o>=</span>root <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --set gitea.admin.passowrd<span class=o>=</span>&lt;Password&gt;
+</span></span></code></pre></div><h2 id=vmlp>vMLP</h2><p>vMLP 는 VMware 인프라위에 Machine Learning 워크로드를 효과적으로 실행하기 위한 Data Scientists 를 위한 ML Platform 이다.</p><ul><li>VMware 와 Kubernetes 위에 가상화된 환경 제공</li><li>Kubeflow 와 Horovod 기반의 분샨 모델 트레이닝과 친숙한 Jupyter notebook 제공</li><li>TKG(Tanzu Kubernetes Grid) 기반에서 GPU 지원 : <a href=https://blogs.vmware.com/apps/2018/09/using-gpus-with-virtual-machines-on-vsphere-part-3-installing-the-nvidia-grid-technology.html>vGPU</a> / <a href=https://github.com/NVIDIA/k8s-device-plugin>NVIDIA Kubernetes Device Plugin</a></li><li>기본 제공 배포 프레임워크 기반의 모델 테스에 대한 빠른 처리</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl get svc -n istio-system istio-ingressgateway
+</span></span></code></pre></div><ul><li>kubeflow UI &ndash;> http://endpoint</li><li>vMLP (e.g. Data Manager) UI &mdash;> http://endpoint/vmlp/</li><li>MLflow UI &mdash;> http://endpoint/mlflow/</li></ul><p><a href=mailto:admin@kubeflow.org>admin@kubeflow.org</a> / 12341234</p><hr><ul class=pager><li class=previous><a href=https://jupilhwang.github.io/post/200630_haproxy_dataplaneapi/ data-toggle=tooltip data-placement=top title="HAProxy - dataplaneapi / Kubernetes - service-api">&larr;
+Previous Post</a></li><li class=next><a href=https://jupilhwang.github.io/post/201223-vsphere-jumpbox-for-tanzu/ data-toggle=tooltip data-placement=top title="jumpbox on vSphere for Tanzu">Next
+Post &rarr;</a></li></ul><div id=disqus-comment></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//just-do-it-2.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+sidebar-container"><section><hr class="hidden-sm hidden-xs"><h5><a href=https://jupilhwang.github.io/tags/>FEATURED TAGS</a></h5><div class=tags><a href=https://jupilhwang.github.io/tags/cloud title=cloud>cloud</a>
+<a href=https://jupilhwang.github.io/tags/groovy title=groovy>groovy</a>
+<a href=https://jupilhwang.github.io/tags/k8s title=k8s>k8s</a>
+<a href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes</a>
+<a href=https://jupilhwang.github.io/tags/linux title=linux>linux</a>
+<a href=https://jupilhwang.github.io/tags/network title=network>network</a>
+<a href=https://jupilhwang.github.io/tags/oracle title=oracle>oracle</a>
+<a href=https://jupilhwang.github.io/tags/tanzu title=tanzu>tanzu</a>
+<a href=https://jupilhwang.github.io/tags/tkg title=tkg>tkg</a>
+<a href=https://jupilhwang.github.io/tags/vsphere title=vsphere>vsphere</a></div></section></div></div></div></article><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center"><li><a href=mailto:jupil.hwang@gmail.com><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-envelope fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://twitter.com/jupil_hwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-twitter fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.facebook.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-facebook fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://github.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-github fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.linkedin.com/in/namoo4u><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-linkedin fa-stack-1x fa-inverse"></i></span></a></li><li><a href rel=alternate type=application/rss+xml title="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="copyright text-muted">Copyright &copy; Just Do It ! 행동하지 않으면 성공도 실패도 없다 2023<br><a href=https://themes.gohugo.io/hugo-theme-cleanwhite>CleanWhite Hugo Theme</a> by <a href=https://zhaohuabing.com>Huabing</a> |
+<iframe style=margin-left:2px;margin-bottom:-5px frameborder=0 scrolling=0 width=100px height=20px src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true"></iframe></p></div></div></div></footer><script>function loadAsync(e,t){var s=document,o="script",n=s.createElement(o),i=s.getElementsByTagName(o)[0];n.src=e,t&&n.addEventListener("load",function(e){t(null,e)},!1),i.parentNode.insertBefore(n,i)}</script><script>$("#tag_cloud").length!==0&&loadAsync("/js/jquery.tagcloud.js",function(){$.fn.tagcloud.defaults={color:{start:"#bbbbee",end:"#0085a1"}},$("#tag_cloud a").tagcloud()})</script><script>loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js",function(){var e=document.querySelector("nav");e&&FastClick.attach(e)})</script></body></html>

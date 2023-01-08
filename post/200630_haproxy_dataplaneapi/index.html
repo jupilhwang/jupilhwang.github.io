@@ -1,924 +1,242 @@
-<!DOCTYPE html>
-<html lang="en-US.UTF8">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    
-    <meta property="og:site_name" content="Just Do It ! - Yolo">
-    <meta property="og:type" content="article">
-
-    
-    <meta property="og:image" content="https://jupilhwang.github.io//img/home-bg.jpg">
-    <meta property="twitter:image" content="https://jupilhwang.github.io//img/home-bg.jpg" />
-    
-
-    
-    <meta name="title" content="HAProxy - dataplaneapi / Kubernetes - service-api" />
-    <meta property="og:title" content="HAProxy - dataplaneapi / Kubernetes - service-api" />
-    <meta property="twitter:title" content="HAProxy - dataplaneapi / Kubernetes - service-api" />
-    
-
-    
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
-    
-
-    
-    <meta property="twitter:card" content="summary" />
-    
-    
-
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="https://jupilhwang.github.io/img/favicon.ico">
-
-    <title>HAProxy - dataplaneapi / Kubernetes - service-api-</title>
-
-    <link rel="canonical" href="https://jupilhwang.github.io/post/200630_haproxy_dataplaneapi/">
-
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/zanshang.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" type="text/css">
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/lightbox.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"><link rel="stylesheet" href="https://jupilhwang.github.io/css/main.css">
-
-    
-    
-    <script src="https://jupilhwang.github.io/js/jquery.min.js"></script>
-
-    
-    <script src="https://jupilhwang.github.io/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://jupilhwang.github.io/js/hux-blog.min.js"></script>
-
-    
-    
-    <script src="https://jupilhwang.github.io/js/lightbox.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
-    <script src="https://jupilhwang.github.io/js/main.js"></script>
-    
-
-</head>
-
-
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://jupilhwang.github.io/">Just Do It ! - Yolo</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://jupilhwang.github.io/">Home</a>
-                    </li>
-                    
-                    
-		    
-                        <li><a href="https://jupilhwang.github.io/top/books/">BOOKS</a></li>
-                    
-                        <li><a href="https://jupilhwang.github.io/page/about">ABOUT</a></li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header {
-        background-image: url('/img/home-bg.jpg')
-    }
-</style>
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/tkg" title="tkg">
-                            tkg
-                        </a>
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/loadbalancer" title="loadbalancer">
-                            loadbalancer
-                        </a>
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/dataplaneapi" title="dataplaneapi">
-                            dataplaneapi
-                        </a>
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/haproxy" title="haproxy">
-                            haproxy
-                        </a>
-                        
-                    </div>
-                    <h1>HAProxy - dataplaneapi / Kubernetes - service-api</h1>
-                    <h2 class="subheading"></h2>
-                    <span class="meta">
-                        Posted by 
-                        
-                                Just Do It ! - Yolo
-                         
-                        on 
-                        Tuesday, June 30, 2020
-                        
-                        
-                        
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                post-container">
-
-                
-                <h1 id="ha-proxy">HA-Proxy</h1>
-<p>SW loadbalancer로 제일 많이 사용하는 것 중에 한가지가 nginx나 haproxy 일것이다. http/s 위주의 서비스라면 nginx로 충분하겠지만, 범용으로 tcp/udp 서비스를 위한 Load Balancer 로 사용할려면 ha-proxy 를 사용하는 것이 좋다.
-또는 envoy나 traefik 등을 사용할 수 있다.</p>
-<table>
-<thead>
-<tr>
-<th align="right">subject</th>
-<th>http</th>
-<th>https</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="right">Latency (HTTP)</td>
-<td>
-  <img src="https://jupilhwang.github.io/img/tanzu/haproxy/Benchmarking-5-Popular-Load-Balancers-1.png" alt="">
-
-</td>
-<td>
-  <img src="https://jupilhwang.github.io/img/tanzu/haproxy/Benchmarking-5-Popular-Load-Balancers-2.png" alt="">
-
-</td>
-</tr>
-<tr>
-<td align="right">Requests/Second</td>
-<td>
-  <img src="https://jupilhwang.github.io/img/tanzu/haproxy/Benchmarking-5-Popular-Load-Balancers-3.png" alt="">
-
-</td>
-<td>
-  <img src="https://jupilhwang.github.io/img/tanzu/haproxy/Benchmarking-5-Popular-Load-Balancers-4.png" alt="">
-
-</td>
-</tr>
-</tbody>
-</table>
-<p>출처 : <a href="https://www.loggly.com/blog/benchmarking-5-popular-load-balancers-nginx-haproxy-envoy-traefik-and-alb/">https://www.loggly.com/blog/benchmarking-5-popular-load-balancers-nginx-haproxy-envoy-traefik-and-alb/</a></p>
-<p>위의 Benchmark 자료를 보면 알 수 있듯이, envoy나 traefik이 요즘 유행하고 있지만, 역시 구관이 명관이다.</p>
-<h1 id="설정-reload">설정 reload</h1>
-<h2 id="haproxycfg">haproxy.cfg</h2>
-<ul>
-<li>/etc/haproxy/haproxy.cfg 에 haproxy 설정을 추가하고 변경된 설정을 적용하기 위해서 haproxy reload 를 해줘야 하는데, 설정이 자주 변경될 때 매번 haproxy 서버에 접속해서 haproxy.cfg 를 변경하고 haproxy 서버를 재 설정해 줘야 한다.</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">cat &gt; /etc/haproxy/haproxy.cfg <span class="s">&lt;&lt;EOF
-</span><span class="s">global
-</span><span class="s">  master-worker
-</span><span class="s">  log stdout format raw local0 info
-</span><span class="s"> 
-</span><span class="s">  stats socket /run/haproxy.sock user haproxy group haproxy mode 660 level admin expose-fd listeners
-</span><span class="s">  stats timeout 30s
-</span><span class="s"> 
-</span><span class="s">  chroot /var/lib/haproxy
-</span><span class="s">  user haproxy
-</span><span class="s">  group haproxy
-</span><span class="s"> 
-</span><span class="s">  # Default SSL material locations
-</span><span class="s">  ca-base /etc/ssl/certs
-</span><span class="s">  crt-base /etc/ssl/private
-</span><span class="s"> 
-</span><span class="s">  # Default ciphers to use on SSL-enabled listening sockets.
-</span><span class="s">  # For more information, see ciphers(1SSL). This list is from:
-</span><span class="s">  #  https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/
-</span><span class="s">  # An alternative list with additional directives can be obtained from
-</span><span class="s">  #  https://mozilla.github.io/server-side-tls/ssl-config-generator/?server=haproxy
-</span><span class="s">  ssl-default-bind-options no-sslv3
-</span><span class="s">  ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:RSA+AESGCM:RSA+AES:!aNULL:!MD5:!DSS
-</span><span class="s"> 
-</span><span class="s">defaults
-</span><span class="s">  mode tcp
-</span><span class="s">  maxconn 4000
-</span><span class="s">  log global
-</span><span class="s">  option tcplog
-</span><span class="s">  option dontlognull
-</span><span class="s">  option tcp-smart-accept
-</span><span class="s">  timeout check 5s
-</span><span class="s">  timeout connect 9s
-</span><span class="s">  timeout client 10s
-</span><span class="s">  timeout queue 5m
-</span><span class="s">  timeout server 10s
-</span><span class="s">  timeout tunnel 1h
-</span><span class="s">  timeout client-fin 10s
-</span><span class="s"> 
-</span><span class="s">userlist controller
-</span><span class="s">  user client insecure-password cert
-</span><span class="s">EOF</span>
- 
-systemctl <span class="nb">enable</span> haproxy.service
-systemctl start haproxy.service
-</code></pre></div><h2 id="dataplane-api">dataplane api</h2>
-<ul>
-<li>haproxy enterprise 를 사용하면 haproxy-dataplane-api 패키지를 바로 사용할 수 있지만, 사용하기 위해서는 haproxy-key 가 필요하다.</li>
-<li>하지만, oss버전의 dataplane-api 를 github에서 다운로드하여 사용할 수 있다.</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -Lk https://github.com/haproxytech/dataplaneapi/releases/download/v2.0.3/dataplaneapi_2.0.3_Linux_x86_64.tar.gz --output dataplaneapi_2.0.3_Linux_x86_64.tar.gz
-
-<span class="c1"># $PATH 경로에 바이너리를 추가한다</span>
-
-<span class="c1"># 방화벽이 있는경우</span>
-iptables -A INPUT -p tcp --dport <span class="m">5555</span> -m conntrack --ctstate NEW,ESTATBLISHED -j ACCEPT
-
-<span class="c1"># Data Plane API 시작(예)</span>
-./dataplaneapi --port <span class="m">5555</span> -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg -d <span class="m">5</span> -r <span class="s2">&#34;service haproxy reload&#34;</span> -s <span class="s2">&#34;service haproxy restart&#34;</span> -u dataplaneapi -t /tmp/haproxy
-
-또는
-
-cat /etc/haproxy/haproxy.cfg <span class="s">&lt;&lt;EOF
-</span><span class="s">program api
-</span><span class="s">  command dataplaneapi --scheme=https --haproxy-bin=/usr/sbin/haproxy --config-file=/etc/haproxy/haproxy.cfg --reload-cmd=&#34;/usr/bin/systemctl reload haproxy&#34; --reload-delay=5 --tls-host=0.0.0.0 --tls-port=5555 --tls-ca=/etc/haproxy/ca.crt --tls-certificate=/etc/haproxy/server.crt --tls-key=/etc/haproxy/server.key --userlist=controller
-</span><span class="s">  no option start-on-reload
-</span><span class="s">EOF</span>
-
-
-<span class="c1"># validate</span>
-curl -u &lt;user&gt;:&lt;pass&gt; -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="s2">&#34;http://127.0.0.1:5555/v2/&#34;</span>
-</code></pre></div><h1 id="kubernetes-sig--service-api">Kubernetes SIG / Service-API</h1>
-<p>쿠버네티스의 서비스 관련 API CRD로 Gateway API (LoadBalancer API)를 사용할 수 있다</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># git clone</span>
-git clone https://github.com/kubernetes-sigs/service-apis
-
-
-kustomize build https://github.com/kubernetes-sigs/service-apis/config/crd <span class="p">|</span> kubectl apply -f -
-
-Build the Load Balanacer API controller manager image:
-make docker-build
-
-
-Load the Load Balancer API controller manager image into the Kind cluster:
-kind load docker-image load-balancer-api-controller:dev
-
-
-<span class="c1"># Load Balancer API 배포</span>
-kustomize build https://github.com/kubernetes/service-apis/config/default <span class="p">|</span> kubectl apply -f -
-
-
-Create a cluster-scoped GatewayClass resource that configures access to the HAProxy DataPlane API server:
-cat <span class="s">&lt;&lt;EOF | kubectl apply -f -
-</span><span class="s">apiVersion: networking.x-k8s.io/v1alpha1
-</span><span class="s">kind: GatewayClass
-</span><span class="s">metadata:
-</span><span class="s">  name: haproxy-lb
-</span><span class="s">spec:
-</span><span class="s">  controller: lbapi.run.tanzu.vmware.com/haproxy
-</span><span class="s">  parameters:
-</span><span class="s">    group: v1
-</span><span class="s">    resource: Secret
-</span><span class="s">    name: haproxy-lb-config
-</span><span class="s">EOF</span>
-
-
-Create the Secret resource that contains the information used to access the DataPlane API server:
-cat <span class="s">&lt;&lt;EOF | kubectl apply -f -
-</span><span class="s">apiVersion: v1
-</span><span class="s">kind: Secret
-</span><span class="s">metadata:
-</span><span class="s">  name: haproxy-lb-config
-</span><span class="s">  namespace: default
-</span><span class="s">stringData:
-</span><span class="s">  value: |
-</span><span class="s">    debug: true
-</span><span class="s">    servers:
-</span><span class="s">    - https://172.17.0.2:5556/v2
-</span><span class="s">    serverName: dataplane-api
-</span><span class="s">    certificateAuthorityData: &#34;$({ base64 -w0 2&gt;/dev/null || base64; } &lt;hack/images/haproxy/example/ca.crt)&#34;
-</span><span class="s">    clientCertificateData: &#34;$({ base64 -w0 2&gt;/dev/null || base64; } &lt;hack/images/haproxy/example/client.crt)&#34;
-</span><span class="s">    clientKeyData: &#34;$({ base64 -w0 2&gt;/dev/null || base64; } &lt;hack/images/haproxy/example/client.key)&#34;
-</span><span class="s">EOF</span>
-
-
-Create a selectorless Service resource that indicates port <span class="m">80</span> should be forwarded to port 8080, the port on which the web server is running:
-cat <span class="s">&lt;&lt;EOF | kubectl apply -f -
-</span><span class="s">apiVersion: v1
-</span><span class="s">kind: Service
-</span><span class="s">metadata:
-</span><span class="s">  name: httpd
-</span><span class="s">  namespace: default
-</span><span class="s">  labels:
-</span><span class="s">    service.route.lbapi.run.tanzu.vmware.com/type: direct
-</span><span class="s">    service.route.lbapi.run.tanzu.vmware.com/gateway-name: httpd
-</span><span class="s">    service.route.lbapi.run.tanzu.vmware.com/gateway-namespace: default
-</span><span class="s">  annotations:
-</span><span class="s">    lbapi.run.tanzu.vmware.com/ip-address: 172.17.200.2
-</span><span class="s">spec:
-</span><span class="s">  ports:
-</span><span class="s">  - name: http
-</span><span class="s">    port: 80
-</span><span class="s">    targetPort: 8080
-</span><span class="s">EOF</span>
-Please note the annotation lbapi.run.tanzu.vmware.com/ip-address is used to define the virtual IP address. The Load Balancer API does not yet include support <span class="k">for</span> IPAM, so the virtual IP to use must be provided. This IP address must be in the range supported by the load balancer.
-
-
-Create the Endpoints resource that contains the IP address of the web server:
-cat <span class="s">&lt;&lt;EOF | kubectl apply -f -
-</span><span class="s">apiVersion: v1
-</span><span class="s">kind: Endpoints
-</span><span class="s">metadata:
-</span><span class="s">  name: httpd
-</span><span class="s">  namespace: default
-</span><span class="s">subsets:
-</span><span class="s">- addresses:
-</span><span class="s">  - ip: 172.17.0.3
-</span><span class="s">  ports:
-</span><span class="s">  - name: http
-</span><span class="s">    port: 8080
-</span><span class="s">EOF</span>
-
-
-At this point, <span class="k">if</span> everything has completed successfully, the environment is <span class="nb">set</span> up and ready to provision a load balanced IP address to the Service. Verify the Service does not currently have a load balanced IP address before proceeding:
-kubectl get service httpd -ojsonpath<span class="o">=</span><span class="s1">&#39;{.status.loadBalancer.ingress[0].ip}&#39;</span>
-The above <span class="nb">command</span> should not result in any output. For the <span class="nb">time</span> being, print the Service resource<span class="s1">&#39;s cluster IP address:
-</span><span class="s1">kubectl get service httpd -ojsonpath=&#39;</span><span class="o">{</span>.spec.clusterIP<span class="o">}</span><span class="s1">&#39; &amp;&amp; echo
-</span><span class="s1">
-</span><span class="s1">
-</span><span class="s1">Because the service&#39;</span>s cluster IP is not visible outside the cluster, attempting to access the web server via the cluster IP will timeout:
-$ docker run --rm photon curl -sSm <span class="m">1</span> http://10.96.63.24
-curl: <span class="o">(</span>28<span class="o">)</span> Connection timed out after <span class="m">1000</span> milliseconds
-
-
-To be accessed from outside the cluster the service needs a load balanced IP address, and one will be provisioned after the following Gateway resource is created:
-cat <span class="s">&lt;&lt;EOF | kubectl apply -f -
-</span><span class="s">apiVersion: networking.x-k8s.io/v1alpha1
-</span><span class="s">kind: Gateway
-</span><span class="s">metadata:
-</span><span class="s">  name: httpd
-</span><span class="s">  namespace: default
-</span><span class="s">spec:
-</span><span class="s">  class: haproxy-lb
-</span><span class="s">  listeners:
-</span><span class="s">  - name: ignored
-</span><span class="s">  routes:
-</span><span class="s">    namespaceSelector: {}
-</span><span class="s">    routeSelector:
-</span><span class="s">      matchLabels:
-</span><span class="s">        service.route.lbapi.run.tanzu.vmware.com/type: direct
-</span><span class="s">        service.route.lbapi.run.tanzu.vmware.com/gateway-name: httpd
-</span><span class="s">        service.route.lbapi.run.tanzu.vmware.com/gateway-namespace: default
-</span><span class="s">EOF</span>
-
-
-The Load Balancer API<span class="s1">&#39;s HAProxy controller will see the above Gateway resource and reconcile it onto the HAProxy load balancer. Use the following command to watch the Service resource until it has a load balanced IP address:
-</span><span class="s1">kubectl get service httpd -ojsonpath=&#39;</span><span class="o">{</span>.status.loadBalancer.ingress<span class="o">[</span>0<span class="o">]</span>.ip<span class="o">}</span><span class="err">&#39;</span> -w
-172.17.200.2
-The <span class="nb">command</span> should eventually returns an IP address, the load balanced address of the service. Once the IP has appeared, use the Ctrl-C key-combination to regain control of the terminal prompt.
-
-
-Finally, use the load balanced IP address to access the web server:
-$ docker run --rm photon curl -sSm <span class="m">1</span> http://172.17.200.2
-hello
-Congratulations, HAProxy just provisioned a load balanced IP address <span class="k">for</span> the Kubernetes Service resource via the Load Balancer API!
-
-
-To clean up the resources started in this example, execute the following command:</code></pre></div>
-
-                
-
-                <hr>
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="https://jupilhwang.github.io/post/200630.loadbalancerapi_for_k8s/" data-toggle="tooltip" data-placement="top" title="LoadBalancer API for k8s">&larr;
-                            Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="https://jupilhwang.github.io/post/201101-tkg-quick-start/" data-toggle="tooltip" data-placement="top" title="TKG 1.2 설치/설정 : quick start">Next
-                            Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "just-do-it-2" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
-            </div>
-            
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="https://jupilhwang.github.io/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/cd" title="cd">
-                            cd
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/cloud" title="cloud">
-                            cloud
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/groovy" title="groovy">
-                            groovy
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/k8s" title="k8s">
-                            k8s
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/kubernetes" title="kubernetes">
-                            kubernetes
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/linux" title="linux">
-                            linux
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/network" title="network">
-                            network
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/oracle" title="oracle">
-                            oracle
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/tanzu" title="tanzu">
-                            tanzu
-                        </a>
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/tkg" title="tkg">
-                            tkg
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/vsphere" title="vsphere">
-                            vsphere
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </div>
-                </section>
-                
-
-                
-                
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href='' rel="alternate" type="application/rss+xml" title="Just Do It ! - Yolo" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fas fa-circle fa-stack-2x"></i>
-                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:jupil.hwang@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-
-                    
-                    <li>
-                        <a href="https://twitter.com/jupil_hwang">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    
-                    
-                    
-
-                    
-                    <li>
-                        <a target="_blank" href="https://www.facebook.com/jupilhwang">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/jupilhwang">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-                    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/namoo4u">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-                    
-                    
-                    
-                    
-                    
-            
-            
-            
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; Just Do It ! - Yolo 2021
-                    <br>
-                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="100px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
-                    </iframe>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-117423189-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
-</html>
+<!doctype html><html lang=en-us.utf8><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:site_name" content="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><meta property="og:type" content="article"><meta property="og:image" content="https://jupilhwang.github.io/img/home-bg.jpg"><meta property="twitter:image" content="https://jupilhwang.github.io/img/home-bg.jpg"><meta name=title content="HAProxy - dataplaneapi / Kubernetes - service-api"><meta property="og:title" content="HAProxy - dataplaneapi / Kubernetes - service-api"><meta property="twitter:title" content="HAProxy - dataplaneapi / Kubernetes - service-api"><meta name=description content><meta property="og:description" content><meta property="twitter:description" content><meta property="twitter:card" content="summary"><meta name=keyword content><link rel="shortcut icon" href=https://jupilhwang.github.io/img/favicon.ico><title>HAProxy - dataplaneapi / Kubernetes - service-api |</title><link rel=canonical href=https://jupilhwang.github.io/post/200630_haproxy_dataplaneapi/><link rel=stylesheet href=https://jupilhwang.github.io/css/bootstrap.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/hugo-theme-cleanwhite.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/zanshang.css><link href=https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css rel=stylesheet type=text/css><link rel=stylesheet href=https://jupilhwang.github.io/css/lightbox.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/main.css><script src=https://jupilhwang.github.io/js/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/bootstrap.min.js></script>
+<script src=https://jupilhwang.github.io/js/hux-blog.min.js></script>
+<script src=https://jupilhwang.github.io/js/lazysizes.min.js></script>
+<script src=https://jupilhwang.github.io/js/lightbox.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/main.js></script></head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-117423189-1","auto"),ga("send","pageview"))</script><nav class="navbar navbar-default navbar-custom navbar-fixed-top"><div class=container-fluid><div class="navbar-header page-scroll"><button type=button class=navbar-toggle>
+<span class=sr-only>Toggle navigation</span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+<span class=icon-bar></span></button>
+<a class=navbar-brand href=https://jupilhwang.github.io/>Just Do It ! 행동하지 않으면 성공도 실패도 없다</a></div><div id=huxblog_navbar><div class=navbar-collapse><ul class="nav navbar-nav navbar-right"><li><a href=https://jupilhwang.github.io/>All Posts</a></li><li><a href=https://jupilhwang.github.io/top/books/>BOOKS</a></li><li><a href=https://jupilhwang.github.io/page/about>ABOUT</a></li><li><a href=https://jupilhwang.github.io/search><i class="fa fa-search"></i></a></li></ul></div></div></div></nav><script>var $body=document.body,$toggle=document.querySelector(".navbar-toggle"),$navbar=document.querySelector("#huxblog_navbar"),$collapse=document.querySelector(".navbar-collapse");$toggle.addEventListener("click",handleMagic);function handleMagic(){$navbar.className.indexOf("in")>0?($navbar.className=" ",setTimeout(function(){$navbar.className.indexOf("in")<0&&($collapse.style.height="0px")},400)):($collapse.style.height="auto",$navbar.className+=" in")}</script><style type=text/css>header.intro-header{background-image:url(/img/home-bg.jpg)}</style><header class=intro-header><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><div class=tags><a class=tag href=https://jupilhwang.github.io/tags/tkg title=tkg>tkg</a>
+<a class=tag href=https://jupilhwang.github.io/tags/loadbalancer title=loadbalancer>loadbalancer</a>
+<a class=tag href=https://jupilhwang.github.io/tags/dataplaneapi title=dataplaneapi>dataplaneapi</a>
+<a class=tag href=https://jupilhwang.github.io/tags/haproxy title=haproxy>haproxy</a></div><h1>HAProxy - dataplaneapi / Kubernetes - service-api</h1><h2 class=subheading></h2><span class=meta>Posted by
+Just Do It ! 행동하지 않으면 성공도 실패도 없다
+on
+Tuesday, June 30, 2020</span></div></div></div></div></header><article><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+post-container"><h1 id=ha-proxy>HA-Proxy</h1><p>SW loadbalancer로 제일 많이 사용하는 것 중에 한가지가 nginx나 haproxy 일것이다. http/s 위주의 서비스라면 nginx로 충분하겠지만, 범용으로 tcp/udp 서비스를 위한 Load Balancer 로 사용할려면 ha-proxy 를 사용하는 것이 좋다.
+또는 envoy나 traefik 등을 사용할 수 있다.</p><table><thead><tr><th style=text-align:right>subject</th><th>http</th><th>https</th></tr></thead><tbody><tr><td style=text-align:right>Latency (HTTP)</td><td><img src=https://jupilhwang.github.io/img/tanzu/haproxy/Benchmarking-5-Popular-Load-Balancers-1.png alt></td><td><img src=https://jupilhwang.github.io/img/tanzu/haproxy/Benchmarking-5-Popular-Load-Balancers-2.png alt></td></tr><tr><td style=text-align:right>Requests/Second</td><td><img src=https://jupilhwang.github.io/img/tanzu/haproxy/Benchmarking-5-Popular-Load-Balancers-3.png alt></td><td><img src=https://jupilhwang.github.io/img/tanzu/haproxy/Benchmarking-5-Popular-Load-Balancers-4.png alt></td></tr></tbody></table><p>출처 : <a href=https://www.loggly.com/blog/benchmarking-5-popular-load-balancers-nginx-haproxy-envoy-traefik-and-alb/>https://www.loggly.com/blog/benchmarking-5-popular-load-balancers-nginx-haproxy-envoy-traefik-and-alb/</a></p><p>위의 Benchmark 자료를 보면 알 수 있듯이, envoy나 traefik이 요즘 유행하고 있지만, 역시 구관이 명관이다.</p><h1 id=설정-reload>설정 reload</h1><h2 id=haproxycfg>haproxy.cfg</h2><ul><li>/etc/haproxy/haproxy.cfg 에 haproxy 설정을 추가하고 변경된 설정을 적용하기 위해서 haproxy reload 를 해줘야 하는데, 설정이 자주 변경될 때 매번 haproxy 서버에 접속해서 haproxy.cfg 를 변경하고 haproxy 서버를 재 설정해 줘야 한다.</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt; /etc/haproxy/haproxy.cfg <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>global
+</span></span></span><span class=line><span class=cl><span class=s>  master-worker
+</span></span></span><span class=line><span class=cl><span class=s>  log stdout format raw local0 info
+</span></span></span><span class=line><span class=cl><span class=s> 
+</span></span></span><span class=line><span class=cl><span class=s>  stats socket /run/haproxy.sock user haproxy group haproxy mode 660 level admin expose-fd listeners
+</span></span></span><span class=line><span class=cl><span class=s>  stats timeout 30s
+</span></span></span><span class=line><span class=cl><span class=s> 
+</span></span></span><span class=line><span class=cl><span class=s>  chroot /var/lib/haproxy
+</span></span></span><span class=line><span class=cl><span class=s>  user haproxy
+</span></span></span><span class=line><span class=cl><span class=s>  group haproxy
+</span></span></span><span class=line><span class=cl><span class=s> 
+</span></span></span><span class=line><span class=cl><span class=s>  # Default SSL material locations
+</span></span></span><span class=line><span class=cl><span class=s>  ca-base /etc/ssl/certs
+</span></span></span><span class=line><span class=cl><span class=s>  crt-base /etc/ssl/private
+</span></span></span><span class=line><span class=cl><span class=s> 
+</span></span></span><span class=line><span class=cl><span class=s>  # Default ciphers to use on SSL-enabled listening sockets.
+</span></span></span><span class=line><span class=cl><span class=s>  # For more information, see ciphers(1SSL). This list is from:
+</span></span></span><span class=line><span class=cl><span class=s>  #  https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/
+</span></span></span><span class=line><span class=cl><span class=s>  # An alternative list with additional directives can be obtained from
+</span></span></span><span class=line><span class=cl><span class=s>  #  https://mozilla.github.io/server-side-tls/ssl-config-generator/?server=haproxy
+</span></span></span><span class=line><span class=cl><span class=s>  ssl-default-bind-options no-sslv3
+</span></span></span><span class=line><span class=cl><span class=s>  ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:RSA+AESGCM:RSA+AES:!aNULL:!MD5:!DSS
+</span></span></span><span class=line><span class=cl><span class=s> 
+</span></span></span><span class=line><span class=cl><span class=s>defaults
+</span></span></span><span class=line><span class=cl><span class=s>  mode tcp
+</span></span></span><span class=line><span class=cl><span class=s>  maxconn 4000
+</span></span></span><span class=line><span class=cl><span class=s>  log global
+</span></span></span><span class=line><span class=cl><span class=s>  option tcplog
+</span></span></span><span class=line><span class=cl><span class=s>  option dontlognull
+</span></span></span><span class=line><span class=cl><span class=s>  option tcp-smart-accept
+</span></span></span><span class=line><span class=cl><span class=s>  timeout check 5s
+</span></span></span><span class=line><span class=cl><span class=s>  timeout connect 9s
+</span></span></span><span class=line><span class=cl><span class=s>  timeout client 10s
+</span></span></span><span class=line><span class=cl><span class=s>  timeout queue 5m
+</span></span></span><span class=line><span class=cl><span class=s>  timeout server 10s
+</span></span></span><span class=line><span class=cl><span class=s>  timeout tunnel 1h
+</span></span></span><span class=line><span class=cl><span class=s>  timeout client-fin 10s
+</span></span></span><span class=line><span class=cl><span class=s> 
+</span></span></span><span class=line><span class=cl><span class=s>userlist controller
+</span></span></span><span class=line><span class=cl><span class=s>  user client insecure-password cert
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>systemctl <span class=nb>enable</span> haproxy.service
+</span></span><span class=line><span class=cl>systemctl start haproxy.service
+</span></span></code></pre></div><h2 id=dataplane-api>dataplane api</h2><ul><li>haproxy enterprise 를 사용하면 haproxy-dataplane-api 패키지를 바로 사용할 수 있지만, 사용하기 위해서는 haproxy-key 가 필요하다.</li><li>하지만, oss버전의 dataplane-api 를 github에서 다운로드하여 사용할 수 있다.</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>curl -Lk https://github.com/haproxytech/dataplaneapi/releases/download/v2.0.3/dataplaneapi_2.0.3_Linux_x86_64.tar.gz --output dataplaneapi_2.0.3_Linux_x86_64.tar.gz
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># $PATH 경로에 바이너리를 추가한다</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 방화벽이 있는경우</span>
+</span></span><span class=line><span class=cl>iptables -A INPUT -p tcp --dport <span class=m>5555</span> -m conntrack --ctstate NEW,ESTATBLISHED -j ACCEPT
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Data Plane API 시작(예)</span>
+</span></span><span class=line><span class=cl>./dataplaneapi --port <span class=m>5555</span> -b /usr/sbin/haproxy -c /etc/haproxy/haproxy.cfg -d <span class=m>5</span> -r <span class=s2>&#34;service haproxy reload&#34;</span> -s <span class=s2>&#34;service haproxy restart&#34;</span> -u dataplaneapi -t /tmp/haproxy
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>또는
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat /etc/haproxy/haproxy.cfg <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>program api
+</span></span></span><span class=line><span class=cl><span class=s>  command dataplaneapi --scheme=https --haproxy-bin=/usr/sbin/haproxy --config-file=/etc/haproxy/haproxy.cfg --reload-cmd=&#34;/usr/bin/systemctl reload haproxy&#34; --reload-delay=5 --tls-host=0.0.0.0 --tls-port=5555 --tls-ca=/etc/haproxy/ca.crt --tls-certificate=/etc/haproxy/server.crt --tls-key=/etc/haproxy/server.key --userlist=controller
+</span></span></span><span class=line><span class=cl><span class=s>  no option start-on-reload
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># validate</span>
+</span></span><span class=line><span class=cl>curl -u &lt;user&gt;:&lt;pass&gt; -H <span class=s2>&#34;Content-Type: application/json&#34;</span> <span class=s2>&#34;http://127.0.0.1:5555/v2/&#34;</span>
+</span></span></code></pre></div><h1 id=kubernetes-sig--service-api>Kubernetes SIG / Service-API</h1><p>쿠버네티스의 서비스 관련 API CRD로 Gateway API (LoadBalancer API)를 사용할 수 있다</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># git clone</span>
+</span></span><span class=line><span class=cl>git clone https://github.com/kubernetes-sigs/service-apis
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>kustomize build https://github.com/kubernetes-sigs/service-apis/config/crd <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Build the Load Balanacer API controller manager image:
+</span></span><span class=line><span class=cl>make docker-build
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Load the Load Balancer API controller manager image into the Kind cluster:
+</span></span><span class=line><span class=cl>kind load docker-image load-balancer-api-controller:dev
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Load Balancer API 배포</span>
+</span></span><span class=line><span class=cl>kustomize build https://github.com/kubernetes/service-apis/config/default <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Create a cluster-scoped GatewayClass resource that configures access to the HAProxy DataPlane API server:
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: networking.x-k8s.io/v1alpha1
+</span></span></span><span class=line><span class=cl><span class=s>kind: GatewayClass
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: haproxy-lb
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  controller: lbapi.run.tanzu.vmware.com/haproxy
+</span></span></span><span class=line><span class=cl><span class=s>  parameters:
+</span></span></span><span class=line><span class=cl><span class=s>    group: v1
+</span></span></span><span class=line><span class=cl><span class=s>    resource: Secret
+</span></span></span><span class=line><span class=cl><span class=s>    name: haproxy-lb-config
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Create the Secret resource that contains the information used to access the DataPlane API server:
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Secret
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: haproxy-lb-config
+</span></span></span><span class=line><span class=cl><span class=s>  namespace: default
+</span></span></span><span class=line><span class=cl><span class=s>stringData:
+</span></span></span><span class=line><span class=cl><span class=s>  value: |
+</span></span></span><span class=line><span class=cl><span class=s>    debug: true
+</span></span></span><span class=line><span class=cl><span class=s>    servers:
+</span></span></span><span class=line><span class=cl><span class=s>    - https://172.17.0.2:5556/v2
+</span></span></span><span class=line><span class=cl><span class=s>    serverName: dataplane-api
+</span></span></span><span class=line><span class=cl><span class=s>    certificateAuthorityData: &#34;$({ base64 -w0 2&gt;/dev/null || base64; } &lt;hack/images/haproxy/example/ca.crt)&#34;
+</span></span></span><span class=line><span class=cl><span class=s>    clientCertificateData: &#34;$({ base64 -w0 2&gt;/dev/null || base64; } &lt;hack/images/haproxy/example/client.crt)&#34;
+</span></span></span><span class=line><span class=cl><span class=s>    clientKeyData: &#34;$({ base64 -w0 2&gt;/dev/null || base64; } &lt;hack/images/haproxy/example/client.key)&#34;
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Create a selectorless Service resource that indicates port <span class=m>80</span> should be forwarded to port 8080, the port on which the web server is running:
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Service
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: httpd
+</span></span></span><span class=line><span class=cl><span class=s>  namespace: default
+</span></span></span><span class=line><span class=cl><span class=s>  labels:
+</span></span></span><span class=line><span class=cl><span class=s>    service.route.lbapi.run.tanzu.vmware.com/type: direct
+</span></span></span><span class=line><span class=cl><span class=s>    service.route.lbapi.run.tanzu.vmware.com/gateway-name: httpd
+</span></span></span><span class=line><span class=cl><span class=s>    service.route.lbapi.run.tanzu.vmware.com/gateway-namespace: default
+</span></span></span><span class=line><span class=cl><span class=s>  annotations:
+</span></span></span><span class=line><span class=cl><span class=s>    lbapi.run.tanzu.vmware.com/ip-address: 172.17.200.2
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  ports:
+</span></span></span><span class=line><span class=cl><span class=s>  - name: http
+</span></span></span><span class=line><span class=cl><span class=s>    port: 80
+</span></span></span><span class=line><span class=cl><span class=s>    targetPort: 8080
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>Please note the annotation lbapi.run.tanzu.vmware.com/ip-address is used to define the virtual IP address. The Load Balancer API does not yet include support <span class=k>for</span> IPAM, so the virtual IP to use must be provided. This IP address must be in the range supported by the load balancer.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Create the Endpoints resource that contains the IP address of the web server:
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Endpoints
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: httpd
+</span></span></span><span class=line><span class=cl><span class=s>  namespace: default
+</span></span></span><span class=line><span class=cl><span class=s>subsets:
+</span></span></span><span class=line><span class=cl><span class=s>- addresses:
+</span></span></span><span class=line><span class=cl><span class=s>  - ip: 172.17.0.3
+</span></span></span><span class=line><span class=cl><span class=s>  ports:
+</span></span></span><span class=line><span class=cl><span class=s>  - name: http
+</span></span></span><span class=line><span class=cl><span class=s>    port: 8080
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>At this point, <span class=k>if</span> everything has completed successfully, the environment is <span class=nb>set</span> up and ready to provision a load balanced IP address to the Service. Verify the Service does not currently have a load balanced IP address before proceeding:
+</span></span><span class=line><span class=cl>kubectl get service httpd -ojsonpath<span class=o>=</span><span class=s1>&#39;{.status.loadBalancer.ingress[0].ip}&#39;</span>
+</span></span><span class=line><span class=cl>The above <span class=nb>command</span> should not result in any output. For the <span class=nb>time</span> being, print the Service resource<span class=s1>&#39;s cluster IP address:
+</span></span></span><span class=line><span class=cl><span class=s1>kubectl get service httpd -ojsonpath=&#39;</span><span class=o>{</span>.spec.clusterIP<span class=o>}</span><span class=s1>&#39; &amp;&amp; echo
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>Because the service&#39;</span>s cluster IP is not visible outside the cluster, attempting to access the web server via the cluster IP will timeout:
+</span></span><span class=line><span class=cl>$ docker run --rm photon curl -sSm <span class=m>1</span> http://10.96.63.24
+</span></span><span class=line><span class=cl>curl: <span class=o>(</span>28<span class=o>)</span> Connection timed out after <span class=m>1000</span> milliseconds
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>To be accessed from outside the cluster the service needs a load balanced IP address, and one will be provisioned after the following Gateway resource is created:
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: networking.x-k8s.io/v1alpha1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Gateway
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: httpd
+</span></span></span><span class=line><span class=cl><span class=s>  namespace: default
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  class: haproxy-lb
+</span></span></span><span class=line><span class=cl><span class=s>  listeners:
+</span></span></span><span class=line><span class=cl><span class=s>  - name: ignored
+</span></span></span><span class=line><span class=cl><span class=s>  routes:
+</span></span></span><span class=line><span class=cl><span class=s>    namespaceSelector: {}
+</span></span></span><span class=line><span class=cl><span class=s>    routeSelector:
+</span></span></span><span class=line><span class=cl><span class=s>      matchLabels:
+</span></span></span><span class=line><span class=cl><span class=s>        service.route.lbapi.run.tanzu.vmware.com/type: direct
+</span></span></span><span class=line><span class=cl><span class=s>        service.route.lbapi.run.tanzu.vmware.com/gateway-name: httpd
+</span></span></span><span class=line><span class=cl><span class=s>        service.route.lbapi.run.tanzu.vmware.com/gateway-namespace: default
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The Load Balancer API<span class=s1>&#39;s HAProxy controller will see the above Gateway resource and reconcile it onto the HAProxy load balancer. Use the following command to watch the Service resource until it has a load balanced IP address:
+</span></span></span><span class=line><span class=cl><span class=s1>kubectl get service httpd -ojsonpath=&#39;</span><span class=o>{</span>.status.loadBalancer.ingress<span class=o>[</span>0<span class=o>]</span>.ip<span class=o>}</span><span class=err>&#39;</span> -w
+</span></span><span class=line><span class=cl>172.17.200.2
+</span></span><span class=line><span class=cl>The <span class=nb>command</span> should eventually returns an IP address, the load balanced address of the service. Once the IP has appeared, use the Ctrl-C key-combination to regain control of the terminal prompt.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Finally, use the load balanced IP address to access the web server:
+</span></span><span class=line><span class=cl>$ docker run --rm photon curl -sSm <span class=m>1</span> http://172.17.200.2
+</span></span><span class=line><span class=cl>hello
+</span></span><span class=line><span class=cl>Congratulations, HAProxy just provisioned a load balanced IP address <span class=k>for</span> the Kubernetes Service resource via the Load Balancer API!
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>To clean up the resources started in this example, execute the following command:
+</span></span></code></pre></div><hr><ul class=pager><li class=previous><a href=https://jupilhwang.github.io/post/200630.loadbalancerapi_for_k8s/ data-toggle=tooltip data-placement=top title="LoadBalancer API for k8s">&larr;
+Previous Post</a></li><li class=next><a href=https://jupilhwang.github.io/post/201101-tkg-quick-start/ data-toggle=tooltip data-placement=top title="TKG 1.2 설치/설정 : quick start">Next
+Post &rarr;</a></li></ul><div id=disqus-comment></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//just-do-it-2.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+sidebar-container"><section><hr class="hidden-sm hidden-xs"><h5><a href=https://jupilhwang.github.io/tags/>FEATURED TAGS</a></h5><div class=tags><a href=https://jupilhwang.github.io/tags/cloud title=cloud>cloud</a>
+<a href=https://jupilhwang.github.io/tags/groovy title=groovy>groovy</a>
+<a href=https://jupilhwang.github.io/tags/k8s title=k8s>k8s</a>
+<a href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes</a>
+<a href=https://jupilhwang.github.io/tags/linux title=linux>linux</a>
+<a href=https://jupilhwang.github.io/tags/network title=network>network</a>
+<a href=https://jupilhwang.github.io/tags/oracle title=oracle>oracle</a>
+<a href=https://jupilhwang.github.io/tags/tanzu title=tanzu>tanzu</a>
+<a href=https://jupilhwang.github.io/tags/tkg title=tkg>tkg</a>
+<a href=https://jupilhwang.github.io/tags/vsphere title=vsphere>vsphere</a></div></section></div></div></div></article><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center"><li><a href=mailto:jupil.hwang@gmail.com><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-envelope fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://twitter.com/jupil_hwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-twitter fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.facebook.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-facebook fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://github.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-github fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.linkedin.com/in/namoo4u><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-linkedin fa-stack-1x fa-inverse"></i></span></a></li><li><a href rel=alternate type=application/rss+xml title="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="copyright text-muted">Copyright &copy; Just Do It ! 행동하지 않으면 성공도 실패도 없다 2023<br><a href=https://themes.gohugo.io/hugo-theme-cleanwhite>CleanWhite Hugo Theme</a> by <a href=https://zhaohuabing.com>Huabing</a> |
+<iframe style=margin-left:2px;margin-bottom:-5px frameborder=0 scrolling=0 width=100px height=20px src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true"></iframe></p></div></div></div></footer><script>function loadAsync(e,t){var s=document,o="script",n=s.createElement(o),i=s.getElementsByTagName(o)[0];n.src=e,t&&n.addEventListener("load",function(e){t(null,e)},!1),i.parentNode.insertBefore(n,i)}</script><script>$("#tag_cloud").length!==0&&loadAsync("/js/jquery.tagcloud.js",function(){$.fn.tagcloud.defaults={color:{start:"#bbbbee",end:"#0085a1"}},$("#tag_cloud a").tagcloud()})</script><script>loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js",function(){var e=document.querySelector("nav");e&&FastClick.attach(e)})</script></body></html>

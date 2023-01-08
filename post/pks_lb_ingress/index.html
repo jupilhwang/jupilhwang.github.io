@@ -1,771 +1,113 @@
-<!DOCTYPE html>
-<html lang="en-US.UTF8">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    
-    <meta property="og:site_name" content="Just Do It ! - Yolo">
-    <meta property="og:type" content="article">
-
-    
-    <meta property="og:image" content="https://jupilhwang.github.io//img/home-bg.jpg">
-    <meta property="twitter:image" content="https://jupilhwang.github.io//img/home-bg.jpg" />
-    
-
-    
-    <meta name="title" content="PKS의 NSX에서 LB와 Ingress 사용" />
-    <meta property="og:title" content="PKS의 NSX에서 LB와 Ingress 사용" />
-    <meta property="twitter:title" content="PKS의 NSX에서 LB와 Ingress 사용" />
-    
-
-    
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
-    
-
-    
-    <meta property="twitter:card" content="summary" />
-    
-    
-
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="https://jupilhwang.github.io/img/favicon.ico">
-
-    <title>PKS의 NSX에서 LB와 Ingress 사용-</title>
-
-    <link rel="canonical" href="https://jupilhwang.github.io/post/pks_lb_ingress/">
-
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/iDisqus.min.css"/>
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/bootstrap.min.css">
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/hux-blog.min.css">
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/zanshang.css">
-
-    
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" type="text/css">
-
-    
-    <link rel="stylesheet" href="https://jupilhwang.github.io/css/lightbox.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"><link rel="stylesheet" href="https://jupilhwang.github.io/css/main.css">
-
-    
-    
-    <script src="https://jupilhwang.github.io/js/jquery.min.js"></script>
-
-    
-    <script src="https://jupilhwang.github.io/js/bootstrap.min.js"></script>
-
-    
-    <script src="https://jupilhwang.github.io/js/hux-blog.min.js"></script>
-
-    
-    
-    <script src="https://jupilhwang.github.io/js/lightbox.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
-    <script src="https://jupilhwang.github.io/js/main.js"></script>
-    
-
-</head>
-
-
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://jupilhwang.github.io/">Just Do It ! - Yolo</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://jupilhwang.github.io/">Home</a>
-                    </li>
-                    
-                    
-		    
-                        <li><a href="https://jupilhwang.github.io/top/books/">BOOKS</a></li>
-                    
-                        <li><a href="https://jupilhwang.github.io/page/about">ABOUT</a></li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
-    
-    
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-
-
-
-<style type="text/css">
-    header.intro-header {
-        background-image: url('/img/home-bg.jpg')
-    }
-</style>
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/pks" title="PKS">
-                            PKS
-                        </a>
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/nsx-t" title="NSX-T">
-                            NSX-T
-                        </a>
-                        
-                        <a class="tag" href="https://jupilhwang.github.io/tags/ingress" title="Ingress">
-                            Ingress
-                        </a>
-                        
-                    </div>
-                    <h1>PKS의 NSX에서 LB와 Ingress 사용</h1>
-                    <h2 class="subheading"></h2>
-                    <span class="meta">
-                        Posted by 
-                        
-                                Just Do It ! - Yolo
-                         
-                        on 
-                        Thursday, April 23, 2020
-                        
-                        
-                        
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-
-
-
-<article>
-    <div class="container">
-        <div class="row">
-
-            
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                post-container">
-
-                
-                <h1 id="pks와-네트워크---pks의-nsx에서-lb와-ingress-사용">PKS와 네트워크 - PKS의 NSX에서 LB와 Ingress 사용</h1>
-<h2 id="network-profile">Network Profile</h2>
-<p>쿠버네티스 클러스터에서 사용할 네트워크를 위해 미리 프로파일을 생성해 놓고 PKS에서 클러스터를 만들 때 이 네트워크 프로파일을 지정할 수 있다.</p>
-<ul>
-<li>기본 쿠버네티스 클러스터 속성</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">ubuntu@ubuntu-205:~/works/pks-network-profile$ pks cluster k8s --details
-
-PKS Version:              1.7.0-build.26
-Name:                     k8s
-K8s Version:              1.16.7
-Plan Name:                Small
-UUID:                     a09dc43b-c1dc-42db-9fad-c00c2d3594f0
-Last Action:              CREATE
-Last Action State:        succeeded
-Last Action Description:  Instance provisioning completed
-Kubernetes Master Host:   10.195.70.136
-Kubernetes Master Port:   <span class="m">8443</span>
-Worker Nodes:             <span class="m">2</span>
-Kubernetes Master IP<span class="o">(</span>s<span class="o">)</span>:  10.195.70.136
-Network Profile Name:
-Kubernetes Profile Name:
-Tags:
-
-NSXT Network Details:
-  Load Balancer Size                       <span class="o">(</span>lb_size<span class="o">)</span>:                  <span class="s2">&#34;small&#34;</span>
-  Nodes DNS Setting                        <span class="o">(</span>nodes_dns<span class="o">)</span>:                <span class="o">[</span><span class="s2">&#34;10.192.2.10&#34;</span>,<span class="s2">&#34;10.192.2.11&#34;</span><span class="o">]</span>
-  Node IP addresses are routable <span class="o">[</span>no-nat<span class="o">]</span>  <span class="o">(</span>node_routable<span class="o">)</span>:            <span class="nb">false</span>
-  Nodes subnet prefix                      <span class="o">(</span>node_subnet_prefix<span class="o">)</span>:       <span class="m">24</span>
-  POD IP addresses are routable <span class="o">[</span>no-nat<span class="o">]</span>   <span class="o">(</span>pod_routable<span class="o">)</span>:             <span class="nb">false</span>
-  PODs subnet prefix                       <span class="o">(</span>pod_subnet_prefix<span class="o">)</span>:        <span class="m">24</span>
-  NS Group ID of master VMs                <span class="o">(</span>master_vms_nsgroup_id<span class="o">)</span>:    <span class="s2">&#34;&#34;</span>
-  Tier <span class="m">0</span> Router identifier                 <span class="o">(</span>t0_router_id<span class="o">)</span>:             <span class="s2">&#34;a85c1b46-653d-459a-97f7-734d7d214e5c&#34;</span>
-  Floating IP Pool identifiers             <span class="o">(</span>fip_pool_ids<span class="o">)</span>:             <span class="o">[</span><span class="s2">&#34;c232499d-6de5-45e2-bf72-c769c3fcd787&#34;</span><span class="o">]</span>
-  Node IP block identifiers                <span class="o">(</span>node_ip_block_ids<span class="o">)</span>:        <span class="o">[</span><span class="s2">&#34;ba66ad9a-b7f1-417b-91d0-bbe64cdc2c12&#34;</span><span class="o">]</span>
-  POD IP block identifiers                 <span class="o">(</span>pod_ip_block_ids<span class="o">)</span>:         <span class="o">[</span><span class="s2">&#34;e8136240-90b2-45ba-a30e-0f6d77b077b4&#34;</span><span class="o">]</span>
-  Shared tier1                             <span class="o">(</span>single_tier_topology<span class="o">)</span>:     <span class="nb">true</span>
-  Infrastructure networks                  <span class="o">(</span>infrastructure_networks<span class="o">)</span>:  <span class="s2">&#34;&#34;</span>
-Kubernetes Settings Details:
-  Set by Plan:
-  Kubelet Node Drain timeout <span class="o">(</span>mins<span class="o">)</span>          <span class="o">(</span>kubelet-drain-timeout<span class="o">)</span>:            <span class="m">0</span>
-  Kubelet Node Drain grace-period <span class="o">(</span>seconds<span class="o">)</span>  <span class="o">(</span>kubelet-drain-grace-period<span class="o">)</span>:       <span class="m">10</span>
-  Kubelet Node Drain force                   <span class="o">(</span>kubelet-drain-force<span class="o">)</span>:              <span class="nb">true</span>
-  Kubelet Node Drain force-node              <span class="o">(</span>kubelet-drain-force-node<span class="o">)</span>:         <span class="nb">false</span>
-  Kubelet Node Drain ignore-daemonsets       <span class="o">(</span>kubelet-drain-ignore-daemonsets<span class="o">)</span>:  <span class="nb">true</span>
-  Kubelet Node Drain delete-local-data       <span class="o">(</span>kubelet-drain-delete-local-data<span class="o">)</span>:  <span class="nb">true</span>
-</code></pre></div><p>lb_size : small
+<!doctype html><html lang=en-us.utf8><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:site_name" content="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><meta property="og:type" content="article"><meta property="og:image" content="https://jupilhwang.github.io/img/home-bg.jpg"><meta property="twitter:image" content="https://jupilhwang.github.io/img/home-bg.jpg"><meta name=title content="PKS의 NSX에서 LB와 Ingress 사용"><meta property="og:title" content="PKS의 NSX에서 LB와 Ingress 사용"><meta property="twitter:title" content="PKS의 NSX에서 LB와 Ingress 사용"><meta name=description content><meta property="og:description" content><meta property="twitter:description" content><meta property="twitter:card" content="summary"><meta name=keyword content><link rel="shortcut icon" href=https://jupilhwang.github.io/img/favicon.ico><title>PKS의 NSX에서 LB와 Ingress 사용 |</title><link rel=canonical href=https://jupilhwang.github.io/post/pks_lb_ingress/><link rel=stylesheet href=https://jupilhwang.github.io/css/bootstrap.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/hugo-theme-cleanwhite.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/zanshang.css><link href=https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css rel=stylesheet type=text/css><link rel=stylesheet href=https://jupilhwang.github.io/css/lightbox.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/main.css><script src=https://jupilhwang.github.io/js/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/bootstrap.min.js></script>
+<script src=https://jupilhwang.github.io/js/hux-blog.min.js></script>
+<script src=https://jupilhwang.github.io/js/lazysizes.min.js></script>
+<script src=https://jupilhwang.github.io/js/lightbox.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<script src=https://jupilhwang.github.io/js/main.js></script></head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-117423189-1","auto"),ga("send","pageview"))</script><nav class="navbar navbar-default navbar-custom navbar-fixed-top"><div class=container-fluid><div class="navbar-header page-scroll"><button type=button class=navbar-toggle>
+<span class=sr-only>Toggle navigation</span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+<span class=icon-bar></span></button>
+<a class=navbar-brand href=https://jupilhwang.github.io/>Just Do It ! 행동하지 않으면 성공도 실패도 없다</a></div><div id=huxblog_navbar><div class=navbar-collapse><ul class="nav navbar-nav navbar-right"><li><a href=https://jupilhwang.github.io/>All Posts</a></li><li><a href=https://jupilhwang.github.io/top/books/>BOOKS</a></li><li><a href=https://jupilhwang.github.io/page/about>ABOUT</a></li><li><a href=https://jupilhwang.github.io/search><i class="fa fa-search"></i></a></li></ul></div></div></div></nav><script>var $body=document.body,$toggle=document.querySelector(".navbar-toggle"),$navbar=document.querySelector("#huxblog_navbar"),$collapse=document.querySelector(".navbar-collapse");$toggle.addEventListener("click",handleMagic);function handleMagic(){$navbar.className.indexOf("in")>0?($navbar.className=" ",setTimeout(function(){$navbar.className.indexOf("in")<0&&($collapse.style.height="0px")},400)):($collapse.style.height="auto",$navbar.className+=" in")}</script><style type=text/css>header.intro-header{background-image:url(/img/home-bg.jpg)}</style><header class=intro-header><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><div class=tags><a class=tag href=https://jupilhwang.github.io/tags/pks title=PKS>PKS</a>
+<a class=tag href=https://jupilhwang.github.io/tags/nsx-t title=NSX-T>NSX-T</a>
+<a class=tag href=https://jupilhwang.github.io/tags/ingress title=Ingress>Ingress</a></div><h1>PKS의 NSX에서 LB와 Ingress 사용</h1><h2 class=subheading></h2><span class=meta>Posted by
+Just Do It ! 행동하지 않으면 성공도 실패도 없다
+on
+Thursday, April 23, 2020</span></div></div></div></div></header><article><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+post-container"><h1 id=pks와-네트워크---pks의-nsx에서-lb와-ingress-사용>PKS와 네트워크 - PKS의 NSX에서 LB와 Ingress 사용</h1><h2 id=network-profile>Network Profile</h2><p>쿠버네티스 클러스터에서 사용할 네트워크를 위해 미리 프로파일을 생성해 놓고 PKS에서 클러스터를 만들 때 이 네트워크 프로파일을 지정할 수 있다.</p><ul><li>기본 쿠버네티스 클러스터 속성</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ubuntu@ubuntu-205:~/works/pks-network-profile$ pks cluster k8s --details
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>PKS Version:              1.7.0-build.26
+</span></span><span class=line><span class=cl>Name:                     k8s
+</span></span><span class=line><span class=cl>K8s Version:              1.16.7
+</span></span><span class=line><span class=cl>Plan Name:                Small
+</span></span><span class=line><span class=cl>UUID:                     a09dc43b-c1dc-42db-9fad-c00c2d3594f0
+</span></span><span class=line><span class=cl>Last Action:              CREATE
+</span></span><span class=line><span class=cl>Last Action State:        succeeded
+</span></span><span class=line><span class=cl>Last Action Description:  Instance provisioning completed
+</span></span><span class=line><span class=cl>Kubernetes Master Host:   10.195.70.136
+</span></span><span class=line><span class=cl>Kubernetes Master Port:   <span class=m>8443</span>
+</span></span><span class=line><span class=cl>Worker Nodes:             <span class=m>2</span>
+</span></span><span class=line><span class=cl>Kubernetes Master IP<span class=o>(</span>s<span class=o>)</span>:  10.195.70.136
+</span></span><span class=line><span class=cl>Network Profile Name:
+</span></span><span class=line><span class=cl>Kubernetes Profile Name:
+</span></span><span class=line><span class=cl>Tags:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>NSXT Network Details:
+</span></span><span class=line><span class=cl>  Load Balancer Size                       <span class=o>(</span>lb_size<span class=o>)</span>:                  <span class=s2>&#34;small&#34;</span>
+</span></span><span class=line><span class=cl>  Nodes DNS Setting                        <span class=o>(</span>nodes_dns<span class=o>)</span>:                <span class=o>[</span><span class=s2>&#34;10.192.2.10&#34;</span>,<span class=s2>&#34;10.192.2.11&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>  Node IP addresses are routable <span class=o>[</span>no-nat<span class=o>]</span>  <span class=o>(</span>node_routable<span class=o>)</span>:            <span class=nb>false</span>
+</span></span><span class=line><span class=cl>  Nodes subnet prefix                      <span class=o>(</span>node_subnet_prefix<span class=o>)</span>:       <span class=m>24</span>
+</span></span><span class=line><span class=cl>  POD IP addresses are routable <span class=o>[</span>no-nat<span class=o>]</span>   <span class=o>(</span>pod_routable<span class=o>)</span>:             <span class=nb>false</span>
+</span></span><span class=line><span class=cl>  PODs subnet prefix                       <span class=o>(</span>pod_subnet_prefix<span class=o>)</span>:        <span class=m>24</span>
+</span></span><span class=line><span class=cl>  NS Group ID of master VMs                <span class=o>(</span>master_vms_nsgroup_id<span class=o>)</span>:    <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>  Tier <span class=m>0</span> Router identifier                 <span class=o>(</span>t0_router_id<span class=o>)</span>:             <span class=s2>&#34;a85c1b46-653d-459a-97f7-734d7d214e5c&#34;</span>
+</span></span><span class=line><span class=cl>  Floating IP Pool identifiers             <span class=o>(</span>fip_pool_ids<span class=o>)</span>:             <span class=o>[</span><span class=s2>&#34;c232499d-6de5-45e2-bf72-c769c3fcd787&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>  Node IP block identifiers                <span class=o>(</span>node_ip_block_ids<span class=o>)</span>:        <span class=o>[</span><span class=s2>&#34;ba66ad9a-b7f1-417b-91d0-bbe64cdc2c12&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>  POD IP block identifiers                 <span class=o>(</span>pod_ip_block_ids<span class=o>)</span>:         <span class=o>[</span><span class=s2>&#34;e8136240-90b2-45ba-a30e-0f6d77b077b4&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>  Shared tier1                             <span class=o>(</span>single_tier_topology<span class=o>)</span>:     <span class=nb>true</span>
+</span></span><span class=line><span class=cl>  Infrastructure networks                  <span class=o>(</span>infrastructure_networks<span class=o>)</span>:  <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>Kubernetes Settings Details:
+</span></span><span class=line><span class=cl>  Set by Plan:
+</span></span><span class=line><span class=cl>  Kubelet Node Drain timeout <span class=o>(</span>mins<span class=o>)</span>          <span class=o>(</span>kubelet-drain-timeout<span class=o>)</span>:            <span class=m>0</span>
+</span></span><span class=line><span class=cl>  Kubelet Node Drain grace-period <span class=o>(</span>seconds<span class=o>)</span>  <span class=o>(</span>kubelet-drain-grace-period<span class=o>)</span>:       <span class=m>10</span>
+</span></span><span class=line><span class=cl>  Kubelet Node Drain force                   <span class=o>(</span>kubelet-drain-force<span class=o>)</span>:              <span class=nb>true</span>
+</span></span><span class=line><span class=cl>  Kubelet Node Drain force-node              <span class=o>(</span>kubelet-drain-force-node<span class=o>)</span>:         <span class=nb>false</span>
+</span></span><span class=line><span class=cl>  Kubelet Node Drain ignore-daemonsets       <span class=o>(</span>kubelet-drain-ignore-daemonsets<span class=o>)</span>:  <span class=nb>true</span>
+</span></span><span class=line><span class=cl>  Kubelet Node Drain delete-local-data       <span class=o>(</span>kubelet-drain-delete-local-data<span class=o>)</span>:  <span class=nb>true</span>
+</span></span></code></pre></div><p>lb_size : small
 single_tier_topology: true
 node_routable: false
-pod_routable: false</p>
-<p>PKS에서는 기본으로 멀티 마스터를 위한 LB와 Ingress를 위한 LB의 Virtual Server가 만들어지는데, Network Profile 에서 이를 비활성할 수 있다.</p>
-<ul>
-<li>disable_lb_ingress.yaml</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">{<span class="w">
-</span><span class="w">  </span><span class="k">&#34;name&#34;: </span><span class="s2">&#34;lb_ingress_disable&#34;</span><span class="p">,</span><span class="w">
-</span><span class="w">  </span><span class="k">&#34;description&#34;: </span><span class="s2">&#34;nsx-t ingress controller: false, nsx-lb: false&#34;</span><span class="p">,</span><span class="w">
-</span><span class="w">  </span><span class="s2">&#34;parameters&#34;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span>{<span class="w">
-</span><span class="w">     </span><span class="k">&#34;cni_configurations&#34;: </span>{<span class="w">
-</span><span class="w">         </span><span class="k">&#34;type&#34;: </span><span class="s2">&#34;nsxt&#34;</span><span class="p">,</span><span class="w">
-</span><span class="w">         </span><span class="k">&#34;parameters&#34;: </span>{<span class="w">
-</span><span class="w">            </span><span class="k">&#34;nsx_lb&#34;: </span><span class="kc">false</span><span class="p">,</span><span class="w">
-</span><span class="w">            </span><span class="k">&#34;nsx_ingress_controller&#34;: </span><span class="kc">false</span><span class="w">
-</span><span class="w">         </span>}<span class="w">
-</span><span class="w">     </span>}<span class="w">
-</span><span class="w">  </span>}<span class="w">
-</span><span class="w"></span>}<span class="w">
-</span></code></pre></div><ul>
-<li>쿠버네티스 network-profile 생성</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">pks create-network-profile disable_lb_ingress.yaml
-</code></pre></div><p>T1 Router 에서 NAT 서비스로 SNAT가 각 Node IP Pool 과 Pod IP Pool 에 맴핑됨
-
-  <img src="https://jupilhwang.github.io/img/pks_nsx-t_network-profile/t1_servics_NAT.png" alt="">
-
-</p>
-<p>기본 네트워크 프로파일로 클러스터를 생성시, Master 노드의 API Server 용 로드밸런서 Virtual Server와 NSX-T Ingress Controller를 위한 로드밸런서 Virtual Server 가 생성됨
-
-  <img src="https://jupilhwang.github.io/img/pks_nsx-t_network-profile/lb_true_ingress_true_virtualserver.png" alt="">
-
-</p>
-<p>lb_ingress_disable 네트워크 프로파일을 가지고 생성된 쿠버네티스 클러스터의 Master API Server용 NSX-T 로드밸런서 하나만 생성됨
-
-  <img src="https://jupilhwang.github.io/img/pks_nsx-t_network-profile/lb_false_ingress_false_virtual_servers.png" alt="">
-
-</p>
-<p>Pod routable: true, nsx_ingress_controller: false</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">{<span class="w">
-</span><span class="w">  </span><span class="k">&#34;name&#34;: </span><span class="s2">&#34;pod_routable&#34;</span><span class="p">,</span><span class="w">
-</span><span class="w">  </span><span class="k">&#34;description&#34;: </span><span class="s2">&#34;nsx-t ingress controller: false, nsx-lb: false&#34;</span><span class="p">,</span><span class="w">
-</span><span class="w">  </span><span class="s2">&#34;parameters&#34;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span>{<span class="w">
-</span><span class="w">     </span><span class="k">&#34;cni_configurations&#34;: </span>{<span class="w">
-</span><span class="w">         </span><span class="k">&#34;type&#34;: </span><span class="s2">&#34;nsxt&#34;</span><span class="p">,</span><span class="w">
-</span><span class="w">         </span><span class="k">&#34;parameters&#34;: </span>{<span class="w">
-</span><span class="w">            </span><span class="k">&#34;pod_routable&#34;: </span><span class="kc">true</span><span class="p">,</span><span class="w">
-</span><span class="w">            </span><span class="k">&#34;node_routable&#34;: </span><span class="kc">true</span><span class="p">,</span><span class="w">
-</span><span class="w">            </span><span class="k">&#34;nsx_ingress_controller&#34;: </span><span class="kc">false</span><span class="w">
-</span><span class="w">         </span>}<span class="w">
-</span><span class="w">     </span>}<span class="w">
-</span><span class="w">  </span>}<span class="w">
-</span><span class="w"></span>}<span class="w">
-</span></code></pre></div>
-
-                
-
-                <hr>
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="https://jupilhwang.github.io/post/springboot_2.3_with_r2dbc_mysql/" data-toggle="tooltip" data-placement="top" title="SpringBoot 2.3 과 R2DBC를 이용한 어플리케이션">&larr;
-                            Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="https://jupilhwang.github.io/post/multiple-boot-usb-%EC%83%9D%EC%84%B1%ED%88%B4/" data-toggle="tooltip" data-placement="top" title="Ventoy: Multiple Boot USB 디스크 생성툴">Next
-                            Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-<div id="disqus-comment"></div>
-
-<div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "just-do-it-2" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
-            </div>
-            
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="https://jupilhwang.github.io/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/cd" title="cd">
-                            cd
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/cloud" title="cloud">
-                            cloud
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/groovy" title="groovy">
-                            groovy
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/k8s" title="k8s">
-                            k8s
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/kubernetes" title="kubernetes">
-                            kubernetes
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/linux" title="linux">
-                            linux
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/network" title="network">
-                            network
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/oracle" title="oracle">
-                            oracle
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/tanzu" title="tanzu">
-                            tanzu
-                        </a>
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/tkg" title="tkg">
-                            tkg
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="https://jupilhwang.github.io/tags/vsphere" title="vsphere">
-                            vsphere
-                        </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </div>
-                </section>
-                
-
-                
-                
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                   <li>
-                       <a href='' rel="alternate" type="application/rss+xml" title="Just Do It ! - Yolo" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fas fa-circle fa-stack-2x"></i>
-                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-                   
-                    
-                    <li>
-                        <a href="mailto:jupil.hwang@gmail.com">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-
-                    
-                    <li>
-                        <a href="https://twitter.com/jupil_hwang">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    
-                    
-                    
-
-                    
-                    <li>
-                        <a target="_blank" href="https://www.facebook.com/jupilhwang">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-
-		    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://github.com/jupilhwang">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-                    
-                    
-                    
-                    <li>
-                        <a target="_blank" href="https://www.linkedin.com/in/namoo4u">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-		    
-                    
-                    
-                    
-                    
-                    
-            
-            
-            
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; Just Do It ! - Yolo 2021
-                    <br>
-                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="100px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
-                    </iframe>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-
-
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-
-
-
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-
-
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-117423189-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-</body>
-</html>
+pod_routable: false</p><p>PKS에서는 기본으로 멀티 마스터를 위한 LB와 Ingress를 위한 LB의 Virtual Server가 만들어지는데, Network Profile 에서 이를 비활성할 수 있다.</p><ul><li>disable_lb_ingress.yaml</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl>{<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>&#34;name&#34;: </span><span class=s2>&#34;lb_ingress_disable&#34;</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>&#34;description&#34;: </span><span class=s2>&#34;nsx-t ingress controller: false, nsx-lb: false&#34;</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=s2>&#34;parameters&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span>{<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>     </span><span class=nt>&#34;cni_configurations&#34;: </span>{<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>         </span><span class=nt>&#34;type&#34;: </span><span class=s2>&#34;nsxt&#34;</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>         </span><span class=nt>&#34;parameters&#34;: </span>{<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>&#34;nsx_lb&#34;: </span><span class=kc>false</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>&#34;nsx_ingress_controller&#34;: </span><span class=kc>false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>         </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>     </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>}<span class=w>
+</span></span></span></code></pre></div><ul><li>쿠버네티스 network-profile 생성</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pks create-network-profile disable_lb_ingress.yaml
+</span></span></code></pre></div><p>T1 Router 에서 NAT 서비스로 SNAT가 각 Node IP Pool 과 Pod IP Pool 에 맴핑됨
+<img src=https://jupilhwang.github.io/img/pks_nsx-t_network-profile/t1_servics_NAT.png alt></p><p>기본 네트워크 프로파일로 클러스터를 생성시, Master 노드의 API Server 용 로드밸런서 Virtual Server와 NSX-T Ingress Controller를 위한 로드밸런서 Virtual Server 가 생성됨
+<img src=https://jupilhwang.github.io/img/pks_nsx-t_network-profile/lb_true_ingress_true_virtualserver.png alt></p><p>lb_ingress_disable 네트워크 프로파일을 가지고 생성된 쿠버네티스 클러스터의 Master API Server용 NSX-T 로드밸런서 하나만 생성됨
+<img src=https://jupilhwang.github.io/img/pks_nsx-t_network-profile/lb_false_ingress_false_virtual_servers.png alt></p><p>Pod routable: true, nsx_ingress_controller: false</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl>{<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>&#34;name&#34;: </span><span class=s2>&#34;pod_routable&#34;</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>&#34;description&#34;: </span><span class=s2>&#34;nsx-t ingress controller: false, nsx-lb: false&#34;</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=s2>&#34;parameters&#34;</span><span class=w> </span><span class=p>:</span><span class=w> </span>{<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>     </span><span class=nt>&#34;cni_configurations&#34;: </span>{<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>         </span><span class=nt>&#34;type&#34;: </span><span class=s2>&#34;nsxt&#34;</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>         </span><span class=nt>&#34;parameters&#34;: </span>{<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>&#34;pod_routable&#34;: </span><span class=kc>true</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>&#34;node_routable&#34;: </span><span class=kc>true</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>&#34;nsx_ingress_controller&#34;: </span><span class=kc>false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>         </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>     </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>}<span class=w>
+</span></span></span></code></pre></div><hr><ul class=pager><li class=previous><a href=https://jupilhwang.github.io/post/springboot_2.3_with_r2dbc_mysql/ data-toggle=tooltip data-placement=top title="SpringBoot 2.3 과 R2DBC를 이용한 어플리케이션">&larr;
+Previous Post</a></li><li class=next><a href=https://jupilhwang.github.io/post/multiple-boot-usb-%EC%83%9D%EC%84%B1%ED%88%B4/ data-toggle=tooltip data-placement=top title="Ventoy: Multiple Boot USB 디스크 생성툴">Next
+Post &rarr;</a></li></ul><div id=disqus-comment></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//just-do-it-2.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+sidebar-container"><section><hr class="hidden-sm hidden-xs"><h5><a href=https://jupilhwang.github.io/tags/>FEATURED TAGS</a></h5><div class=tags><a href=https://jupilhwang.github.io/tags/cloud title=cloud>cloud</a>
+<a href=https://jupilhwang.github.io/tags/groovy title=groovy>groovy</a>
+<a href=https://jupilhwang.github.io/tags/k8s title=k8s>k8s</a>
+<a href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes</a>
+<a href=https://jupilhwang.github.io/tags/linux title=linux>linux</a>
+<a href=https://jupilhwang.github.io/tags/network title=network>network</a>
+<a href=https://jupilhwang.github.io/tags/oracle title=oracle>oracle</a>
+<a href=https://jupilhwang.github.io/tags/tanzu title=tanzu>tanzu</a>
+<a href=https://jupilhwang.github.io/tags/tkg title=tkg>tkg</a>
+<a href=https://jupilhwang.github.io/tags/vsphere title=vsphere>vsphere</a></div></section></div></div></div></article><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center"><li><a href=mailto:jupil.hwang@gmail.com><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-envelope fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://twitter.com/jupil_hwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-twitter fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.facebook.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-facebook fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://github.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-github fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.linkedin.com/in/namoo4u><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-linkedin fa-stack-1x fa-inverse"></i></span></a></li><li><a href rel=alternate type=application/rss+xml title="Just Do It ! 행동하지 않으면 성공도 실패도 없다"><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="copyright text-muted">Copyright &copy; Just Do It ! 행동하지 않으면 성공도 실패도 없다 2023<br><a href=https://themes.gohugo.io/hugo-theme-cleanwhite>CleanWhite Hugo Theme</a> by <a href=https://zhaohuabing.com>Huabing</a> |
+<iframe style=margin-left:2px;margin-bottom:-5px frameborder=0 scrolling=0 width=100px height=20px src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true"></iframe></p></div></div></div></footer><script>function loadAsync(e,t){var s=document,o="script",n=s.createElement(o),i=s.getElementsByTagName(o)[0];n.src=e,t&&n.addEventListener("load",function(e){t(null,e)},!1),i.parentNode.insertBefore(n,i)}</script><script>$("#tag_cloud").length!==0&&loadAsync("/js/jquery.tagcloud.js",function(){$.fn.tagcloud.defaults={color:{start:"#bbbbee",end:"#0085a1"}},$("#tag_cloud a").tagcloud()})</script><script>loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js",function(){var e=document.querySelector("nav");e&&FastClick.attach(e)})</script></body></html>

@@ -1,26 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>zsh on Just Do It ! - Yolo</title>
-    <link>https://jupilhwang.github.io/tags/zsh/</link>
-    <description>Recent content in zsh on Just Do It ! - Yolo</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-US.UTF8</language>
-    <copyright>Jupil Hwang All rights reserved</copyright>
-    <lastBuildDate>Tue, 22 Nov 2016 00:27:10 +0900</lastBuildDate>
-    
-	<atom:link href="https://jupilhwang.github.io/tags/zsh/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>oh my zsh 설치하기</title>
-      <link>https://jupilhwang.github.io/post/oh-my-zsh-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/</link>
-      <pubDate>Tue, 22 Nov 2016 00:27:10 +0900</pubDate>
-      
-      <guid>https://jupilhwang.github.io/post/oh-my-zsh-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/</guid>
-      <description>zsh 를 설치하고, oh-my-zsh 를 설치하기
-$ curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh </description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>zsh on Just Do It ! 행동하지 않으면 성공도 실패도 없다</title><link>https://jupilhwang.github.io/tags/zsh/</link><description>Recent content in zsh on Just Do It ! 행동하지 않으면 성공도 실패도 없다</description><generator>Hugo -- gohugo.io</generator><language>en-US.UTF8</language><copyright>Jupil Hwang All rights reserved</copyright><lastBuildDate>Tue, 22 Nov 2016 00:27:10 +0900</lastBuildDate><atom:link href="https://jupilhwang.github.io/tags/zsh/index.xml" rel="self" type="application/rss+xml"/><item><title>oh my zsh 설치하기</title><link>https://jupilhwang.github.io/post/oh-my-zsh-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/</link><pubDate>Tue, 22 Nov 2016 00:27:10 +0900</pubDate><guid>https://jupilhwang.github.io/post/oh-my-zsh-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/</guid><description>zsh 를 설치하고, oh-my-zsh 를 설치하기
+$ curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh</description></item></channel></rss>
