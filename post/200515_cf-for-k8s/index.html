@@ -1,0 +1,95 @@
+<!doctype html><html lang=en-US.UTF8><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:site_name" content="행동하지 않으면 성공도 실패도 없다!! Just Do It!!"><meta property="og:type" content="article"><meta property="og:image" content="https://jupilhwang.github.io//img/home-bg.jpg"><meta property="twitter:image" content="https://jupilhwang.github.io//img/home-bg.jpg"><meta name=title content="CF for K8s"><meta property="og:title" content="CF for K8s"><meta property="twitter:title" content="CF for K8s"><meta name=description content><meta property="og:description" content><meta property="twitter:description" content><meta property="og:url" content="https://jupilhwang.github.io/post/200515_cf-for-k8s/"><meta property="twitter:card" content="summary"><meta name=keyword content><link rel="shortcut icon" href=https://jupilhwang.github.io/img/favicon.ico><title>CF for K8s | </title><link rel=canonical href=https://jupilhwang.github.io/post/200515_cf-for-k8s/><link rel=stylesheet href=https://jupilhwang.github.io/css/bootstrap.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/hugo-theme-cleanwhite.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/zanshang.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/font-awesome.all.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/lightbox.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css><link rel=stylesheet href=https://jupilhwang.github.io/css/main.css><script src=https://jupilhwang.github.io/js/jquery.min.js></script><script src=https://jupilhwang.github.io/js/bootstrap.min.js></script><script src=https://jupilhwang.github.io/js/hux-blog.min.js></script><script src=https://jupilhwang.github.io/js/lazysizes.min.js></script><script src=https://jupilhwang.github.io/js/lightbox.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script><script src=https://jupilhwang.github.io/js/main.js></script></head><nav class="navbar navbar-default navbar-custom navbar-fixed-top"><div class=container-fluid><div class="navbar-header page-scroll"><button type=button class=navbar-toggle>
+<span class=sr-only>Toggle navigation</span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+</button>
+<a class=navbar-brand href=https://jupilhwang.github.io/>행동하지 않으면 성공도 실패도 없다!! Just Do It!!</a></div><div id=huxblog_navbar><div class=navbar-collapse><ul class="nav navbar-nav navbar-right"><li><a href=https://jupilhwang.github.io/>All Posts</a></li><li><a href=https://jupilhwang.github.io/search><i class="fa fa-search"></i></a></li></ul></div></div></div></nav><script>var $body=document.body,$toggle=document.querySelector(".navbar-toggle"),$navbar=document.querySelector("#huxblog_navbar"),$collapse=document.querySelector(".navbar-collapse");$toggle.addEventListener("click",handleMagic);function handleMagic(){$navbar.className.indexOf("in")>0?($navbar.className=" ",setTimeout(function(){$navbar.className.indexOf("in")<0&&($collapse.style.height="0px")},400)):($collapse.style.height="auto",$navbar.className+=" in")}</script><style type=text/css>header.intro-header{background-image:url(/img/home-bg.jpg)}</style><header class=intro-header><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><div class=tags><a class=tag href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes
+</a><a class=tag href=https://jupilhwang.github.io/tags/cf title=cf>cf
+</a><a class=tag href=https://jupilhwang.github.io/tags/cloudfoundry title=cloudfoundry>cloudfoundry
+</a><a class=tag href=https://jupilhwang.github.io/tags/cf4k8s title=cf4k8s>cf4k8s</a></div><h1>CF for K8s</h1><h2 class=subheading></h2><span class=meta>Posted by
+행동하지 않으면 성공도 실패도 없다!! Just Do It!!
+on
+Friday, May 15, 2020</span></div></div></div></div></header><article><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+post-container"><blockquote><p>Cloudfoundry 는 컨테이너 기반의 애플리케이션을 위한 플랫폼으로 PaaS 시장을 선도하고 있다.
+Heroku와 더불어 PaaS의 양대 산맥이라 할 수 있을 것이다.
+Cloudfoundry 는 자체 개발한 Garden이라고 하는 컨테이너 오케스트레이션 툴을 사용하였다.
+Kubernetes 가 등장하고 나서, 이 컨테이너 오케스트레이션 툴을 Kuberentes 으로 대체하는 프로젝트가 등장하였고,
+마침내 cf-for-k8s 가 나왔다.
+기존에 애플리케이션을 개발하여 손쉽게 배포하여 테스트하고 운영 하던 경험을 그대로 쿠버네티스에서도 경험할 수 있다.</p></blockquote><h1 id=cloudfoundry-for-kubernetes>CloudFoundry for Kubernetes</h1><p><a href=https://tanzu.vmware.com/developer/guides/kubernetes/cf4k8s-gs/>https://tanzu.vmware.com/developer/guides/kubernetes/cf4k8s-gs/</a></p><p>그 동안 BOSH / Deigo 기반의 Cloudfoundry (이하 CF) 를 Kubernetes 기반으로 사용할 수 있다. 어떠한 Kubernetes 클러스터 에서도 동작한다. 하지만, Tanzu Application Serivce와 기능상의 차이는 존재한다.</p><p>OSS에서는 순수한 API부분과 Runtime 부분만 제공한다.</p><h1 id=설치-환경>설치 환경</h1><p>cf4k8s 를 설치하기 위해서는 쿠버네티스 클러스터가 필요하다. EKS, AKS, GKE, DIY Kubernetes, TKG, PKS 등 CNCF표준을 준수하는 어떠한 Kubernetes 라도 상관없이 CF를 설치할 수 있다.</p><h2 id=toosls>Toosls</h2><ul><li>kubectl</li><li>kinD (Kubernetes in Docker)</li><li>Cloud Foundry CLI (v6.5+)</li><li>BOSH CLI</li><li>kapp (v0.21.0+)</li><li>ytt (v0.26.0+)</li></ul><h2 id=kubernetes-cluster-requirements>Kubernetes Cluster Requirements</h2><ul><li>Kubernetes version : 1.15x - 1.18.x</li><li>최소 5 nodes</li><li>최소 4 CPU, 15GB Memory / node</li><li>LoadBalancer service 지원</li><li>Metrics-server</li><li>default StorageClass</li></ul><h1 id=설치>설치</h1><h2 id=step1--cf-for-k8s-가져오기>Step1 : cf-for-k8s 가져오기</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone https://github.com/cloudfoundry/cf-for-k8s.git <span class=o>&amp;&amp;</span> <span class=nb>cd</span> cf-for-k8s
+</span></span></code></pre></div><h2 id=step2--kind로-쿠버네티스-클러스터-생성>Step2 : KinD로 쿠버네티스 클러스터 생성</h2><ul><li>KinD 클러스터 생성</li></ul><p><img src=https://jupilhwang.github.io/img/tanzu/cf-for-k8s/kind-cluster.png alt></p><ul><li>KinD 클러스터 정보
+<img src=https://jupilhwang.github.io/img/tanzu/cf-for-k8s/kind-cluster-info.png alt></li></ul><h2 id=step3--cf-for-k8s-배포를-위한-yaml-생성>Step3 : CF for k8s 배포를 위한 yaml 생성</h2><ul><li>설치에 필요한 인증서와 패스워드 정보를 생성한다.</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># cf 설치를 위한 속성값 생성</span>
+</span></span><span class=line><span class=cl>./hack/generate-values.sh -d jupil.cf &gt; ./cf-install-values.yml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 어플리케이션의 컨테이너 이미지를 저장하기 위한 레지스트리</span>
+</span></span><span class=line><span class=cl>cat &gt;&gt; cf-install-values.yml <span class=s>&lt;&lt; EOL
+</span></span></span><span class=line><span class=cl><span class=s>app_registry:
+</span></span></span><span class=line><span class=cl><span class=s>  hostname: https://index.docker.io/v1/
+</span></span></span><span class=line><span class=cl><span class=s>  repository: &#34;namoo4u&#34;
+</span></span></span><span class=line><span class=cl><span class=s>  username: &#34;namoo4u&#34;
+</span></span></span><span class=line><span class=cl><span class=s>  password: &#34;&lt;dockerhub-password&gt;&#34;
+</span></span></span><span class=line><span class=cl><span class=s>EOL</span>
+</span></span></code></pre></div><p>jupil.cf 는 CF 에서 사용할 도메인이름으로 *.apps.jupil.cf / *.sys.jupil.cf 와 같이 어플리케이션에 접근한다.</p><h3 id=step4--metrics-server-설치>Step4 : Metrics-server 설치</h3><ul><li>k8s 클러스터에 metrics-server 를 설치한다</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.6/components.yaml
+</span></span></code></pre></div><h2 id=step42--default-storage-class-설정>Step4.2 : Default Storage Class 설정</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl apply -f -<span class=s>&lt;&lt;-EOF
+</span></span></span><span class=line><span class=cl><span class=s>kind: StorageClass
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: storage.k8s.io/v1
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: fast
+</span></span></span><span class=line><span class=cl><span class=s>  namespace: kube-system
+</span></span></span><span class=line><span class=cl><span class=s>  annotations:
+</span></span></span><span class=line><span class=cl><span class=s>    storageclass.kubernetes.io/is-default-class: &#34;true&#34;
+</span></span></span><span class=line><span class=cl><span class=s>provisioner: csi.vsphere.vmware.com
+</span></span></span><span class=line><span class=cl><span class=s>allowVolumeExpansion: true
+</span></span></span><span class=line><span class=cl><span class=s>parameters:
+</span></span></span><span class=line><span class=cl><span class=s>  # DatastoreURL: &#34;ds:///vmfs/volumes/vsan:52cdfa80721ff516-ea1e993113acfc77/&#34; # Optional Parameter
+</span></span></span><span class=line><span class=cl><span class=s>  # StoragePolicyName: &#34;vSAN Default Storage Policy&#34; # Optional Parameter
+</span></span></span><span class=line><span class=cl><span class=s>  DatastoreURL: ds:///vmfs/volumes/5ed6580b-a1527157-93e9-000e1e5759b0/
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div><h3 id=step5--cf-for-k8s-설치>Step5 : cf-for-k8s 설치</h3><ul><li>로컬 환경에 설치할 경우, remove-resource-requirements 와 remove-resource-ingressgateway-service 를 추가한다. 실제 외부 K8s 클러스터에 설치할때는 리소스 설정과 Istio Ingressgateway 를 설치하는 것이 좋다.</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kapp deploy -a cf -f &lt;<span class=o>(</span>ytt -f config -f ./cf-install-values.yml -f ./config-optional/remove-resource-requirements.yml -f ./config-optional/remove-ingressgateway-service.yml<span class=o>)</span>
+</span></span></code></pre></div><ul><li>서버 환경에서는</li></ul><h2 id=step4--dns-설정>Step4 : DNS 설정</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kapp deploy -a cf -f &lt;<span class=o>(</span>ytt -f config -f ./cf-install-values.yml<span class=o>)</span>
+</span></span></code></pre></div><h2 id=step6--dns-설정>Step6 : DNS 설정</h2><ul><li>-d 로 설정한 도메인에 대해서 *. 를 설정한다.</li></ul><h1 id=minibroker-for-open-serivce-broker>Minibroker for Open Serivce Broker</h1><p>Minibroker : Open Service Broker API implementation</p><h2 id=minibroker-설치>minibroker 설치</h2><ul><li></li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>helm repo add minibroker https://minibroker.blob.core.windows.net/charts
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>helm repo update
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>helm install minibroker -n minibroker minibroker/minibroker --set <span class=nv>deployServiceCatalog</span><span class=o>=</span><span class=nb>false</span> --set <span class=nv>defaultNamespace</span><span class=o>=</span>minibroker
+</span></span></code></pre></div><h2 id=cf-service>CF service</h2><ul><li></li></ul><pre tabindex=0><code>cf create-service-broker minibroker user pass http://minibroker-minibroker.minibroker.svc.cluster.local
+
+cf service-brokers
+
+cf service-access
+
+cf enable-service-access redis
+
+cf enable-service-access mongodb
+
+cf enable-service-access mariadb
+
+cf marketplace
+
+cf create-service redis 5-0-7 redis-svc
+</code></pre><p>참고 URL : <a href="https://www.youtube.com/watch?v=B-h2yggVk8w&amp;feature=youtu.be">https://www.youtube.com/watch?v=B-h2yggVk8w&amp;feature=youtu.be</a></p><hr><ul class=pager><li class=previous><a href=https://jupilhwang.github.io/post/powrecli-core-for-vmware/ data-toggle=tooltip data-placement=top title="PowerCLI CORE for VMware">&larr;
+Previous Post</a></li><li class=next><a href=https://jupilhwang.github.io/post/200625_metallb/ data-toggle=tooltip data-placement=top title="TKG에 MetalLB">Next
+Post &rarr;</a></li></ul></div><div class="col-lg-2 col-lg-offset-0
+visible-lg-block
+sidebar-container
+catalog-container"><div class=side-catalog><hr class="hidden-sm hidden-xs"><h5><a class=catalog-toggle href=#>CATALOG</a></h5><ul class=catalog-body></ul></div></div><div class="col-lg-8 col-lg-offset-2
+col-md-10 col-md-offset-1
+sidebar-container"><section><hr class="hidden-sm hidden-xs"><h5><a href=https://jupilhwang.github.io/tags/>FEATURED TAGS</a></h5><div class=tags><a href=https://jupilhwang.github.io/tags/cloud title=cloud>cloud
+</a><a href=https://jupilhwang.github.io/tags/groovy title=groovy>groovy
+</a><a href=https://jupilhwang.github.io/tags/ingress title=ingress>ingress
+</a><a href=https://jupilhwang.github.io/tags/k8s title=k8s>k8s
+</a><a href=https://jupilhwang.github.io/tags/kafka title=kafka>kafka
+</a><a href=https://jupilhwang.github.io/tags/kubernetes title=kubernetes>kubernetes
+</a><a href=https://jupilhwang.github.io/tags/linux title=linux>linux
+</a><a href=https://jupilhwang.github.io/tags/network title=network>network
+</a><a href=https://jupilhwang.github.io/tags/oracle title=oracle>oracle
+</a><a href=https://jupilhwang.github.io/tags/tanzu title=tanzu>tanzu
+</a><a href=https://jupilhwang.github.io/tags/tkg title=tkg>tkg
+</a><a href=https://jupilhwang.github.io/tags/vsphere title=vsphere>vsphere</a></div></section></div></div></div></article><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center"><li><a href=mailto:jupil.hwang@gmail.com><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-envelope fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://twitter.com/jupil_hwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-twitter fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.facebook.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-facebook fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://github.com/jupilhwang><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-github fa-stack-1x fa-inverse"></i></span></a></li><li><a target=_blank href=https://www.linkedin.com/in/namoo4u><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fab fa-linkedin fa-stack-1x fa-inverse"></i></span></a></li><li><a href rel=alternate type=application/rss+xml title="행동하지 않으면 성공도 실패도 없다!! Just Do It!!"><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="copyright text-muted">Copyright &copy; 행동하지 않으면 성공도 실패도 없다!! Just Do It!! 2025</p></div></div></div></footer><script>function loadAsync(e,t){var s=document,o="script",n=s.createElement(o),i=s.getElementsByTagName(o)[0];n.src=e,t&&n.addEventListener("load",function(e){t(null,e)},!1),i.parentNode.insertBefore(n,i)}</script><script>$("#tag_cloud").length!==0&&loadAsync("/js/jquery.tagcloud.js",function(){$.fn.tagcloud.defaults={color:{start:"#bbbbee",end:"#0085a1"}},$("#tag_cloud a").tagcloud()})</script><script>loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js",function(){var e=document.querySelector("nav");e&&FastClick.attach(e)})</script><script type=text/javascript>function generateCatalog(e){_containerSelector="div.post-container";var t,n,s,o,i,a=$(_containerSelector),r=a.find("h1,h2,h3,h4,h5,h6");return $(e).html(""),r.each(function(){n=$(this).prop("tagName").toLowerCase(),o="#"+$(this).prop("id"),t=$(this).text(),i=$('<a href="'+o+'" rel="nofollow" title="'+t+'">'+t+"</a>"),s=$('<li class="'+n+'_nav"></li>').append(i),$(e).append(s)}),!0}generateCatalog(".catalog-body"),$(".catalog-toggle").click(function(e){e.preventDefault(),$(".side-catalog").toggleClass("fold")}),loadAsync("/js/jquery.nav.js",function(){$(".catalog-body").onePageNav({currentClass:"active",changeHash:!1,easing:"swing",filter:"",scrollSpeed:700,scrollOffset:0,scrollThreshold:.2,begin:null,end:null,scrollChange:null,padding:80})})</script></body></html>
